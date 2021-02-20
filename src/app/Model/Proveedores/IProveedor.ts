@@ -1,7 +1,7 @@
 
 export interface IProveedor
 {
-    idProveedor?: number;
+    id?: number;
     nombreProveedor: string;
     
 }

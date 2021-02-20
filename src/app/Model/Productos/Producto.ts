@@ -1,7 +1,7 @@
 
 import { IProveedor  } from "../Proveedores/IProveedor";
 
-export interface Productos  extends IProveedor
+export interface Productos // extends IProveedor
 {
     idProducto?: number,
     nombreProducto: string;
@@ -11,7 +11,7 @@ export interface Productos  extends IProveedor
     existenciaProducto: number;
     precioProducto: number;
 
- // proveedor: IProveedor;
+     proveedor: IProveedor;
 
     
 }

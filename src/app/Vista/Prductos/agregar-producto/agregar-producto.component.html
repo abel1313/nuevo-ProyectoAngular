@@ -21,8 +21,8 @@
                         </div>
                         <div class="col-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="CodBarra" placeholder="" name="codigo_Barras_Producto" [(ngModel)]='producto.codigoBarrasProducto' required>
-                                <label for="CodBarra">Código de barra</label>
+                                <input type="text" class="form-control" id="CodBarra" placeholder="" name="codigo_Barras_Producto" (keyup)="onKey($event)" [(ngModel)]='producto.codigoBarrasProducto' required>
+                                <label for="CodBarra">Código de barra {{ valueKeyUp }}</label>
                             </div>
                             <div class="invalid-feedback">
                                 Por favor ingrese el nombre
@@ -131,23 +131,32 @@
                     <div class="col-6">
                         <div class="form-group">
                             <label for="lblNomProveedor">Ingrese nuevo proveedor</label>
-                            <input type="text" [disabled]="!disa"  class="form-control" id="lblNomProveedor" name="nombreProveedor"  [(ngModel)]="producto.nombreProveedor" placeholder="Nuevo proveedor">
+                            <input type="text" [disabled]="!disa"  class="form-control" id="lblNomProveedor" name="nombreProveedor"  [(ngModel)]="producto.proveedor.nombreProveedor" placeholder="Nuevo proveedor">
                         </div>
                     </div>
                 </div>
+                <div class="alert alert-primary" role="alert"  *ngIf="mostrarMensaje">
+                    This is a primary alert—check it out!
+                  </div>
 
                 <div class="row p-2">
                     <div class="col-6 d-flex justify-content-center d-flex align-items-center">
-                        <button class="btn btn-secondary" (click)="eventAgregarProducto()" >agregar</button>
+                        <button class="btn btn-secondary" (click)="eventAgregarProducto()" [disabled]="btnAgregarProducto" >agregar</button>
                     </div>
                     <div class="col-6"></div>
                 </div>
+
+         
 
                 </fieldset>
             </form>
         </div>
     </div>
 </div>
+
+
+
+
 
 
 

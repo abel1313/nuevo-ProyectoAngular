@@ -6,6 +6,7 @@ import { IProveedor } from 'src/app/Model/Proveedores/IProveedor';
 
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
+
 @Component({
   selector: 'app-agregar-producto',
   templateUrl: './agregar-producto.component.html',
@@ -22,6 +23,9 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
   disa: Boolean = false;
   btnAgregarProveedor: Boolean = false;
 
+  btnAgregarProducto: Boolean = false;
+  mostrarMensaje: Boolean = false;
+  valueKeyUp = '';
   datosProveedores: any = [];
 
   producto: Productos = 
@@ -33,18 +37,14 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
     caracteristicasProducto: '',
     existenciaProducto: 0,
     precioProducto: 0,
-    idProveedor: 0,
-    nombreProveedor: ''
+    proveedor:
+    {
+       id: 0, 
+       nombreProveedor: ''
+    }
 
 }
-proveedor: IProveedor = 
-{
-  
-    idProveedor: 0,
-    nombreProveedor: ''
-  
-}
-  
+
 
   keyword = 'nombreProveedor';
 
@@ -71,7 +71,7 @@ proveedor: IProveedor =
       {
        // console.log(res);
         this.datosProveedores = res;
-          console.log(this.datosProveedores);
+        //  console.log(this.datosProveedores);
       },
       error => console.log(error)
     );
@@ -81,8 +81,8 @@ proveedor: IProveedor =
 
   selectEvent(item: any) {
     // do something with selected item
-    this.producto.nombreProveedor = item.nombreProveedor;
-    this.producto.idProveedor = item.id;
+    this.producto.proveedor.nombreProveedor = item.nombreProveedor;
+    this.producto.proveedor.id = item.id;
 
 
   }
@@ -103,7 +103,7 @@ proveedor: IProveedor =
       setTimeout(()=>{ // this will make the execution after the above boolean has changed
         let nomProveedor = document.getElementById("lblNomProveedor");
         nomProveedor.focus();
-        this.producto.idProveedor = 0;
+        this.producto.proveedor.id = 0;
         
       
       },100); 
@@ -118,58 +118,124 @@ proveedor: IProveedor =
     }
     
   }
-  
+  // evento click para agregar un producto
   eventAgregarProducto()
   {
-  
+    // validamos que el alguna caja este vacía
     if(this.producto.nombreProducto == "" || this.producto.codigoBarrasProducto == "" ||this.producto. descripcionProducto == "" || 
     this.producto.caracteristicasProducto == "" || this.producto.existenciaProducto == 0 || this.producto.precioProducto == 0 || 
-    this.producto.nombreProveedor == "" )
+    this.producto.proveedor.nombreProveedor == "" )
     {
+      // si alguna caja está vacía  se ejecuta este método que solo muestra un mensaje en la vista para el ususario
       this.validarFormulario();
 
+      // valoda que las casas de texto no esten vacías
     }else  if(this.producto.nombreProducto != "" || this.producto.codigoBarrasProducto != "" ||this.producto. descripcionProducto != "" || 
     this.producto.caracteristicasProducto != "" || ( this.producto.existenciaProducto != 0 && isNaN( this.producto.existenciaProducto ) ) || 
     ( this.producto.precioProducto != 0 && isNaN( this.producto.precioProducto ) ) || 
-    this.producto.nombreProveedor != "" )
+    this.producto.proveedor.nombreProveedor != "" )
     {
-
-      if( this.producto.idProveedor > 0 && this.producto.nombreProveedor != "" )
+      // valida que el proveedor y el nombre de proveedor se agregen
+      if( this.producto.proveedor.id > 0 && this.producto.proveedor.nombreProveedor != "" )
       {
-    
+        this.btnAgregarProducto = true;
+        setTimeout(() => 
+        {
+          this._ngZone.runOutsideAngular(() => {
+            // realiza el service para agregar el producto
+              
+            this.suscription =  this.serviceProducto.serviceProducto.guardarProducto(this.producto)
+            .subscribe
+            (
+              res => 
+              {
+   
+              //    console.log(res);
+              },
+              error => console.log(error)
+            );
+            // reenter the Angular zone and display done
+            this._ngZone.run(() => { 
+            //  console.log('Outside Done!'); 
+            
+            });
+       
+        });
+        this.limpiarProducto();
+        this.btnAgregarProducto = false;
+        }, 3000);
+
+        this.mostrarMensaje = true;
+        setTimeout(() => 
+        {
+         this.mostrarMensaje = false;
+        }, 3500);
+
+      }
+      // si el usuario agrega un proveedor lo agrega y despúes agrega el producto
+      else if(  this.producto.proveedor.id == 0 && this.producto.proveedor.nombreProveedor != "" )
+      {
+        //console.log("nuevo proveedor ");
+        this.btnAgregarProducto = true;
+
+       setTimeout(() =>
+       {
         this._ngZone.runOutsideAngular(() => {
-    
-          
-          this.suscription =  this.serviceProducto.serviceProducto.guardarProducto(this.producto)
+          // realiza el service para agregar el proveedor
+          this.suscription =  this.serviceProducto.serviceProveedor.guardarProveedor(this.producto.proveedor)
           .subscribe
           (
             res => 
             {
-             // console.log(res);
-            
-                console.log(res);
+           
+                this.producto.proveedor.id = res.id;
+                this.suscription =  this.serviceProducto.serviceProducto.guardarProducto(this.producto)
+                .subscribe
+                (
+                  res => 
+                  {
+       
+                     // console.log(res);
+                  },
+                  error => console.log(error)
+                );
             },
             error => console.log(error)
           );
           // reenter the Angular zone and display done
-          this._ngZone.run(() => { console.log('Outside Done!'); });
+          this._ngZone.run(() => 
+          {
+            // console.log('Outside Done!'); 
+            });
      
       });
-      }
-      else if(  this.producto.idProveedor == 0 && this.producto.nombreProveedor != "" )
-      {
-        console.log("nuevo proveedor ");
-      }
-      console.log(this.producto);
+      this.limpiarProducto();
+        this.btnAgregarProducto = false;
+       }, 3000);
+       this.mostrarMensaje = true;
+       setTimeout(() => 
+       {
+        this.mostrarMensaje = true;
+       }, 2000);
 
- 
+      }
+     // console.log(this.producto);
+
+
+
+
+
+
 
     }
     
   }
 
   
-   
+  onKey(event: any) { // without type info
+    this.valueKeyUp += event.target.value + ' | ';
+  }
+
   validarFormulario()
   {
     // Example starter JavaScript for disabling form submissions if there are invalid fields
@@ -204,6 +270,21 @@ proveedor: IProveedor =
 
   ngOnDestroy(): void {
     this.suscription.unsubscribe();
+  }
+
+  limpiarProducto()
+  {
+
+     this.producto.idProducto = 0;
+     this.producto.nombreProducto = '';
+     this.producto.codigoBarrasProducto = '';
+     this.producto.descripcionProducto = '';
+     this.producto.caracteristicasProducto = '';
+     this.producto.existenciaProducto = 0;
+     this.producto.precioProducto = 0;
+     this.producto.proveedor.id = 0;
+     this.producto.proveedor.nombreProveedor = '';
+
   }
 
 }
