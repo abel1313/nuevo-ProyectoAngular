@@ -1,0 +1,137 @@
+<div class="row p-3">
+    <div class="col-6 offset-3 ">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center fw-bolder"> Venta</h3>
+            </div>
+            <div class="card-body text-center fw-bolder">
+                <form class="needs-validation" novalidate>
+                    
+
+                    <fieldset class='border' style="background-color:  #e0d8d6  ">
+
+                        <div class="row p-2">
+                            <div class="col-5">
+                                <label for="atiende" class="">Usuario que lo atiende</label>
+                            </div>
+                            <div class="col-7">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="atiende" name="UsuarioAtiende" readonly>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="lblCliente">Cliente</label>
+                            </div>
+                            <div class="col-7">
+                                <div class="ng-autocomplete col-12 d-flex">
+                                    <ng-autocomplete 
+                                        [data]="datosCliente" 
+                                        [searchKeyword]="keyword"
+                                        placeholder="Ingrese nombre del cliente" 
+                                        (selected)='selectEvent($event)'
+                                        (inputChanged)='onChangeSearch($event)' 
+                                        (inputFocused)='onFocused($event)'
+                                        [itemTemplate]="itemTemplate" 
+                                        [notFoundTemplate]="notFoundTemplate"
+                                        requiered>
+                                        <div class="invalid-feedback">
+                                            Por favor ingrese el nombre
+                                        </div>
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplate let-item>
+                                        <a [innerHTML]="item.nombrePersona"></a>
+                                    </ng-template>
+
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row p-3">
+                            <div class="col-5">
+                                <label for="totalVenta">Total</label>
+                            </div>
+                            <div class="col-7">
+                                <div class="form-group">
+
+                                    <input type="text" class="form-control mx-auto text-center" id="totalVenta" 
+                                    
+                                        value="{{ totalVentaMostrar }}"  readonly>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="lblPagoCon">Pagó con</label>
+                            </div>
+                            <div class="col-7">
+
+                                <div class="form-group">
+
+                                    <input type="number" #valor class="form-control text-center" id="lblPagoCon" 
+                                    (keyup)="onKey(valor.value)"
+                                    (change)="changeValue(valor.value)"
+                                        placeholder="Ingrese el pago" name="pago" required [(ngModel)]="pago">
+                                    <div class="invalid-feedback">
+                                        Por favor ingrese el pago
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-5">
+                                <label for="lblCambio">Cambio</label>
+                            </div>
+                            <div class="col-7">
+                                <div class="form-group">
+
+                                    <input type="number" value="{{ cambioVenta }}" class="form-control text-center" id="lblCambio" readonly
+                                        name="">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row p-2">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button class="btn btn-secondary col-6" (click)="agregarVenta()"> Pagar</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+                <div class="row" *ngIf="showMessage">
+                    <div class="col-12">
+                        <div class="alert alert-danger text-justify" role="alert">
+                            El pago debe ser mayor al total
+                          </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="showMessageRespuesta">
+                    <div class="col-12">
+                        <div class="alert alert-danger text-justify" role="alert">
+                            <p class="text-center" id="resp"> Gracias por la compra </p>
+                          </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

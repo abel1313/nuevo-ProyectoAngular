@@ -1,0 +1,27 @@
+
+<div class="row p-3 border">
+    <div class="col-10">
+        <div class="form-group  d-flex justify-content-center d-flex align-items-center">
+            <label for="buscar-producto">Buscar producto</label>
+            <input type="text" class="form-control col-4" id="buscar-producto" name="buscar-producto" (keyup)="onKey($event)" placeholder="buscar producto">
+            <p class="text-center">{{ valueKeyUp }}</p>
+        </div>
+    </div>
+    <div class="col-1 border d-flex justify-content-center d-flex align-items-center">
+        <h3 class="fw-bolder border border-black" > {{ countProductoBuscarProducto }}    </h3> 
+        <!-- {{ serviceFerreteria.serviceDetalle.countProductosCarrito$ | async}}  -->
+    </div>
+
+
+    <div class="col-1">
+      
+       <img src="../../../../assets/ImagenesFerreteria/ImagenesProductos/carritoVenta.jpg" h class="rounded" alt="" (click)="verDetalle();">
+    </div>
+</div>
+
+<div class="container border" >
+    
+    <app-mostrar-productos *ngIf="!verCarritoCompras"></app-mostrar-productos>
+    <app-carrito-detalle *ngIf="verCarritoCompras"></app-carrito-detalle>
+</div>
+

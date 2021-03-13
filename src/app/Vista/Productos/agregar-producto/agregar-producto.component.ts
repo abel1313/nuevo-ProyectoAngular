@@ -1,8 +1,10 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 
 import { Observable, Subscription } from 'rxjs';
+import { ICategoria } from 'src/app/Model/Categorias/ICategoria';
 import { Productos } from 'src/app/Model/Productos/Producto';
 import { IProveedor } from 'src/app/Model/Proveedores/IProveedor';
+import { Tornilleria } from 'src/app/Model/Tornilleria/Tornilleria';
 
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
@@ -19,6 +21,9 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
   suscription: Subscription;
   datosProveedor$: Observable<any[]>
 
+
+  tornilleria = new Tornilleria();
+
   check: Boolean ;
   disa: Boolean = false;
   btnAgregarProveedor: Boolean = false;
@@ -27,6 +32,9 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
   mostrarMensaje: Boolean = false;
   valueKeyUp = '';
   datosProveedores: any = [];
+  // datos categoría para mostrar en el autocomplete para elejir la categoría
+  // a la que pertenece el producto
+  datosCategorias: any = [];
 
   producto: Productos = 
   {
@@ -47,13 +55,14 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
 
 
   keyword = 'nombreProveedor';
+  keywordCategoria = 'nombreCategoria';
 
  // public pro: Subscription;
   
   ngOnInit(): void 
   {
     this.getDataProveedores();
-    
+    this.getCategorias();
 
     //(this.check) ? console.log(" Habi") : console.log("Desc") ;
 
@@ -124,16 +133,18 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
     // validamos que el alguna caja este vacía
     if(this.producto.nombreProducto == "" || this.producto.codigoBarrasProducto == "" ||this.producto. descripcionProducto == "" || 
     this.producto.caracteristicasProducto == "" || this.producto.existenciaProducto == 0 || this.producto.precioProducto == 0 || 
-    this.producto.proveedor.nombreProveedor == "" )
+    this.producto.proveedor.nombreProveedor == ""  || this.tornilleria.tornilleria.categoria.id == 0 )
     {
       // si alguna caja está vacía  se ejecuta este método que solo muestra un mensaje en la vista para el ususario
       this.validarFormulario();
+      
+      alert( "Llene los campos ");
 
       // valoda que las casas de texto no esten vacías
     }else  if(this.producto.nombreProducto != "" || this.producto.codigoBarrasProducto != "" ||this.producto. descripcionProducto != "" || 
     this.producto.caracteristicasProducto != "" || ( this.producto.existenciaProducto != 0 && isNaN( this.producto.existenciaProducto ) ) || 
     ( this.producto.precioProducto != 0 && isNaN( this.producto.precioProducto ) ) || 
-    this.producto.proveedor.nombreProveedor != "" )
+    this.producto.proveedor.nombreProveedor != "" &&  this.tornilleria.tornilleria.categoria.id != 0 )
     {
       // valida que el proveedor y el nombre de proveedor se agregen
       if( this.producto.proveedor.id > 0 && this.producto.proveedor.nombreProveedor != "" )
@@ -149,8 +160,10 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
             (
               res => 
               {
-   
-              //    console.log(res);
+                  
+                 // this.tornilleria.tornilleria.producto.id = res.id;
+
+
               },
               error => console.log(error)
             );
@@ -261,11 +274,38 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
 
 
 
+  selectEventCategoria(val: any) 
+  {
+    // fetch remote data from here
+    // And reassign the 'data' which is binded to 'data' property.
+    this.tornilleria.tornilleria.categoria.id = val.id;
+    
+  }
+  
+  onChangeSearchCategoria(e: any){
+    // do something when input is focused
+  }
+  onFocusedCategoria(even: any)
+  {
+
+    
+  }
 
 
 
-
-
+getCategorias()
+{
+  this.suscription = this.serviceProducto.seriviceCategoria
+  .getCategorias()
+  .subscribe
+  (
+    res=> 
+    {
+      this.datosCategorias = res;
+    },
+     err=> console.log(err)
+  );
+}
 
 
   ngOnDestroy(): void {

@@ -44,10 +44,11 @@
                             <div class="form-floating">
                                 <textarea class="form-control" placeholder="" id="CaracProducto" name="caracteristicas_Producto" style="height: 100px" [(ngModel)]='producto.caracteristicasProducto' required></textarea>
                                 <label for="CaracProducto">Caracteristicas</label>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese las caracteristicas
+                                   </div>
                             </div>
-                            <div class="invalid-feedback">
-                                Por favor ingrese el nombre
-                               </div>
+                   
                         </div>
 
 
@@ -66,7 +67,7 @@
                         <div class="col-6">
                             <div class="form-floating mb-3">
                                 <input type="number" min="1"  class="form-control" id="precio_Producto" name="precio_Producto" placeholder="" [(ngModel)]='producto.precioProducto' required>
-                                <label for="precio_Producto">Marca del producto</label>
+                                <label for="precio_Producto">Precio del producto</label>
                             </div>
                             <div class="invalid-feedback">
                                 Por favor ingrese el precio
@@ -106,6 +107,35 @@
                                        </div>
                             
                         </div>
+
+                        <div class="col-6">
+                            
+                            <div class="ng-autocomplete col-12">
+                                <ng-autocomplete
+                                  [data]="datosCategorias"
+                                  [searchKeyword]="keywordCategoria"
+                                  placeholder = "Ingrese la categoría"
+                                  (selected)='selectEventCategoria($event)'
+                                (inputChanged)='onChangeSearchCategoria($event)'
+                                (inputFocused)='onFocusedCategoria($event)'
+                                  [itemTemplate]="itemTemplate"
+                                  [notFoundTemplate]="notFoundTemplate"
+                                  [disabled]="disa"
+                                  
+                                  >                                 
+                                </ng-autocomplete>
+                                
+                                <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.nombreCategoria"></a>
+                                </ng-template>
+                                
+                                <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                                </ng-template>
+                                </div>
+                 
+                        
+                    </div>
 
                         
                     </div>

@@ -1,0 +1,144 @@
+
+
+
+    
+<app-buscar-pagos-venta></app-buscar-pagos-venta>
+
+
+
+<div class="row p-2">
+    <div class="col-7">
+        <table class="table table-hover">
+    
+            <thead>
+                <tr>
+                    <th colspan="2" class="border">Ciente</th>
+                    <th>Total de la venta</th>
+                    <th>Total de pagos dado</th>
+                    <th>Resto del pago</th>
+                   
+         
+                </tr>
+            </thead>
+        
+            <tbody>
+                <tr *ngFor="let item of DTOPagoVenta" #isd (click)="onClick( item );">
+                    
+                    <td colspan="2">
+                    {{  item.cliente.persona.nombrePersona }}
+                    {{ item.cliente.persona.paternoPersona}}
+                    {{ item.cliente.persona.maternoPersona }}
+                        
+                    </td>
+                    <td>{{ item.totalVenta }}</td>
+                    <td>{{ item.totalPagosVenta }}</td>
+
+                    <td>{{ item.totalResta    }}</td>
+                    
+                </tr>
+            </tbody>
+        
+          </table>
+        
+    </div>
+    <div class="col-5">
+
+        <div class="card">
+            <div class="card-header bg-secondary text-white">
+                <h3 class="card-title text-center">Realizar pago</h3>
+            </div>
+            <div class="car-body">
+
+                <form>
+                    <fieldset class="text-center">
+                        <legend> pagara : {{ this.dtoVentaPago.ventasPagos.cliente.persona.nombrePersona }}
+                                            {{ this.dtoVentaPago.ventasPagos.cliente.persona.paternoPersona }}
+                                            {{ this.dtoVentaPago.ventasPagos.cliente.persona.maternoPersona }}
+                        </legend>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="ttal" class="fw-bolder d-flex justify-content-end d-flex align-items-center">Total de la venta</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group d-flex justify-content-start">
+                                    <input type="number" class="form-control col-10 text-center " 
+                                    name="" id="ttal" disabled value="{{ dtoVentaPago.ventasPagos.totalVenta }}"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-4">
+                                <label for="ttal" class="fw-bolder d-flex justify-content-end d-flex align-items-center">Total de pagos</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group d-flex justify-content-start">
+                                    <input type="number" 
+                                    class="form-control  col-10 text-center" disabled value="{{ dtoVentaPago.ventasPagos.totalPagosVenta }}"
+                                    name="" id="" >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row ">
+                            <div class="col-4">
+                                <label for="ttal" class="fw-bolder d-flex justify-content-end d-flex align-items-center">Resto</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group d-flex justify-content-start">
+                                    <input type="number" class="form-control  col-10 text-center" 
+                                    name="" id="" disabled value="{{ dtoVentaPago.ventasPagos.totalResta }}"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-4">
+                                <label for="ttal" class="fw-bolder text-center d-flex justify-content-end d-flex align-items-center"> Ingresar pago</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group d-flex justify-content-start">
+                                    <input type="number" class="form-control  col-10 text-center" #pagoVenta
+                                    name="pago" id="" placeholder="ingrese el pago" 
+                                    (keyup)="onKeyUpPagoVenta(pagoVenta.value)"  [disabled]="!btnDisablePagoVenta" [(ngModel)]="datosPagoVenta.pago"
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row ">
+                            <div class="col-4">
+                                <label for="ttal" class="fw-bolder text-center d-flex justify-content-end d-flex align-items-center">cambio</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="form-group d-flex justify-content-start">
+                                    <input type="number" class="form-control  col-10 text-center" 
+                                    name="" id="" disabled value="{{ resultado }}"
+                                   
+                                    >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-1">
+                            <div class="col-12 d-flex justify-content-center">
+                                <button class="btn btn-secondary" [disabled]="!btnDisablePagoVenta" (click)="guardarPago();" > Realizar pago</button>
+                            </div>
+                        </div>
+
+
+                    </fieldset>
+                </form>
+
+            </div>
+            <div class="card-footer" *ngIf="mostrarMensaje">
+                
+                <div class="alert alert-secondary" role="alert">
+                   {{ mensaje }}
+                  </div>
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+

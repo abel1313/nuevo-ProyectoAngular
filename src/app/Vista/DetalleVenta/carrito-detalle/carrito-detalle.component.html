@@ -1,0 +1,59 @@
+<table class="table table-hover" *ngIf="!mostrarVenta">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of carrito">
+            <td> {{ item.nombreProducto }}</td>
+            <td > $ {{ item.precioProducto }}</td>
+            <td> {{ item.cantidad1 }}</td>
+            <td>$ {{  item.precioProducto * item.cantidad1 }}</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Total:  </td>
+            <td>$ {{ total }}</td>
+        </tr>
+    </tbody>
+  </table>
+
+
+  <div class="container-fluid" *ngIf="!mostrarVenta">
+      
+  <!-- <div *ngIf="validandoTotal; else loading" class="d-flex justify-content-end d-flex align-items-center"> -->
+    <div class="row" *ngIf="validandoTotal; else loading">
+        <div class="col-6 d-flex justify-content-end d-flex align-items-center">
+            <button class="btn btn-secondary col-10" (click)="cancelarVenta();" >cancelar</button>
+
+        </div>
+        <div class="col-6 d-flex justify-content-start d-flex align-items-center">
+            <button class="btn btn-secondary col-10" (click)="realizarVenta();" >reliazar venta</button>
+        </div>
+    </div>
+<!-- </div> -->
+  </div>
+
+  <ng-template #loading>
+        <div class="row">
+            <div class="col-9">
+                <p class="text-center">Por favor agrege productos al detalle...</p> 
+            </div>
+            <div class="col-3 d-flex justify-content-end">
+    <button class="btn btn-info" (click)="regresarCarritoDetalle();">Regresar</button>
+            </div>
+         
+        </div>
+   </ng-template>
+
+   <div class="container" *ngIf="mostrarVenta">
+       <app-agregar-venta></app-agregar-venta>
+   </div>
+
+
+

@@ -1,0 +1,142 @@
+<div class="row p-3 d-flex justify-content-center">
+    <div class="col-6 ">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title text-center"> {{ mostrarMensaje }}</h5>
+            </div>
+            <div class="card-body text-center">
+
+                <form class="needs-validation" novalidate>
+                    <legend>Datos personales</legend>
+
+                    <fieldset class="border fw-bolder">
+
+                        <div class="row p-3 text-center ">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="nombrePersona" class="">Nombre</label>
+                                    <input type="text" class="form-control" name="nombrePersona" id="nombrePersona"
+                                        placeholder="Ingrese nombre persona"
+                                        [(ngModel)]="cliente.cliente.persona.nombrePersona" required>
+                                        <div class="invalid-feedback">
+                                            Por favor ingrese
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="paterno">Apellido paterno</label>
+                                    <input type="text" class="form-control" name="paternoPersona" id="paterno"
+                                        placeholder="Ingrese su paterno"
+                                        [(ngModel)]="cliente.cliente.persona.paternoPersona" required>
+
+                                    <div class="invalid-feedback">
+                                        Por favor ingrese
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="materno">Apellido pmterno</label>
+                                    <input type="text" class="form-control" name="maternoPersona" id="materno"
+                                        placeholder="Ingrese su materno"
+                                        [(ngModel)]="cliente.cliente.persona.maternoPersona" required>
+                                    <div class="invalid-feedback">
+                                        Por favor ingrese
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="correoPersona">Correo</label>
+                                    <input type="text" class="form-control" name="correoelectronicoPersona"
+                                        id="correoPersona" placeholder="Ingrese correo"
+                                        [(ngModel)]="cliente.cliente.persona.correoelectronicoPersona" required>
+                                    <div class="invalid-feedback">
+                                        Por favor ingrese
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="fechaPersona">Fecha de nacimiento</label>
+                                    <input type="date" class="form-control" name="fechanacimientosPersona"
+                                        id="fechaPersona" [(ngModel)]="cliente.cliente.persona.fechanacimientosPersona"
+                                        required>
+                                    <div class="invalid-feedback">
+                                        Por favor ingrese
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="genero"></label>
+                                    <select class="form-select" required aria-label="select example"
+                                        name="genero" id="genero"
+                                    >
+                                        <option value="" >Seleccione su género</option>
+                                        <option [selected]="selectedItem" >Hombre</option>
+                                        <option [selected]="!selectedItem">Mujer</option>
+                                        
+                                      </select>
+                                      <div class="invalid-feedback">Por favor ingrese su sexo</div>
+
+
+
+              
+                                </div>
+                            </div>
+                            <div *ngIf="!mostrarTemplate; else elseBlock">
+                                <div class="col-6 d-flex justify-content-center align-items-center">
+                                    <button class="btn btn-secondary col-12 "> Guardar empleado</button>
+                                </div>
+                            </div>
+
+                            <div *ngIf="mensajeEditar">
+                                <div class="alert alert-warning" role="alert">
+                                    Se edito correctamente
+                                  </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #elseBlock>
+
+    <div class="alert alert-dark" role="alert"  *ngIf="btnMensaje">
+        Por favor espere, se está guardando ...  
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      </div>
+
+    <div class="col-6 d-flex justify-content-end align-items-center">
+       
+        <button class="btn btn-secondary" [disabled]="btnMensaje" (click)="agregarCliente();" >     
+            Guardar
+          </button>
+    </div>
+
+    <div class="alert alert-info" *ngIf="btnMensajeAgregar" role="alert">
+        Se agregó correctamente
+      </div>
+
+
+</ng-template>
+

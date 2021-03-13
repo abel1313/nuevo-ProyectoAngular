@@ -11,20 +11,45 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AgregarProductoComponent } from './Vista/Prductos/agregar-producto/agregar-producto.component';
+import { AgregarProductoComponent } from './Vista/Productos/agregar-producto/agregar-producto.component';
+
 
 import { NavFerreteriaComponent } from './Vista/Navegacion/nav-ferreteria/nav-ferreteria.component';
 import { FootFerreteriaComponent } from './Vista/Footer/foot-ferreteria/foot-ferreteria.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { AgregarProveedorComponent } from './Vista/Proveedores/agregar-proveedor/agregar-proveedor.component';
+import { BuscarProductosComponent } from './Vista/Productos/buscar-productos/buscar-productos.component';
+import { MostrarProductosComponent } from './Vista/Productos/mostrar-productos/mostrar-productos.component';
+import { CarritoDetalleComponent } from './Vista/DetalleVenta/carrito-detalle/carrito-detalle.component';
+import { AgregarVentaComponent } from './Vista/Venta/agregar-venta/agregar-venta.component';
+import { PagosVentaMostrarComponent } from './Vista/PagosVenta/pagos-venta-mostrar/pagos-venta-mostrar.component';
+import { BuscarPagosVentaComponent } from './Vista/PagosVenta/BuscarPagos/buscar-pagos-venta/buscar-pagos-venta.component';
+import { AgregarClienteComponent } from './Vista/Clientes/AgregarCliente/agregar-cliente/agregar-cliente.component';
+import { MostrarClienteComponent } from './Vista/Clientes/MostrarCliente/mostrar-cliente/mostrar-cliente.component';
+import { BuscarClienteComponent } from './Vista/Clientes/BuscarCliente/buscar-cliente/buscar-cliente.component';
+import { AgregarPersonaComponent } from './Vista/Personas/AgregarPersona/agregar-persona/agregar-persona.component';
+import { ActualizarClienteComponent } from './Vista/Clientes/ActualizarCliente/actualizar-cliente/actualizar-cliente.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+
+
     NavFerreteriaComponent,
     FootFerreteriaComponent,
     AgregarProductoComponent,
     AgregarProveedorComponent,
+    BuscarProductosComponent,
+    MostrarProductosComponent,
+    CarritoDetalleComponent,
+    AgregarVentaComponent,
+    PagosVentaMostrarComponent,
+    BuscarPagosVentaComponent,
+    AgregarClienteComponent,
+    MostrarClienteComponent,
+    BuscarClienteComponent,
+    AgregarPersonaComponent,
+    ActualizarClienteComponent,
     
 
 

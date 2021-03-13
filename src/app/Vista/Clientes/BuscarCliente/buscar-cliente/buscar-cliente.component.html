@@ -1,0 +1,22 @@
+
+
+
+<div class="row p-3 border bprder-secondary">
+    <div class="col-2 d-flex justify-content-end align-items-center">
+        <label for="">buscar cliente </label>
+    </div>
+    <div class="col-10">
+        <div class="form-group">
+            
+            <input type="text" class="form-control col-4" id="" name="" 
+            placeholder="Ingrese nombre del cliente" #inputOnKey (keyup)="keyUpBuscarCliente(inputOnKey.value);" >
+        </div>
+    </div>
+</div>
+
+
+<div class="container border border-danger mt-2">
+    <app-mostrar-cliente></app-mostrar-cliente>
+</div>
+
+

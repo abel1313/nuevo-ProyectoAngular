@@ -4,6 +4,13 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ServiceProducto } from './ServiceProducto/ServiceProducto';
 import { ServiceProveedor } from './ServiceProveedor/ServiceProveedor';
+import { ServiceDetalle } from './ServiceProducto/ServiceDetalle';
+import { ServiceVenta } from './ServiceVenta/ServiceVenta';
+import { ServiceCliente } from './ServiceCliente/ServiceCliente';
+import { ServicePagoVenta } from './ServicePagoVenta/ServicePagoVenta';
+import { ServiceVentasPagadas } from './ServiceVentasPagadas/ServiceVentasPagadas';
+import { ServiceCategoria } from './ServiceCategoria/ServiceCategoria';
+
 
 
 @Injectable({
@@ -64,6 +71,21 @@ editarUsuario(id: number, updateUsuario: Usuario): Observable<Usuario>
 
 serviceProducto = new ServiceProducto(this.http);
 serviceProveedor = new ServiceProveedor(this.http);
+serviceDetalle = new ServiceDetalle(this.http);
+
+serviceVenta = new ServiceVenta(this.http);
+
+serviceCliente = new ServiceCliente(this.http);
+
+serivicePagosVenta = new ServicePagoVenta(this.http);
+
+
+seriviceVentasPagadas = new ServiceVentasPagadas(this.http);
+
+// clase service para las categoria
+seriviceCategoria = new ServiceCategoria(this.http);
+
+
 
 /*
 

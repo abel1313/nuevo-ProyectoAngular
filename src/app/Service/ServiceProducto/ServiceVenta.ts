@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 
 export class ServiceVenta
 {
-    private URI_JAVA_Productos = 'http://localhost:8080/ferreteria/venta';
+    private URI_JAVA_Productos = 'http://localhost:8080/ferreteria/ventas';
 
     constructor(private http: HttpClient ){}
 

@@ -10,21 +10,64 @@
           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+          <a class="nav-link" href="#">Productoss</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Pricing</a>
         </li>
+
+               <!-- Usuarios -->
+               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 Usuarios
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" [routerLink]="['agregar']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
+                  <a class="dropdown-item" href="#">mostrar</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </li>
+              <!-- Usuarios -->
+
+        <!-- Clientes -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown link
+           Clientes
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" [routerLink]="['productos']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" [routerLink]="['cliente']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
+            <a class="dropdown-item" [routerLink]="['buscarcliente']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
+            
           </div>
         </li>
+        <!-- Clientes -->
+
+                <!-- Productos -->
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Productos
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" [routerLink]="['agregarProducto']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
+                    <a class="dropdown-item" [routerLink]="['mostrarProducto']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </li>
+                <!-- Productos -->
+
+                               <!-- Ventas -->
+               <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 Ventas
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" [routerLink]="['agregarventa']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
+                  <a class="dropdown-item" [routerLink]="['mostrarventas']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </li>
+              <!-- Ventas -->
+
       </ul>
     </div>
   </nav>

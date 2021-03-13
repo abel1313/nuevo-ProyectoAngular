@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 @Component({
   selector: 'app-nav-ferreteria',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavFerreteriaComponent implements OnInit {
 
-  constructor() { }
+  constructor( private serviceFerreteria: ServiceFerreteriaService ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+
   }
+
+
 
 }
