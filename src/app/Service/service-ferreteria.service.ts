@@ -10,6 +10,7 @@ import { ServiceCliente } from './ServiceCliente/ServiceCliente';
 import { ServicePagoVenta } from './ServicePagoVenta/ServicePagoVenta';
 import { ServiceVentasPagadas } from './ServiceVentasPagadas/ServiceVentasPagadas';
 import { ServiceCategoria } from './ServiceCategoria/ServiceCategoria';
+import { ServiceUsuario  } from "./ServiceUsuario/ServiceUsuario";
 
 
 
@@ -85,6 +86,7 @@ seriviceVentasPagadas = new ServiceVentasPagadas(this.http);
 // clase service para las categoria
 seriviceCategoria = new ServiceCategoria(this.http);
 
+serviceUsuario = new ServiceUsuario(this.http);
 
 
 /*

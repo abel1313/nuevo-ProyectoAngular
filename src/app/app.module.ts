@@ -29,6 +29,10 @@ import { MostrarClienteComponent } from './Vista/Clientes/MostrarCliente/mostrar
 import { BuscarClienteComponent } from './Vista/Clientes/BuscarCliente/buscar-cliente/buscar-cliente.component';
 import { AgregarPersonaComponent } from './Vista/Personas/AgregarPersona/agregar-persona/agregar-persona.component';
 import { ActualizarClienteComponent } from './Vista/Clientes/ActualizarCliente/actualizar-cliente/actualizar-cliente.component';
+import { InicioSessionComponent } from './Vista/InicioSession/inicio-session/inicio-session.component';
+import { RegistrarUsuarioComponent } from './Vista/InicioSession/registrar-usuario/registrar-usuario.component';
+import { AccederUsuarioComponent } from './Vista/InicioSession/acceder-usuario/acceder-usuario.component';
+import { ExampleUsuarioComponent } from './Vista/InicioSession/example-usuario/example-usuario.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +54,10 @@ import { ActualizarClienteComponent } from './Vista/Clientes/ActualizarCliente/a
     BuscarClienteComponent,
     AgregarPersonaComponent,
     ActualizarClienteComponent,
+    InicioSessionComponent,
+    RegistrarUsuarioComponent,
+    AccederUsuarioComponent,
+    ExampleUsuarioComponent,
     
 
 

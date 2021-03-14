@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ActualizarClienteComponent } from './Vista/Clientes/ActualizarCliente/actualizar-cliente/actualizar-cliente.component';
 import { AgregarClienteComponent } from './Vista/Clientes/AgregarCliente/agregar-cliente/agregar-cliente.component';
 import { BuscarClienteComponent } from './Vista/Clientes/BuscarCliente/buscar-cliente/buscar-cliente.component';
+import { InicioSessionComponent } from './Vista/InicioSession/inicio-session/inicio-session.component';
 import { PagosVentaMostrarComponent } from './Vista/PagosVenta/pagos-venta-mostrar/pagos-venta-mostrar.component';
 import { AgregarProductoComponent } from './Vista/Productos/agregar-producto/agregar-producto.component';
 import { BuscarProductosComponent } from './Vista/Productos/buscar-productos/buscar-productos.component';
@@ -25,7 +26,8 @@ const routes: Routes =
  { path: 'cliente', component: AgregarClienteComponent },
  { path: 'buscarcliente', component: BuscarClienteComponent },
  { path: 'editarcliente', component: ActualizarClienteComponent },
- { path: '**', redirectTo: 'editarcliente', pathMatch: 'full' }
+ { path: 'acceso', component: InicioSessionComponent },
+ { path: '**', redirectTo: 'acceso', pathMatch: 'full' }
 
 
 ];

@@ -1,73 +1,103 @@
-
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Bienvenidos: Ferretería Martínez</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Productoss</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
-        </li>
+  <a class="navbar-brand" href="#">Bienvenidos: Ferretería Martínez</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
 
-               <!-- Usuarios -->
-               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 Usuarios
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" [routerLink]="['agregar']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
-                  <a class="dropdown-item" href="#">mostrar</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <!-- Usuarios -->
 
-        <!-- Clientes -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           Clientes
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" [routerLink]="['cliente']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
-            <a class="dropdown-item" [routerLink]="['buscarcliente']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
-            
+      <!-- Usuarios -->
+      <li class="nav-item dropdown"
+        *ngIf="(serviceFerreteria.serviceUsuario.permisosProductos$ | async) || permisosUsuarios">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Usuarios
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" [routerLink]="['agregar']"
+            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
+          <a class="dropdown-item" href="#">mostrar</a>
+          
+        </div>
+      </li>
+      <!-- Usuarios -->
+
+      <!-- Clientes -->
+      <!-- *ngIf="sessionUsuarioAcceso.listaPermiso.includes(1) || sessionUsuarioAcceso.listaPermiso == null" -->
+      <li class="nav-item dropdown"
+        *ngIf="(serviceFerreteria.serviceUsuario.permisosProductos$ | async) || permisosClientes">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Clientes
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" [routerLink]="['cliente']"
+            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
+          <a class="dropdown-item" [routerLink]="['buscarcliente']"
+            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
+
+        </div>
+      </li>
+      <!-- Clientes -->
+
+      <!-- Productos -->
+      <!-- *ngIf="sessionUsuarioAcceso.listaPermiso.includes(2) || sessionUsuarioAcceso.listaPermiso == null" -->
+      <li class="nav-item dropdown"
+        *ngIf="(serviceFerreteria.serviceUsuario.permisosProductos$ | async) || permisosProductos">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Productos
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" [routerLink]="['agregarProducto']"
+            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
+          <a class="dropdown-item" [routerLink]="['mostrarProducto']"
+            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
+          
+        </div>
+      </li>
+      <!-- Productos -->
+
+      <!-- Ventas -->
+      <!-- *ngIf="sessionUsuarioAcceso.listaPermiso.includes(3) || sessionUsuarioAcceso.listaPermiso == null "  -->
+      <li class="nav-item dropdown"
+        *ngIf="(serviceFerreteria.serviceUsuario.permisosProductos$ | async) || permisosVentas">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Ventas
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" [routerLink]="['agregarventa']"
+            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
+          <a class="dropdown-item" [routerLink]="['mostrarventas']"
+            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
+          
+        </div>
+      </li>
+      <!-- Ventas -->
+
+      <!-- UsuarioSession -->
+      <!-- *ngIf="sessionUsuarioAcceso.listaPermiso.includes(3) || sessionUsuarioAcceso.listaPermiso == null "  -->
+      <li class="nav-item dropdown" *ngIf="nombreUsuarioAcceso != '' ">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          {{ nombreUsuarioAcceso.toUpperCase() }}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <div class="row">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+              <a href="#" (click)="cerrarSession();">Cerrar sesión</a>
+            </div>
           </div>
-        </li>
-        <!-- Clientes -->
+        </div>
+      </li>
+      <!-- UsuarioSession -->
 
-                <!-- Productos -->
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                   Productos
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" [routerLink]="['agregarProducto']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
-                    <a class="dropdown-item" [routerLink]="['mostrarProducto']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                  </div>
-                </li>
-                <!-- Productos -->
-
-                               <!-- Ventas -->
-               <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                 Ventas
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <a class="dropdown-item" [routerLink]="['agregarventa']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
-                  <a class="dropdown-item" [routerLink]="['mostrarventas']" [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-              <!-- Ventas -->
-
-      </ul>
-    </div>
-  </nav>
+    </ul>
+  </div>
+</nav>
