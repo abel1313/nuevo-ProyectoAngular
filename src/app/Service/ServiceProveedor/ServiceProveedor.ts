@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { IProveedor } from "src/app/Model/Proveedores/IProveedor";
+import { IProveedorAll } from "src/app/Model/Proveedores/IProveedorAll";
 import { UriJava } from "src/app/URISERVER/UriJava";
 
 
@@ -22,6 +23,11 @@ export class ServiceProveedor
     guardarProveedor(proveedor: IProveedor): Observable<any>
     {
         return this.http.post(`${this.uri.UriJavaFerreteria}/proveedores`, proveedor);
+    }
+
+    getAllProveedores(): Observable<IProveedorAll[]>
+    {
+        return this.http.get<IProveedorAll[]>(`${this.uri.UriJavaFerreteria}/proveedores`);
     }
 
 

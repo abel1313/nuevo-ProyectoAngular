@@ -4,38 +4,56 @@
     </div>
     <div class="card-body">
 
-        <!-- <form class="needs-validation" novalidate>
+        <form class="needs-validation" novalidate>
             <legend class="card-title text-center">Ingresando datos</legend>
             <fieldset class="border border-success p-4">
                 <div class="form-group mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="usuarioAcceder.usuarioAcceso.nombre_Usuario" name="nombre_Usuario"  id="" placeholder="Ingrese usuario" required>
-                    <div class="invalid-feedback">
-                        Por favor ingrese usuario
-                       </div>
+                    <input type="text" class="form-control" (blur)="updateBlur()"
+                    [(ngModel)]="usuarioAcceder.usuarioAcceso.nombre_Usuario" 
+                    name="nombre_Usuario"  id="" placeholder="Ingrese usuario" 
+                    required [disabled]="cajasInput">
+                    <div class="alert alert-danger" role="alert" *ngIf="existeUsuario">
+                      El usuario ya existe
+                     </div>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" [(ngModel)]="usuarioAcceder.usuarioAcceso.contra_Usuario" name="contra_Usuario" id="" placeholder="Ingrese contraseña" required>
-                    <div class="invalid-feedback">
-                        Por favor ingrese contraseña
+                    <input type="text" class="form-control" [(ngModel)]="usuarioAcceder.usuarioAcceso.contra_Usuario" name="contra_Usuario" id="" placeholder="Ingrese contraseña" required [disabled]="cajasInput">
+                    <div class="alert alert-success" role="alert" *ngIf="mensajeErrorContr" >
+                      La contraseña no coincide
                        </div>
                 </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" [(ngModel)]="repetirContr" name="repetirContr" id="" placeholder="Repetir contraseña" required [disabled]="cajasInput">
+                  <div class="alert alert-success" role="alert" *ngIf="mensajeErrorContr">
+                      La contraseña no coincide
+                     </div>
+              </div>
 
                 <div class="alert alert-danger" role="alert" *ngIf="mensajeErrorAcceso">
                   Datos incorrectos
                 </div>
 
-                <button class="btn btn-primary btn-block"  (click)="accederSistema();" [disabled]="mensajeSpinner">
-                  <span *ngIf="mensajeSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>  Ingresar
+                <div class="alert alert-danger" role="alert" *ngIf="mensajeDatosError">
+                  No deje campos vacíos
+                </div>
+
+                <button class="btn btn-primary btn-block"  (click)="registrarUsuario();" [disabled]="mensajeSpinner">
+                  <span *ngIf="mensajeSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>  Registrar
                 </button>
+
+                <div class="alert alert-succes" role="alert" *ngIf="mensajeRegistro">
+                  Se registro correctamente
+                </div>
+
             </fieldset>
         </form>
     </div>
     <div class="card-footer">
         <div class="row">
           <div class="col-12">
-            <p class="text-center"> Si no tiene cuenta <a (click)="irRegistrar();" class="fw-bolder text-success">registrar</a></p>
+            <p class="text-center"> Si ya tienes una  cuenta <a (click)="irAcceso();" class="fw-bolder text-success">acceder</a></p>
           </div>
         </div>
-    </div> -->
+    </div>
 </div>

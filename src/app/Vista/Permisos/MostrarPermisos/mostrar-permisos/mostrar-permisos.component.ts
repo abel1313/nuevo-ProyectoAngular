@@ -3,15 +3,17 @@ import { Router } from '@angular/router';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 
 @Component({
-  selector: 'app-pagos-venta-mostrar',
-  templateUrl: './pagos-venta-mostrar.component.html',
-  styleUrls: ['./pagos-venta-mostrar.component.css']
+  selector: 'app-mostrar-permisos',
+  templateUrl: './mostrar-permisos.component.html',
+  styleUrls: ['./mostrar-permisos.component.css']
 })
-export class PagosVentaMostrarComponent implements OnInit {
+export class MostrarPermisosComponent implements OnInit {
 
   constructor( private router: Router) { }
 
-  sessionProducto = new Sessiones( this.router);
+
+  sessionProducto = new Sessiones( this.router );
+
   ngOnInit(): void 
   {
 

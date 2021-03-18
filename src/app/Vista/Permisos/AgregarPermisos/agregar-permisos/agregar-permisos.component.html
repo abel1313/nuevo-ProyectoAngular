@@ -1,0 +1,56 @@
+<div class="row p-3 d-flex justify-content-center">
+    <div class="col-6">
+        <div class="card ">
+            <div class="card-header">
+                <p class="card-title text-center fw-bolder"> Permisos </p>
+            </div>
+
+            <div class="card-body">
+
+<form>
+    <div class="row">
+        <div class="col-5">
+            <label for="lblCliente">Cliente</label>
+        </div>
+        <div class="col-7">
+            <div class="ng-autocomplete col-12 d-flex">
+                <ng-autocomplete [data]="datosUsuarios$ | async" 
+                    [searchKeyword]="keywordUsuario"
+                    placeholder="Ingrese nombre del cliente" (selected)='selectEvent($event)'
+                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" requiered>
+                    <div class="invalid-feedback">
+                        Por favor ingrese el nombre
+                    </div>
+                </ng-autocomplete>
+
+                <ng-template #itemTemplate let-item>
+                    <a [innerHTML]="item.nombre_Usuario"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <div class="row p-3">
+
+        <div class="col-4" *ngFor="let menu of datosMenu">
+            <div class="form-check form-check-inline p-2">
+                <input class="form-check-input" type="checkbox" 
+                id="inlineCheckbox1" (change)="cambiando($event, valor.value)" #valor value="{{ menu.id }}">
+                <label class="form-check-label" for="inlineCheckbox1"> {{ menu.nombreMenu }} {{ menu.id }}</label>
+              </div>
+        </div>
+    </div>
+
+    <button class="btn btn-success" (click)="agregarPermisos();">add</button>
+
+</form>
+
+
+            </div>
+        </div>
+    </div>
+</div>

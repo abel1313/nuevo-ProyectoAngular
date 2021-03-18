@@ -5,8 +5,11 @@ import { AgregarClienteComponent } from './Vista/Clientes/AgregarCliente/agregar
 import { BuscarClienteComponent } from './Vista/Clientes/BuscarCliente/buscar-cliente/buscar-cliente.component';
 import { InicioSessionComponent } from './Vista/InicioSession/inicio-session/inicio-session.component';
 import { PagosVentaMostrarComponent } from './Vista/PagosVenta/pagos-venta-mostrar/pagos-venta-mostrar.component';
+import { AgregarPermisosComponent } from './Vista/Permisos/AgregarPermisos/agregar-permisos/agregar-permisos.component';
+import { MostrarPermisosComponent } from './Vista/Permisos/MostrarPermisos/mostrar-permisos/mostrar-permisos.component';
 import { AgregarProductoComponent } from './Vista/Productos/agregar-producto/agregar-producto.component';
 import { BuscarProductosComponent } from './Vista/Productos/buscar-productos/buscar-productos.component';
+import { EditarProductosComponent } from './Vista/Productos/editar-productos/editar-productos.component';
 import { AgregarVentaComponent } from './Vista/Venta/agregar-venta/agregar-venta.component';
 
 const routes: Routes = 
@@ -20,14 +23,17 @@ const routes: Routes =
  // { path: 'direccion', component: AgregarDireccionAppComponent },
  // { path: 'permiso', component: AgregarPermisoAppComponent },
  { path: 'agregarProducto', component: AgregarProductoComponent },
- { path: 'mostrarProducto', component: BuscarProductosComponent },
+ { path: 'mostrarproductos', component: BuscarProductosComponent },
+ { path: 'editarProducto', component: EditarProductosComponent },
  { path: 'agregarventa', component: AgregarVentaComponent },
  { path: 'mostrarventas', component: PagosVentaMostrarComponent },
  { path: 'cliente', component: AgregarClienteComponent },
  { path: 'buscarcliente', component: BuscarClienteComponent },
  { path: 'editarcliente', component: ActualizarClienteComponent },
  { path: 'acceso', component: InicioSessionComponent },
- { path: '**', redirectTo: 'acceso', pathMatch: 'full' }
+ { path: 'agregarpermisos', component: AgregarPermisosComponent },
+ { path: 'mostrarpermisos', component: MostrarPermisosComponent },
+ { path: '**', redirectTo: 'mostrarproductos', pathMatch: 'full' }
 
 
 ];

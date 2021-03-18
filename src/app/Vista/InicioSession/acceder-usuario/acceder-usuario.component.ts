@@ -35,6 +35,8 @@ export class AccederUsuarioComponent implements OnInit {
   ngOnInit(): void 
   {
 
+    if( sessionStorage.getItem("sessionUsuario") != null )
+        this.router.navigateByUrl('mostrarproductos');
   }
 
   accederSistema()
@@ -73,12 +75,8 @@ export class AccederUsuarioComponent implements OnInit {
           this._ngZone.run(()=>
           {
             this.datAccesoUsr = res;
-          
-          
             if( this.datAccesoUsr.usuario == null )
             {
-          
-            
               this.mensajeSpinner = true;
 
               setTimeout(() => {
@@ -93,9 +91,18 @@ export class AccederUsuarioComponent implements OnInit {
   
             }else{
               sessionStorage.setItem("sessionUsuario", JSON.stringify(this.datAccesoUsr) );
-              this.router.navigateByUrl('/mostrarProducto');
+           
 
-              console.log(this.datAccesoUsr);
+              this.mensajeSpinner = true;
+
+              setTimeout(() => {
+                this.mensajeErrorAcceso = true;
+                this.mensajeSpinner = false;
+                this.router.navigateByUrl('/mostrarproductos');
+             
+             
+
+              
               this.serviceFerreteria.serviceUsuario.permisosUsuarios$.emit(
                 ( this.datAccesoUsr.listaPermiso != null || 
                   this.datAccesoUsr.listaPermiso.includes(4) ) ? true  : false);
@@ -120,7 +127,7 @@ export class AccederUsuarioComponent implements OnInit {
                   ) ? this.datAccesoUsr.usuario.nombre_Usuario : ""
                  );
 
-                 console.log(this.datAccesoUsr.usuario.nombre_Usuario, " acceder");
+                }, 2000);
                  
             }
           });

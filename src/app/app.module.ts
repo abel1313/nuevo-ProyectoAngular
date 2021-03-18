@@ -33,6 +33,9 @@ import { InicioSessionComponent } from './Vista/InicioSession/inicio-session/ini
 import { RegistrarUsuarioComponent } from './Vista/InicioSession/registrar-usuario/registrar-usuario.component';
 import { AccederUsuarioComponent } from './Vista/InicioSession/acceder-usuario/acceder-usuario.component';
 import { ExampleUsuarioComponent } from './Vista/InicioSession/example-usuario/example-usuario.component';
+import { AgregarPermisosComponent } from './Vista/Permisos/AgregarPermisos/agregar-permisos/agregar-permisos.component';
+import { MostrarPermisosComponent } from './Vista/Permisos/MostrarPermisos/mostrar-permisos/mostrar-permisos.component';
+import { EditarProductosComponent } from './Vista/Productos/editar-productos/editar-productos.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,9 @@ import { ExampleUsuarioComponent } from './Vista/InicioSession/example-usuario/e
     RegistrarUsuarioComponent,
     AccederUsuarioComponent,
     ExampleUsuarioComponent,
+    AgregarPermisosComponent,
+    MostrarPermisosComponent,
+    EditarProductosComponent,
     
 
 

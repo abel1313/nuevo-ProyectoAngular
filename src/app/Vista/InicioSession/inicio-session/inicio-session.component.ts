@@ -18,6 +18,7 @@ export class InicioSessionComponent implements OnInit, OnDestroy {
 
   accederRegistrar: Boolean = false;
 
+
   ngOnInit(): void 
   {
 
@@ -26,9 +27,7 @@ export class InicioSessionComponent implements OnInit, OnDestroy {
 
  
   mostrandoTempate()
-  {
-    console.log(this.accederRegistrar, "antes");
-     
+  {  
     this.serviceFerreteria.serviceUsuario.irRegistrar$.subscribe
     (
       res=>

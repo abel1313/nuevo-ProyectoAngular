@@ -7,6 +7,8 @@ import { IProducto } from 'src/app/Model/Productos/IProducto';
 
 
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-buscar-productos',
@@ -15,7 +17,8 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class BuscarProductosComponent implements OnInit, OnDestroy {
 
-  constructor(public serviceFerreteria: ServiceFerreteriaService) { }
+  constructor(public serviceFerreteria: ServiceFerreteriaService,
+              private router: Router ) { }
 
   
   valueKeyUp: string = '';
@@ -24,6 +27,8 @@ export class BuscarProductosComponent implements OnInit, OnDestroy {
   countProductoBuscarProducto: number = 0;
 
   verCarritoCompras: Boolean = false; 
+
+  sessionesProducto = new Sessiones( this.router );
 
   producto: IProducto = 
   {
@@ -130,6 +135,11 @@ export class BuscarProductosComponent implements OnInit, OnDestroy {
         // console.log("Entra a emitir ");
       }
     //this.serviceFerreteria.serviceProducto.caracterKeyUp$.emit( );
+
+
+    this.sessionesProducto.eliminarSession("datosEditarProducto");
+    
+
   }
 
   onKey(event: any) { // without type info

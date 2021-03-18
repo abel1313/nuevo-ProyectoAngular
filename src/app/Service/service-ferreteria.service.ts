@@ -12,6 +12,9 @@ import { ServiceVentasPagadas } from './ServiceVentasPagadas/ServiceVentasPagada
 import { ServiceCategoria } from './ServiceCategoria/ServiceCategoria';
 import { ServiceUsuario  } from "./ServiceUsuario/ServiceUsuario";
 
+import { ServiceMenu  } from "./ServiceMenu/ServiceMenu";
+import { ServicePermisos } from './ServicePermisos/ServicePermisos';
+
 
 
 @Injectable({
@@ -87,6 +90,10 @@ seriviceVentasPagadas = new ServiceVentasPagadas(this.http);
 seriviceCategoria = new ServiceCategoria(this.http);
 
 serviceUsuario = new ServiceUsuario(this.http);
+
+serviceMenu = new ServiceMenu(this.http);
+
+servicePermisos = new ServicePermisos(this.http);
 
 
 /*

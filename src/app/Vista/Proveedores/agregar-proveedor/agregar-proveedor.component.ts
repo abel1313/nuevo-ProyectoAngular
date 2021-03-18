@@ -1,4 +1,7 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
+import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 @Component({
   selector: 'app-agregar-proveedor',
@@ -7,9 +10,14 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 })
 export class AgregarProveedorComponent implements OnInit {
 @HostBinding("class") classe = "row"
-  constructor() { }
+  constructor( private serviceFerreteria: ServiceFerreteriaService,
+    private _ngZone: NgZone, private router: Router ) { }
 
-  ngOnInit(): void {
+    sessionProducto = new Sessiones( this.router );
+  ngOnInit(): void 
+  {
+
+    this.sessionProducto.eliminarSession("datosEditarProducto");
   }
 
 }

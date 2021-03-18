@@ -45,6 +45,10 @@ mostrarNavegacion()
   this.sessionUsuarioAcceso = sessionStorage.getItem("sessionUsuario") != null ?
   JSON.parse( sessionStorage.getItem("sessionUsuario")) : null ;
 
+  if( sessionStorage.getItem("sessionEditProd") != null )
+  {
+    sessionStorage.removeItem("sessionEditProd")
+  } 
   if( this.sessionUsuarioAcceso == null )
   {
     this.router.navigateByUrl("/acceso");

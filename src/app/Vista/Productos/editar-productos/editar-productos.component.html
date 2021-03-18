@@ -1,0 +1,150 @@
+<div class="col-6 offset-3 mt-3">
+    <div class="card">
+        <div class="head-card bg-danger">
+            <p class="text-center fs-4 fw-bold pt-2">Actualizar de producto</p>
+        </div>
+        <div class="card-body">
+            <form class="needs-validation" novalidate>
+                <legend class="text-center fw-bolder fs-5">Datos del producto</legend>
+
+                <fieldset class='border' style="background-color:  #e0d8d6  ">
+
+                    <div class="row p-2">
+                        <div class="col-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="NomPorudcto" 
+                                placeholder="" name="nombreProducto"  
+                                required [(ngModel)]="productosEditar.producto.nombreProducto"
+                                 [disabled]="inputEditar"
+                                >
+                                <label for="NomPorudcto">Nombre del producto </label>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese el nombre del producto
+                                   </div>
+                            </div>
+                            
+                        </div>
+                        <div class="col-6">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="CodBarra" 
+                                placeholder="" name="codigo_Barras_Producto" (blur)="verificarCodigo();"
+                                (keyup)="onKey($event)"  required 
+                                [(ngModel)]="productosEditar.producto.codigoBarrasProducto" [disabled]="inputEditar">
+                                <label for="CodBarra">Código de barra </label>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese el código de barras
+                                   </div>
+
+                                   <div class="alert alert-danger" *ngIf="existsCodigoBarraMensaje">
+                                    Este código ya existe
+                                   </div>
+                            </div>
+                      
+                        </div>
+                    </div>
+
+                    <div class="row p-2">
+                        <div class="col-6">
+                            <div class="form-floating">
+                                <textarea class="form-control" 
+                                placeholder="" id="DescProducto" 
+                                name="descripcion_Producto" 
+                                style="height: 100px"  required [(ngModel)]="productosEditar.producto.descripcionProducto" [disabled]="inputEditar"> </textarea>
+                                <label for="DescProducto">Descripción</label>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese la descripcción
+                                   </div>
+                            </div>
+
+                        </div>
+                        <div class="col-6">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="" 
+                                id="CaracProducto" name="caracteristicas_Producto" 
+                                style="height: 100px"  required [(ngModel)]="productosEditar.producto.caracteristicasProducto" [disabled]="inputEditar"></textarea>
+                                <label for="CaracProducto">Caracteristicas</label>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese las caracteristicas
+                                   </div>
+                            </div>
+                   
+                        </div>
+
+
+                    </div>
+
+                    <div class="row p-2">
+                        <div class="col-6">
+                            <div class="form-floating mb-3">
+                                <input type="number" min="1" class="form-control" 
+                                id="ExistProducto" name="existencia_Producto"  
+                                placeholder=""  required [(ngModel)]="productosEditar.producto.existenciaProducto" [disabled]="inputEditar">
+                                <label for="ExistProducto">Agregar existencias</label>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese las existencias
+                                   </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-floating mb-3">
+                                <input type="number" min="1" class="form-control" 
+                                id="ExistProducto" name="existencia_Producto" 
+                                placeholder="" disabled value="{{ existenciasActuales }}">
+                                <label for="ExistProducto">Existencia actuales</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-floating mb-3">
+                                <input type="number" min="1"  class="form-control" 
+                                id="precio_Producto" name="precio_Producto" placeholder="" 
+                                required [(ngModel)]="productosEditar.producto.precioProducto" [disabled]="inputEditar">
+                                <label for="precio_Producto">Precio del producto</label>
+                            </div>
+                            <div class="invalid-feedback">
+                                Por favor ingrese el precio
+                            </div>
+                        </div>
+
+                        <div class="col-6  position-relative">
+                            
+                                <select class="form-select" id="validationTooltip04"  [disabled]="inputEditar"
+                                (change)="selectProveedor($event)" required>
+                                  <option selected disabled value="">Elija una opción...</option>
+                                  <option *ngFor="let item of dataProveedores$ | async" 
+                                   value="{{ item.id }}"
+                                  >{{ item.nombreProveedor }}</option>
+                                </select>
+                                <div class="invalid-tooltip">
+                                  Por favor seleccione un proveedor
+                                </div>
+
+                        </div>
+                    </div>
+
+            
+
+                <div class="row p-2">
+                    <div class="col-12 ">
+                       
+                        <button class="btn btn-secondary col-12" [disabled]="inputEditar" (click)="eventEditProducto()" >
+                            <span class="spinner-border spinner-border-sm" role="status" *ngIf="spinnerEditar" aria-hidden="true"></span>
+                            Guardar
+                        </button>
+                    </div>
+                    
+                </div>
+
+                <div class="alert alert-success" *ngIf="actualizarMensaje">
+                    <p class="card-title">El producto se actualizó correcatemente</p>
+                </div>
+
+         
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+

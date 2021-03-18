@@ -1,9 +1,11 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Observable, Subscription } from 'rxjs';
 import { ICategoria } from 'src/app/Model/Categorias/ICategoria';
 import { Productos } from 'src/app/Model/Productos/Producto';
 import { IProveedor } from 'src/app/Model/Proveedores/IProveedor';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { Tornilleria } from 'src/app/Model/Tornilleria/Tornilleria';
 
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
@@ -16,7 +18,8 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class AgregarProductoComponent implements OnInit, OnDestroy {
 
-  constructor(private serviceProducto: ServiceFerreteriaService , private _ngZone: NgZone) { }
+  constructor(private serviceProducto: ServiceFerreteriaService , private _ngZone: NgZone,
+               private router: Router ) { }
 
   suscription: Subscription;
   datosProveedor$: Observable<any[]>
@@ -35,6 +38,9 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
   // datos categoría para mostrar en el autocomplete para elejir la categoría
   // a la que pertenece el producto
   datosCategorias: any = [];
+
+  sessionesProducto = new Sessiones( this.router );
+
 
   producto: Productos = 
   {
@@ -66,7 +72,7 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
 
     //(this.check) ? console.log(" Habi") : console.log("Desc") ;
 
-
+    this.sessionesProducto.eliminarSession("datosEditarProducto");
 
   }
 

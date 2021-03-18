@@ -13,6 +13,7 @@ import { type } from 'os';
 import { PagoVenta } from 'src/app/Model/PagosVenta/PagoVenta';
 import { VentasPagadas } from 'src/app/Model/VentasPagadas/VentasPagadas';
 import { Router } from '@angular/router';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 
 @Component({
   selector: 'app-agregar-venta',
@@ -49,6 +50,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
     idCliente : 0,
     idUsuario : 0
   }
+  sessionUsuario = new Sessiones( this.router );
 
 
   ventasPagadas = new VentasPagadas();
@@ -131,6 +133,8 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
 
     this.tomarDetalle();
     this.getClientes();
+
+    this.sessionUsuario.eliminarSession("datosEditarProducto");
     
   }
   agregarVenta()

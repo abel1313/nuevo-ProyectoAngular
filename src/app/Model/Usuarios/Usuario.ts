@@ -1,7 +1,7 @@
 
 export interface Usuario
 {
-  id?: number;
+  	id?: number;
 	nombre_Usuario: string;
 	contra_Usuario: string;
 

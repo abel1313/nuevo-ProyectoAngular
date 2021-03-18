@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { DTOVentaPagos } from 'src/app/Model/DTO/DTOVentaPagos/DTOVentaPagos';
 import { IPagosVenta } from 'src/app/Model/PagosVenta/IPagosVenta';
 import { PagoVenta } from 'src/app/Model/PagosVenta/PagoVenta';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 import { VentasPagadas } from "../../../Model/VentasPagadas/VentasPagadas";
@@ -45,10 +46,13 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
    ventaId:0
  };
 
+ sessionProducto = new Sessiones( this.router );
 
   ngOnInit(): void 
   {
     this.buscarPagosVenta();
+
+    this.sessionProducto.eliminarSession("datosEditarProducto");
   }
 
   onClick(btn: any) {

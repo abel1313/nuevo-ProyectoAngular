@@ -2,6 +2,7 @@ import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ICliente } from 'src/app/Model/Clientes/ICliente';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 @Component({
@@ -20,6 +21,8 @@ export class MostrarClienteComponent implements OnInit, OnDestroy {
   //variable para obtener las letras que el evento keyup de template buscar-cliente
   // envía
 
+  sessionesProducto = new Sessiones( this.router );
+
   datosExample: any = [];
 
 keyUpBuscarCliente: string = "";
@@ -34,6 +37,8 @@ keyUpBuscarCliente: string = "";
     this.eventKeyUp();
     // método para obtener los clientes del servidor y mostrarlos en la vista
     this.obtenerClientes();
+
+    this.sessionesProducto.eliminarSession("datosEditarProducto");
     
   }
 

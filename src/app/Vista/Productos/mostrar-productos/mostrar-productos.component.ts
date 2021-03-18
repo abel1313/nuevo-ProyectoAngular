@@ -1,9 +1,12 @@
 
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { element } from 'protractor';
 
 import { Observable, Subscription } from 'rxjs';
 import { IDetalleVenta } from 'src/app/Model/DetalleVenta/DetalleVenta';
+import { IProducto } from 'src/app/Model/Productos/IProducto';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { IVenta } from 'src/app/Model/Venta/Venta';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
@@ -22,6 +25,8 @@ export class MostrarProductosComponent implements OnInit {
 
   suscription: Subscription;
 
+  sessionesProducto = new Sessiones( this.router );
+
   prodCarrito =
   {
     id: 0,
@@ -37,7 +42,8 @@ export class MostrarProductosComponent implements OnInit {
   
 
   
-  constructor(public serviceFerreteria: ServiceFerreteriaService, private _ngZone: NgZone) { }
+  constructor(public serviceFerreteria: ServiceFerreteriaService, 
+    private _ngZone: NgZone, private router: Router) { }
 
   public productosRes: any =  [];
 
@@ -108,6 +114,7 @@ export class MostrarProductosComponent implements OnInit {
   {
     this.obtenerProductosServidor();
  this.mostrarproductos();   
+ this.sessionesProducto.eliminarSession("datosEditarProducto");
   }
 
   addArray : any = [];
@@ -189,10 +196,6 @@ if ( this.carritoVenta.hasOwnProperty( this.prodCarrito.id)) {
  this.carritoVenta[this.prodCarrito.id] = 
 { ...this.prodCarrito }
 
-
-console.log(this.carritoVenta, " Carrito");
-
-
 sessionStorage.setItem("carritoventa", JSON.stringify(this.carritoVenta));
 
   }
@@ -202,10 +205,16 @@ sessionStorage.setItem("carritoventa", JSON.stringify(this.carritoVenta));
     sessionStorage.removeItem("productoDetalle");
     sessionStorage.removeItem("carritoventa");
   }
-  editarproducto()
+  editarproducto(event: IProducto)
   {
-    const productoDetalleSession = JSON.parse(sessionStorage.getItem("productoDetalle"));
+
+    sessionStorage.setItem("sessionEditProd", "sesEditarProducto");
     
+    sessionStorage.setItem("datosEditarProducto", JSON.stringify(event));
+
+
+    this.router.navigateByUrl('/editarProducto');
+
   }
 
   mostrarproductos()

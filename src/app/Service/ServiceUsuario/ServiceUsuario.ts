@@ -35,5 +35,20 @@ export class ServiceUsuario
         return this.http.post<Usuario[]>(`${this.uri.UriJavaFerreteria}/usuarios/accesousuario`, usuario);
     }
 
+    guardarUsuarioServer( usuario: Usuario): Observable<Usuario>
+    {
+        return this.http.post<Usuario>(`${this.uri.UriJavaFerreteria}/usuarios`, usuario);
+    }
+
+    existsUsuario( nombreUsuario: string): Observable<Boolean>
+    {
+        return this.http.get<Boolean>(`${this.uri.UriJavaFerreteria}/usuarios/existsusuario/${nombreUsuario}`);
+    }
+
+    getUsuarios(): Observable<Usuario[]>
+    {
+        return this.http.get<Usuario[]>(`${this.uri.UriJavaFerreteria}/usuarios`);
+    }
+
 
 }

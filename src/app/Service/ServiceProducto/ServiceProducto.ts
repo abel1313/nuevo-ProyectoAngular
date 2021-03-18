@@ -3,6 +3,8 @@ import { EventEmitter } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 
 import { catchError, retry } from 'rxjs/operators';
+import { IProducto } from 'src/app/Model/Productos/IProducto';
+import { IProductoAll } from 'src/app/Model/Productos/IProductoAll';
 import { Productos } from 'src/app/Model/Productos/Producto';
 import { UriJava } from 'src/app/URISERVER/UriJava';
 
@@ -15,6 +17,9 @@ export class ServiceProducto
 
     caracterKeyUp$ = new EventEmitter<string>();
     caracterInput$ = new EventEmitter<string>();
+    editarProducto$ = new EventEmitter<IProducto>();
+
+    mostra$ = new EventEmitter<string>();
 
     // ------------------------------ Productos ------------------------------------------ //
     options: {
@@ -29,6 +34,11 @@ export class ServiceProducto
   {
     return this.http.get<any[]>(`${this.uri.UriJavaFerreteria}/productos`)
   }
+
+  // verificarCodigoBarra( codigoBarra: string )
+  // {
+  //   return this.http.get(`${this.uri.UriJavaFerreteria}/proveedores/existsproveedor/${codigoBarra}`);
+  // }
   getOneProduct(nombreProducto:string)
   {
     //console.log(`${this.URI_JAVA_Productos}/all/${nombreProducto}`);
@@ -53,6 +63,15 @@ export class ServiceProducto
            // with formData as req 
            return  this.http.post(`${this.URI_JAVA_Productos}/guardarProducto` , producto);
        } 
+       editarrProductoServer( producto: IProductoAll ): Observable<any> { 
+
+   return  this.http.put<IProductoAll>(`${this.uri.UriJavaFerreteria}/productos/editarProducto` , producto);
+             } 
+       existsCodigoBarraEditar( producto: IProductoAll ): Observable<any>
+       {
+         
+         return this.http.post(`${this.uri.UriJavaFerreteria}/productos/buscarCodigoEditar`, producto);
+       }
 
              // Returns an observable 
 

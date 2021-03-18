@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Cliente } from 'src/app/Model/Clientes/Cliente';
 import { ICliente } from 'src/app/Model/Clientes/ICliente';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
@@ -36,6 +37,8 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
   editarCliente$: Observable<ICliente[]>;
 
   cliente = new Cliente();
+
+  sessionProducto = new Sessiones( this.router );
 
 
   ngOnInit(): void {
@@ -74,7 +77,7 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
     }
 
 
-
+    this.sessionProducto.eliminarSession("datosEditarProducto");
     
 
     // this.cliente.cliente.persona.generoPersona = this.cliente.cliente.persona.generoPersona == "" ? "Seleccione su género" : this.cliente.cliente.persona.generoPersona;

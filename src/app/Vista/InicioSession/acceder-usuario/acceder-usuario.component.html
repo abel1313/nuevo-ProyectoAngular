@@ -8,14 +8,14 @@
             <legend class="card-title text-center">Ingresando datos</legend>
             <fieldset class="border border-success p-4">
                 <div class="form-group mt-3">
-                    <input type="text" class="form-control" [(ngModel)]="usuarioAcceder.usuarioAcceso.nombre_Usuario" name="nombre_Usuario"  id="" placeholder="Ingrese usuario" required>
+                    <input type="text" class="form-control" [(ngModel)]="usuarioAcceder.usuarioAcceso.nombre_Usuario" name="nombre_Usuario"  id="" placeholder="Ingrese usuario" [disabled]="mensajeSpinner" required>
                     <div class="invalid-feedback">
                         Por favor ingrese usuario
                        </div>
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" [(ngModel)]="usuarioAcceder.usuarioAcceso.contra_Usuario" name="contra_Usuario" id="" placeholder="Ingrese contraseña" required>
+                    <input type="text" class="form-control" [(ngModel)]="usuarioAcceder.usuarioAcceso.contra_Usuario" name="contra_Usuario" id="" placeholder="Ingrese contraseña" [disabled]="mensajeSpinner" required>
                     <div class="invalid-feedback">
                         Por favor ingrese contraseña
                        </div>
