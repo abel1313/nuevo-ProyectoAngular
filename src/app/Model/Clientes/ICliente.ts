@@ -6,6 +6,6 @@ import { IPersona } from "../Personas/IPersona";
 export interface ICliente
 {
 
-    id?: number,
+    id?: number;
     persona: IPersona;
 }

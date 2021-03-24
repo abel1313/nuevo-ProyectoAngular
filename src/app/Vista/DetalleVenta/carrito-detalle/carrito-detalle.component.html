@@ -51,7 +51,8 @@
         </div>
    </ng-template>
 
-   <div class="container" *ngIf="mostrarVenta">
+   <!-- quitar el ! al de agregar venta -->
+   <div class="container" *ngIf="!mostrarVenta">
        <app-agregar-venta></app-agregar-venta>
    </div>
 

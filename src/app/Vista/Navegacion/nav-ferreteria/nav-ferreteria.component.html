@@ -67,7 +67,7 @@
       <!-- Ventas -->
       <!-- *ngIf="sessionUsuarioAcceso.listaPermiso.includes(3) || sessionUsuarioAcceso.listaPermiso == null "  -->
       <li class="nav-item dropdown"
-        *ngIf="(serviceFerreteria.serviceUsuario.permisosProductos$ | async) || permisosVentas">
+        *ngIf="(serviceFerreteria.serviceUsuario.permisosVentas$ | async) || permisosVentas">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
           Ventas

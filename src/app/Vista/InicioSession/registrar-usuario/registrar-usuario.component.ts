@@ -92,7 +92,6 @@ export class RegistrarUsuarioComponent implements OnInit, OnDestroy {
     if(  this.usuarioExistente )
     {
       this.existeUsuario = true ;
-
       
       setTimeout(() => {
         this.existeUsuario = false;
@@ -138,6 +137,8 @@ export class RegistrarUsuarioComponent implements OnInit, OnDestroy {
   registrarUsuarioServer()
   {
     
+
+
     setTimeout(() => {
       
       this._ngZone.runOutsideAngular(() =>
@@ -163,7 +164,7 @@ export class RegistrarUsuarioComponent implements OnInit, OnDestroy {
                 this.serviceFerreteria.serviceUsuario.irRegistrar$.emit(false);
               }, 2000);
 
-              console.log(res);
+         
             });
           }, err=> console.log(err)
         );
@@ -173,7 +174,13 @@ export class RegistrarUsuarioComponent implements OnInit, OnDestroy {
 
   }
 
+
+  guardarUsuarioServer()
+  {
+    
+  }
+
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.subscription.unsubscribe();
   }
 }

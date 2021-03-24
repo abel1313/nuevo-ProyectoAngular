@@ -18,9 +18,7 @@ export class DTOVentaPagos
             {
                 id: 0,
                 nombrePersona: '',
-                correoelectronicoPersona: '',
-                fechanacimientosPersona: '',
-                generoPersona: '',
+                telefonoPersona: '',
                 maternoPersona: '',
                 paternoPersona: ''
             }

@@ -1,5 +1,4 @@
 
-
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { IVenta } from "src/app/Model/Venta/Venta";
@@ -14,26 +13,26 @@ import { IDireccion } from "src/app/Model/Direccion/IDireccion";
 // import { ServiceAppService } from "../service-app.service";
 
 
-export class ServiceVenta
+export class ServiceDireccion
 {
     
-    ventaCliente$ = new EventEmitter<ICliente>();
-    ventaRes$ = new EventEmitter<ICliente>();
+    // ventaCliente$ = new EventEmitter<ICliente>();
+    // ventaRes$ = new EventEmitter<ICliente>();
 
-    direccion$ = new EventEmitter<IDireccion>();
+    // direccion$ = new EventEmitter<IDireccion>();
 
     constructor(private http: HttpClient){}
     
     private uri = new UriJava();
  
-     obtenerProveedores()
+     obtenerDireccion(): Observable<IDireccion[]>
     {
-        return this.http.get(`${this.uri.UriJavaFerreteria}/ventas`);
+        return this.http.get<IDireccion[]>(`${this.uri.UriJavaFerreteria}/direcciones`);
     }
-    guardarProveedor( venta: IVenta ): Observable<any>
+    guardarDireccion( direccion: IDireccion ): Observable<IDireccion>
     {
        
-        return this.http.post(`${this.uri.UriJavaFerreteria}/ventas/saveVenta`, venta);
+        return this.http.post<IDireccion>(`${this.uri.UriJavaFerreteria}/direcciones`, direccion);
     }
 
 

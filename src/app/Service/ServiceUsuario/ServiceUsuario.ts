@@ -37,7 +37,7 @@ export class ServiceUsuario
 
     guardarUsuarioServer( usuario: Usuario): Observable<Usuario>
     {
-        return this.http.post<Usuario>(`${this.uri.UriJavaFerreteria}/usuarios`, usuario);
+        return this.http.post<Usuario>(`${this.uri.UriJavaFerreteria}/usuarios/guardarusuario`, usuario);
     }
 
     existsUsuario( nombreUsuario: string): Observable<Boolean>

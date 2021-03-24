@@ -45,9 +45,7 @@ export class DetalleVentaServer
                 {
                   id: 0,
                   nombrePersona: '',
-                  correoelectronicoPersona: '',
-                  fechanacimientosPersona: '',
-                  generoPersona: '',
+                  telefonoPersona: '',
                   maternoPersona: '',
                   paternoPersona: '',
                 },
@@ -98,9 +96,7 @@ export class DetalleVentaServer
           {
             id: 0,
             nombrePersona: '',
-            correoelectronicoPersona: '',
-            fechanacimientosPersona: '',
-            generoPersona: '',
+            telefonoPersona: '',
             maternoPersona: '',
             paternoPersona: '',
           },

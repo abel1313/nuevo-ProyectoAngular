@@ -64,7 +64,7 @@ existenciasActuales: number = 0;
     // método para redireccionar a la vista de mostrarProducto
     this.sessionUsuario.sessionEditarUsuario( 'mostrarProducto' );
 
-
+    this.getProveedores();
 
 this.obtenerProductoEditar();
   }

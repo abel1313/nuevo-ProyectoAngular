@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 @Component({
@@ -29,11 +29,21 @@ export class NavFerreteriaComponent implements OnInit {
   datosPermisosSesion: any;
   permisoUsuario: Boolean = false;
 
+  per$: Observable<Boolean>;
+
+
   ngOnInit(): void 
   {
 
 this.mostrarNavegacion();
 
+this.per$ = this.serviceFerreteria.serviceUsuario.permisosVentas$;
+this.per$.subscribe
+(
+    
+      res=>console.log(res, " res 2")
+    
+  )
 
   }
 

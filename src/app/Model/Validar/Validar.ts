@@ -27,5 +27,17 @@ export class Validar
           });
         
         }
+      
+        validarInput( cajaText: string ): Boolean
+        {
+          return (cajaText  == '') ? true: false;
+     
+        }
+
+        validarInputNumber( cajaText: number ): Boolean
+        {
+          return (cajaText > 0  ) ? true: false;
+     
+        }
 
 }

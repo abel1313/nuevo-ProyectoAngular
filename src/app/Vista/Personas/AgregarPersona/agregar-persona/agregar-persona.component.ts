@@ -1,9 +1,10 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Cliente } from 'src/app/Model/Clientes/Cliente';
 import { ICliente } from 'src/app/Model/Clientes/ICliente';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
+import { Validar } from 'src/app/Model/Validar/Validar';
 
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
@@ -14,9 +15,13 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
-  constructor(private serviceFerreteria: ServiceFerreteriaService,
-    private router: Router, private _ngZone: NgZone) { }
+  @ViewChild('checkClando') calndo: ElementRef;
 
+  constructor(private serviceFerreteria: ServiceFerreteriaService,
+    private router: Router, private _ngZone: NgZone,
+    private render: Renderer2) { }
+
+    nocumole: Boolean = false;
 
   mostrarTemplate: Boolean = true;
   btnAgregar: Boolean = false;
@@ -24,8 +29,22 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
   btnMensaje: Boolean = false;
   btnMensajeAgregar: Boolean = false;
 
+  udateCliente$: Observable<any>;
+
+  diabledInputClientePersona: Boolean = false;
+
+
   selectedItem: Boolean = false;
   mensajeEditar: Boolean = false;
+
+
+
+      validarnombre: Boolean = false;
+      validartelefono: Boolean = false;
+      validarpaterno: Boolean = false;
+      validarmaterno: Boolean = false;
+    seguimos: Boolean = false;
+
 
     mensajeAgregar = '';
     mostrarMensaje: string;
@@ -36,6 +55,8 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
   editarCliente$: Observable<ICliente[]>;
 
+  chechVenta: Boolean = false;
+
   cliente = new Cliente();
 
   sessionProducto = new Sessiones( this.router );
@@ -45,12 +66,15 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
     this.mensajeAgregar = this.router.url;
 
+   
     
+    if(this.mensajeAgregar == "/mostrarproductos")
+    {
+        this.chechVenta = true;
+    }
     if(this.mensajeAgregar == "/editarcliente")
     {
       
-      
-  
         this.editarClientex = sessionStorage.getItem("ediatrCliente") != null ?
         JSON.parse(sessionStorage.getItem("ediatrCliente")) : null;
   
@@ -62,9 +86,7 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
         if( this.cliente.cliente.id != 0 )
         {
           
-          this.selectedItem = 
-          (this.cliente.cliente.persona.generoPersona == "Hombre")
-          ? true : false;
+   
   
         }
       
@@ -83,35 +105,45 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
     // this.cliente.cliente.persona.generoPersona = this.cliente.cliente.persona.generoPersona == "" ? "Seleccione su género" : this.cliente.cliente.persona.generoPersona;
   }
 
+  seguimosVenta()
+  {
 
+  this.mostrarMensajeValidadr();
+
+    // if(this.cliente.cliente.persona.nombrePersona == '' )
+    // {
+    //   this.nocumole = true;
+      
+    //   setTimeout(() => {
+       
+    //     this.nocumole = false;
+    //   }, 1500);
+    // }
+
+
+  }
 
 
   agregarCliente() {
-    let genero = (<HTMLSelectElement>document.getElementById('genero')).value;
+  //  let genero = (<HTMLSelectElement>document.getElementById('genero')).value;
 
     if (this.cliente.cliente.persona.nombrePersona == '' ||
       this.cliente.cliente.persona.paternoPersona == '' ||
       this.cliente.cliente.persona.maternoPersona == '' ||
-      this.cliente.cliente.persona.fechanacimientosPersona == '' ||
-      this.cliente.cliente.persona.correoelectronicoPersona == '' ||
-      genero == "Seleccione su género"
+      this.cliente.cliente.persona.telefonoPersona == '' 
     ) {
       this.validForm();
-
-
     }
     else
       if (
         this.cliente.cliente.persona.nombrePersona != '' &&
         this.cliente.cliente.persona.paternoPersona != '' &&
         this.cliente.cliente.persona.maternoPersona != '' &&
-        this.cliente.cliente.persona.fechanacimientosPersona != '' &&
-        this.cliente.cliente.persona.correoelectronicoPersona != '' &&
-        genero != "Seleccione su género"
+        this.cliente.cliente.persona.telefonoPersona != '' 
 
       ) {
         if (this.mensajeAgregar == "/cliente") {
-          this.cliente.cliente.persona.generoPersona = genero;
+          
 
           this.btnMensaje = true;
 
@@ -128,13 +160,10 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
         }
         if (this.mensajeAgregar == "/editarcliente") {
-          this.cliente.cliente.persona.generoPersona = genero;
-         
-
-
-          this.subscription = this.serviceFerreteria
-          .serviceCliente.actualizarCliente(this.cliente.cliente)
-          .subscribe
+          
+          this.udateCliente$ = this.serviceFerreteria
+          .serviceCliente.actualizarCliente(this.cliente.cliente);
+          this.udateCliente$.subscribe
           (
             res=>
             {
@@ -166,9 +195,9 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
   guardarCliente() {
 
     this._ngZone.runOutsideAngular(() => {
-      this.subscription = this.serviceFerreteria.serviceCliente
-        .guardarCliente(this.cliente.cliente)
-        .subscribe
+      this.udateCliente$ = this.serviceFerreteria.serviceCliente
+        .guardarCliente(this.cliente.cliente);
+        this.udateCliente$.subscribe
         (
           res => {
             this.limpiarInput();
@@ -212,15 +241,43 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
     this.cliente.cliente.persona.nombrePersona = '';
     this.cliente.cliente.persona.paternoPersona = '';
     this.cliente.cliente.persona.maternoPersona = '';
-    this.cliente.cliente.persona.fechanacimientosPersona = '';
-    this.cliente.cliente.persona.correoelectronicoPersona = '';
+    this.cliente.cliente.persona.telefonoPersona = '';
+    
 
   }
 
+  cancelarSeguimos()
+  {
+    this.seguimos = false;
+    this.diabledInputClientePersona = false;
+  }
+mostrarMensajeValidadr()
+{
+  let validarCampos = new Validar();
 
+    
+  this.validarnombre = validarCampos
+   .validarInput(this.cliente.cliente.persona.nombrePersona);
+   this.validartelefono = validarCampos
+   .validarInput(this.cliente.cliente.persona.telefonoPersona);
+   this.validarmaterno = validarCampos
+   .validarInput(this.cliente.cliente.persona.maternoPersona);
+   this.validarpaterno = validarCampos
+   .validarInput(this.cliente.cliente.persona.paternoPersona);
+   
+   if( !this.validarnombre && !this.validartelefono && 
+      !this.validarmaterno && !this.validarpaterno)
+   {
+    this.seguimos = true;
+    this.diabledInputClientePersona = true;
+    this.serviceFerreteria.serviceVenta.ventaCliente$.emit(this.cliente.cliente);
+   }
+
+
+}
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  //  this.subscription.unsubscribe();
   }
 
 

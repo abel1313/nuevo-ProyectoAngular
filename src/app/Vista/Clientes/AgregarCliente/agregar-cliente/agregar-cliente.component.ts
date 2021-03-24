@@ -7,11 +7,11 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
   templateUrl: './agregar-cliente.component.html',
   styleUrls: ['./agregar-cliente.component.css']
 })
-export class AgregarClienteComponent implements OnInit, OnDestroy {
+export class AgregarClienteComponent implements OnInit{
 
   constructor( private serviceFerreteria: ServiceFerreteriaService ) { }
 
-  suscription: Subscription;
+
 
  
 
@@ -26,9 +26,7 @@ export class AgregarClienteComponent implements OnInit, OnDestroy {
   
   }
 
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
+
 
 }
 

@@ -36,6 +36,7 @@ import { ExampleUsuarioComponent } from './Vista/InicioSession/example-usuario/e
 import { AgregarPermisosComponent } from './Vista/Permisos/AgregarPermisos/agregar-permisos/agregar-permisos.component';
 import { MostrarPermisosComponent } from './Vista/Permisos/MostrarPermisos/mostrar-permisos/mostrar-permisos.component';
 import { EditarProductosComponent } from './Vista/Productos/editar-productos/editar-productos.component';
+import { AgregarDireccionComponent } from './Vista/Direccion/agregar-direccion/agregar-direccion.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { EditarProductosComponent } from './Vista/Productos/editar-productos/edi
     AgregarPermisosComponent,
     MostrarPermisosComponent,
     EditarProductosComponent,
+    AgregarDireccionComponent,
     
 
 

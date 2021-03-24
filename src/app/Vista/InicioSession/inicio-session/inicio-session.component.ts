@@ -33,7 +33,7 @@ export class InicioSessionComponent implements OnInit, OnDestroy {
       res=>
       {
         this.accederRegistrar = res;
-        console.log(this.accederRegistrar, "des");
+        
       }, err=>console.log(err)
     );
   }
