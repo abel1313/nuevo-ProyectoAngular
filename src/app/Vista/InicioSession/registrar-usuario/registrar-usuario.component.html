@@ -18,13 +18,13 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="text" class="form-control" [(ngModel)]="usuarioAcceder.usuarioAcceso.contra_Usuario" name="contra_Usuario" id="" placeholder="Ingrese contraseña" required [disabled]="cajasInput">
+                    <input type="password" class="form-control" [(ngModel)]="usuarioAcceder.usuarioAcceso.contra_Usuario" name="contra_Usuario" id="" placeholder="Ingrese contraseña" required [disabled]="cajasInput">
                     <div class="alert alert-success" role="alert" *ngIf="mensajeErrorContr" >
                       La contraseña no coincide
                        </div>
                 </div>
                 <div class="form-group">
-                  <input type="text" class="form-control" [(ngModel)]="repetirContr" name="repetirContr" id="" placeholder="Repetir contraseña" required [disabled]="cajasInput">
+                  <input type="password" class="form-control" [(ngModel)]="repetirContr" name="repetirContr" id="" placeholder="Repetir contraseña" required [disabled]="cajasInput">
                   <div class="alert alert-success" role="alert" *ngIf="mensajeErrorContr">
                       La contraseña no coincide
                      </div>

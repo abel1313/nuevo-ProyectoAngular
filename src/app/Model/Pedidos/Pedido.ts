@@ -13,6 +13,11 @@ export class Pedido
             municipioDireccion: '',
             caracteristicasDireccion: '',
             descripccionDireccion: ''
+        },
+        venta:
+        {
+            id: 0,
+
         }
     }
 }

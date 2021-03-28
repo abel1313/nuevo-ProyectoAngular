@@ -1,4 +1,4 @@
-import { Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 
 
 import { Observable, Subscription } from 'rxjs';
@@ -20,6 +20,10 @@ import { Cliente } from 'src/app/Model/Clientes/Cliente';
 import { RealizarVenta } from 'src/app/Model/Venta/RealizarVenta';
 import { IPedido } from 'src/app/Model/Pedidos/IPedido';
 import { VentasServidor } from 'src/app/Model/Venta/VentasServidor';
+import { IVentasPagadas } from 'src/app/Model/VentasPagadas/IVentasPagadas';
+import { IRealizarVenta } from 'src/app/Model/Venta/IRealizarVenta';
+import { IPagosVenta } from 'src/app/Model/PagosVenta/IPagosVenta';
+import { Pedido } from 'src/app/Model/Pedidos/Pedido';
 
 @Component({
   selector: 'app-agregar-venta',
@@ -29,6 +33,7 @@ import { VentasServidor } from 'src/app/Model/Venta/VentasServidor';
 export class AgregarVentaComponent implements OnInit, OnDestroy {
 
   @ViewChild('checkClando') calndo: ElementRef;
+  @ViewChild('totalVenta', { static: false }) totalVentaElemnet: ElementRef;
 
   constructor(private serviceFerreteria: ServiceFerreteriaService,
     private router: Router, private render2: Renderer2,
@@ -47,6 +52,18 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
   datosCliente$: Observable<any>;
   guardarPepido$: Observable<IPedido>;
 
+  guardarDetalle$: Observable<any>;
+
+  guardarDireccion$: Observable<IDireccion>;
+
+  guardarVentasPagadas$: Observable<IVentasPagadas>;
+
+  realizarPagoVenta$: Observable<IRealizarVenta>;
+
+  guardarPedido$: Observable<IPedido>;
+
+  realizarPagos$: Observable<any>;
+
   guardarCliente$: Observable<any>;
 
 
@@ -61,7 +78,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
 
   radio: Boolean = true;
 
-  d = new DetalleVentaServer();
+
 
   respuestaCliente: ICliente;
 
@@ -199,7 +216,154 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
     }
   }
 
+  addVentaServer(id: number) {
+  
+
+    let ventaSession = JSON.parse(sessionStorage.getItem('carritoventa'));
+
+    let detalleServer = new DetalleVentaServer();
+
+    for (const key in ventaSession) {
+
+      if (ventaSession[key].id != 0) {
+        let detalle = new DetalleVentaServer();
+
+        detalle.detalleAdd.precioDetalleVenta = ventaSession[key].precioProducto;
+        detalle.detalleAdd.cantidadDetalleVenta = ventaSession[key].cantidad1;
+        detalle.detalleAdd.subtotalDetalleVenta = ventaSession[key].subtotal;
+        detalle.detalleAdd.producto.id = ventaSession[key].id;
+
+        detalle.detalleAdd.venta.cliente.id = id;
+        detalleServer.detalleV.detalle.push(detalle.detalleAdd);
+
+      }
+
+    }
+    let pagoVenta = new PagoVenta();
+
+    pagoVenta.pago.pagoVenta = this.pago;
+
+    let respuestDetalle: any;
+    let ventasPagadas = new VentasPagadas();
+
+    let enviarDetalle: any = [];
+
+    enviarDetalle = detalleServer.detalleV.detalle;
+
+   
+
+    this._ngZone.runOutsideAngular(()=>
+    {
+      this.guardarDetalle$ = this.serviceFerreteria.serviceDetalle.
+      saveDetalleServer(enviarDetalle);
+      this.guardarDetalle$
+        .subscribe
+        (
+          res => 
+          {
+            this._ngZone.run(()=>
+            {
+              respuestDetalle = res; 
+
+            //  agregar d euna el usuariio a la venta
+            
+              if (this.pago >= this.totalVentaMostrar) {
+                if (respuestDetalle.id != 0) {
+                  ventasPagadas.ventasPagadas.estatusVenta.id = 1;
+                  ventasPagadas.ventasPagadas.venta.id = respuestDetalle.id;
+                  this.saveVentaPagada( ventasPagadas.ventasPagadas );
+
+                  pagoVenta.pago.venta.id = respuestDetalle.id;
+                  pagoVenta.pago.pagoVenta = this.totalVentaMostrar;
+                  this.realizarPagosVenta( pagoVenta.pago );
+                }
+              }
+              else
+              {
+                
+              pagoVenta.pago.venta.id = respuestDetalle.id;
+              pagoVenta.pago.pagoVenta = this.pago;
+
+              this.realizarPagosVenta( pagoVenta.pago );
+                
+              }
+
+          this.cambioVenta = 0;
+            this.totalVentaMostrar = 0;
+            this.pago = 0;
+            this.showMessageRespuesta = true;
+            sessionStorage.removeItem("carritoventa");
+            sessionStorage.removeItem("tamanoCarrito");
+            setTimeout(() => {
+              this.showMessageRespuesta = false;
+              this.router.navigateByUrl('/mostrarventas');
+  
+            }, 2000);
+
+            });
+  
+          }, err => console.log(err)
+        )
+    });
+  }
+  realizarPagosVenta( pagoVenta: any) 
+  {
+
+    let pag: IPagosVenta = pagoVenta;
+    
+    
+
+    this._ngZone.runOutsideAngular(()=>
+    {
+      this.realizarPagos$ = this.serviceFerreteria.serivicePagosVenta
+      .savePagoVenta( pagoVenta );
+      this.realizarPagos$.subscribe
+      (
+        res => {
+          this.guardarDireccion( pag.venta.id );
+        },
+        err => console.log(err)
+      );
+    });
+  }
+
+  // evento click de la vista de ventas
   agregarVenta() {
+
+    if (this.pago > 0) {
+
+      if (!this.radio) {
+        // return new Promise( (resolve, err )=>
+        // {
+        this._ngZone.runOutsideAngular(() => {
+          this.guardarCliente$ = this.serviceFerreteria.serviceCliente.guardarCliente(this.clienteVenta.cliente);
+          this.guardarCliente$.subscribe
+            (
+              (res: ICliente) => {
+                this._ngZone.run(() => 
+                {
+
+                  this.addVentaServer(res.id);
+
+                  //   resolve(res.id);
+                  //    sessionStorage.setItem("idCliente", JSON.stringify(res.id) );
+
+
+                });
+              }
+              , err => console.log(err)
+            );
+        });
+      }
+      else {
+        this.validarFormulario();
+        this.showMessage = true;
+        setTimeout(() => {
+          this.showMessage = false;
+          (<HTMLInputElement>document.getElementById('lblPagoCon')).focus();
+        }, 2000);
+      }
+    }
 
 
 
@@ -223,34 +387,30 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
 
 
 
-    if (this.pago > 0) {
+    // if (this.pago > 0) {
 
-      if(!this.radio)
-      {
-        console.log("llego");
-        let ventaExample = new VentasServidor(this._ngZone, this.serviceFerreteria);
-        ventaExample.addCliente( this.clienteVenta.cliente ).then((res: number)=>
-        {
- 
-sessionStorage.setItem("idCliente", JSON.stringify(res) );
-          
-        });
-      }
+    //   if (!this.radio) {
+    //     console.log("llego");
+    //     var inputValue = (<HTMLInputElement>document.getElementById('totalVenta')).value;
 
 
-      //  this.render2.setAttribute(this.calndo.nativeElement, "checked", "true");
+    //     this.venta.totalVenta = parseInt(inputValue);
+
+    //     let ventaExample = new VentasServidor(this._ngZone, this.serviceFerreteria);
+    //     ventaExample.addCliente(this.clienteVenta.cliente, ventaExample.enviarVetaServidor)
+    //   }
 
 
-      this.enviarVetaServidor();
-    }
-    else {
-      this.validarFormulario();
-      this.showMessage = true;
-      setTimeout(() => {
-        this.showMessage = false;
-        (<HTMLInputElement>document.getElementById('lblPagoCon')).focus();
-      }, 2000);
-    }
+    //   //  this.render2.setAttribute(this.calndo.nativeElement, "checked", "true");
+    // }
+    // else {
+    //   this.validarFormulario();
+    //   this.showMessage = true;
+    //   setTimeout(() => {
+    //     this.showMessage = false;
+    //     (<HTMLInputElement>document.getElementById('lblPagoCon')).focus();
+    //   }, 2000);
+    // }
 
   }
 
@@ -266,91 +426,7 @@ sessionStorage.setItem("idCliente", JSON.stringify(res) );
     this.cambioVenta = parseInt(evt) - this.totalVentaMostrar;
   }
 
-  enviarVetaServidor() {
-    var inputValue = (<HTMLInputElement>document.getElementById('totalVenta')).value;
-    this.venta.totalVenta = parseInt(inputValue);
 
-    let venta = JSON.parse(sessionStorage.getItem("carritoventa"));
-
-
-
-    for (const key in venta) {
-
-      if (venta[key].id != 0) {
-        let detalle = new DetalleVentaServer();
-
-        detalle.detalleAdd.precioDetalleVenta = venta[key].precioProducto;
-        detalle.detalleAdd.cantidadDetalleVenta = venta[key].cantidad1;
-        detalle.detalleAdd.subtotalDetalleVenta = venta[key].subtotal;
-        detalle.detalleAdd.producto.id = venta[key].id;
-
-
-        if (this.radio) {
-          detalle.detalleAdd.venta.cliente.id = this.clienteUsuario.idCliente;
-        }else
-        {
-          let a =  sessionStorage.getItem('idCliente') != null ? 
-          JSON.parse(sessionStorage.getItem('idCliente')) : 0
-          detalle.detalleAdd.venta.cliente.id = a;
-       ;
-
-          console.log(a, " a ",sessionStorage.getItem('idCliente'), "session");
-        }
-     
-        console.log(detalle.detalleAdd.venta.cliente);
-        this.d.detalleV.detalle.push(detalle.detalleAdd);
-
-      }
-
-    }
-
-    let das: any = [];
-    das = this.d.detalleV.detalle;
-
-    this.pagoVenta.pago.pagoVenta = this.pago;
-
-    this.suscription = this.serviceFerreteria.serviceDetalle
-      .saveDetalleServer(das)
-      .subscribe
-      (
-        res => {
-          this.datosResouestVenta = res;
-
-
-
-
-          if (this.pago >= this.totalVentaMostrar) {
-            if (this.datosResouestVenta.id != 0) {
-
-              //  this.agregarPedido(this.clientePersona ,this.direccion);
-
-              this.ventasPagadas.ventasPagadas.estatusVenta.id = 1;
-              this.ventasPagadas.ventasPagadas.venta.id = this.datosResouestVenta.id;
-              this.saveVentaPagada();
-            }
-
-          }
-          this.pagoVenta.pago.venta.id = this.datosResouestVenta.id;
-
-          this.realizarPagosVenta();
-
-
-          this.cambioVenta = 0;
-          this.totalVentaMostrar = 0;
-          this.pago = 0;
-          this.showMessageRespuesta = true;
-          sessionStorage.removeItem("carritoventa");
-          sessionStorage.removeItem("tamanoCarrito");
-          setTimeout(() => {
-            this.showMessageRespuesta = false;
-            this.router.navigateByUrl('/mostrarventas');
-
-          }, 2000);
-        },
-        error => console.log(error)
-
-      );
-  }
   tomarDetalle() {
 
     let venta = JSON.parse(sessionStorage.getItem("carritoventa"));
@@ -436,21 +512,13 @@ sessionStorage.setItem("idCliente", JSON.stringify(res) );
   }
 
 
-  realizarPagosVenta() {
-    this.suscription = this.serviceFerreteria.serivicePagosVenta
-      .savePagoVenta(this.pagoVenta.pago)
-      .subscribe
-      (
-        res => {
 
-        },
-        err => console.log(err)
-      );
-  }
-  saveVentaPagada() {
-    this.suscription = this.serviceFerreteria.seriviceVentasPagadas
-      .guardarVentasPagadas(this.ventasPagadas.ventasPagadas)
-      .subscribe
+  saveVentaPagada( ventasPagadas: any ) {
+
+console.log(ventasPagadas, " ventas pagadas2");
+    this.guardarVentasPagadas$ = this.serviceFerreteria.seriviceVentasPagadas
+      .guardarVentasPagadas( ventasPagadas );
+      this.guardarVentasPagadas$.subscribe
       (
         res => {
 
@@ -486,7 +554,50 @@ sessionStorage.setItem("idCliente", JSON.stringify(res) );
       );
   }
 
+  guardarPedido( id: number, direccion: IDireccion )
+{
 
+ let pedido = new Pedido();
+
+ pedido.pedido.venta.id = id;
+ pedido.pedido.direccion = direccion;
+
+  this._ngZone.runOutsideAngular(()=>
+  {
+    this.guardarPedido$ = this.serviceFerreteria.servicePedido
+    .guardarPedido( pedido.pedido );
+    this.guardarPedido$
+    .subscribe
+    (
+      (res: IPedido)=>
+      {
+        this._ngZone.run(()=>
+        {
+          console.log(res, " pedido");
+        });
+      }, err=> console.log(err)
+    );
+  });
+}
+guardarDireccion( id: number )
+{
+  this._ngZone.runOutsideAngular(()=>
+  {
+    this.guardarDireccion$ = this.serviceFerreteria.serviceDireccion
+    .guardarDireccion( this.direccion );
+    this.guardarDireccion$
+    .subscribe
+    (
+      (res: IDireccion)=>
+      {
+        this._ngZone.run(()=>
+        {
+          this.guardarPedido( id, res );
+        });
+      }, err=> console.log(err)
+    );
+  });
+}
   agregarCliente(cliente: ICliente) {
 
     this._ngZone.runOutsideAngular(() => {
@@ -499,7 +610,7 @@ sessionStorage.setItem("idCliente", JSON.stringify(res) );
             this._ngZone.run(() => {
 
               this.respuestaCliente = res;
-              console.log(this.direccion);
+              
               this.realizarVenta.realizarVenta.cliente = this.respuestaCliente;
 
 

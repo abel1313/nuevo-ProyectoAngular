@@ -26,6 +26,7 @@ export class ServiceVentasPagadas
     }
     guardarVentasPagadas( ventasPagadas: IVentasPagadas ): Observable<any>
     {
+     
         return this.http.post( `${this.uri.UriJavaFerreteria}/ventaspagadas/guardarventapagada`, ventasPagadas );
     }
 

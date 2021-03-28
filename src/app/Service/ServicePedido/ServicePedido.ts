@@ -27,8 +27,7 @@ export class ServicePedido
     }
     guardarPedido( pedido: IPedido ): Observable<IPedido>
     {
-       
-        return this.http.post<IPedido>(`${this.uri.UriJavaFerreteria}/ventas/`, pedido);
+        return this.http.post<IPedido>(`${this.uri.UriJavaFerreteria}/pedidos/guardarPedido`, pedido);
     }
 
 
