@@ -10,6 +10,7 @@ import { MostrarPermisosComponent } from './Vista/Permisos/MostrarPermisos/mostr
 import { AgregarProductoComponent } from './Vista/Productos/agregar-producto/agregar-producto.component';
 import { BuscarProductosComponent } from './Vista/Productos/buscar-productos/buscar-productos.component';
 import { EditarProductosComponent } from './Vista/Productos/editar-productos/editar-productos.component';
+import { ReportePagoComponent } from './Vista/Reportes/reporte-pago/reporte-pago.component';
 import { AgregarVentaComponent } from './Vista/Venta/agregar-venta/agregar-venta.component';
 
 const routes: Routes = 
@@ -33,7 +34,9 @@ const routes: Routes =
  { path: 'acceso', component: InicioSessionComponent },
  { path: 'permisos/nuevo', component: AgregarPermisosComponent },
  { path: 'permisos/buscar', component: MostrarPermisosComponent },
- { path: '**', redirectTo: 'mostrarproductos', pathMatch: 'full' }
+ { path: 'reportes/reportepago', component: ReportePagoComponent },
+
+ { path: '**', redirectTo: 'productos/buscar', pathMatch: 'full' }
 
 
 ];

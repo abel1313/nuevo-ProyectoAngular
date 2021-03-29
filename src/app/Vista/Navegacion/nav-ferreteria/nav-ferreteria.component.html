@@ -82,6 +82,24 @@
       </li>
       <!-- Ventas -->
 
+       <!-- Reportes -->
+      <!-- *ngIf="sessionUsuarioAcceso.listaPermiso.includes(3) || sessionUsuarioAcceso.listaPermiso == null "  -->
+      <li class="nav-item dropdown"
+        *ngIf="(serviceFerreteria.serviceUsuario.permisosVentas$ | async) || permisosVentas">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Reportes
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" [routerLink]="['reportes/reportepago']"
+            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
+          <a class="dropdown-item" [routerLink]="['reportes/buscar']"
+            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
+          
+        </div>
+      </li>
+      <!-- Reportes -->
+
       <!-- UsuarioSession -->
       <!-- *ngIf="sessionUsuarioAcceso.listaPermiso.includes(3) || sessionUsuarioAcceso.listaPermiso == null "  -->
       <li class="nav-item dropdown" *ngIf="nombreUsuarioAcceso != '' ">

@@ -2,6 +2,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { IDTOPagoReporte } from 'src/app/Model/DTO/DROPagosRepostes/IDTOPagoReporte';
 import { DTOVentaPagos } from 'src/app/Model/DTO/DTOVentaPagos/DTOVentaPagos';
 import { IPagosVenta } from 'src/app/Model/PagosVenta/IPagosVenta';
 import { PagoVenta } from 'src/app/Model/PagosVenta/PagoVenta';
@@ -143,9 +144,11 @@ this.suscription = this.serviceFerreteria.serivicePagosVenta.getPagosVentaAll()
     .savePagoVenta(this.pagoVenta.pago)
     .subscribe
     (
-      res=>
+      (res: IDTOPagoReporte)=>
       {
         this.buscarPagosVenta();
+        console.log(res);
+        sessionStorage.setItem('iReportePago', JSON.stringify(res));
         this.dtoVentaPago.ventasPagos.totalVenta = 0;
         this.dtoVentaPago.ventasPagos.totalPagosVenta  = 0;
         this.dtoVentaPago.ventasPagos.totalResta = 0;
@@ -165,7 +168,7 @@ this.suscription = this.serviceFerreteria.serivicePagosVenta.getPagosVentaAll()
             this.mensaje = "";
           }, 1200);
           setTimeout(() => {
-            this.router.navigateByUrl('/productos/buscar');
+            this.router.navigateByUrl('/reportes/reportepago');
           }, 2000);
         }else{
           this.mostrarMensaje = true;
@@ -176,7 +179,7 @@ this.suscription = this.serviceFerreteria.serivicePagosVenta.getPagosVentaAll()
           this.mensaje = "";
         }, 1200);
         setTimeout(() => {
-          this.router.navigateByUrl('/productos/buscar');
+          this.router.navigateByUrl('/reportes/reportepago');
         }, 2000);
         }
 

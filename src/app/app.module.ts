@@ -43,6 +43,8 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
 
 import { MatInputModule } from '@angular/material/input';
+import { ReportePagoComponent } from './Vista/Reportes/reporte-pago/reporte-pago.component';
+import { PaginaNoEncontradaComponent } from './Vista/PaginaNoEncontrada/pagina-no-encontrada/pagina-no-encontrada.component';
 
 //import { MateriaModule } from "./Module/materia/materia.module";
 
@@ -75,6 +77,8 @@ import { MatInputModule } from '@angular/material/input';
     MostrarPermisosComponent,
     EditarProductosComponent,
     AgregarDireccionComponent,
+    ReportePagoComponent,
+    PaginaNoEncontradaComponent,
     
 
 

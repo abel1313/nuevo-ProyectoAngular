@@ -117,7 +117,7 @@ export class AccederUsuarioComponent implements OnInit {
               setTimeout(() => {
                 this.mensajeErrorAcceso = true;
                 this.mensajeSpinner = false;
-                this.router.navigateByUrl('/mostrarproductos');
+                this.router.navigateByUrl('/productos/buscar');
              
              //console.log(this.datAccesoUsr.listaPermiso.includes(3) , " permisos venta");
 
