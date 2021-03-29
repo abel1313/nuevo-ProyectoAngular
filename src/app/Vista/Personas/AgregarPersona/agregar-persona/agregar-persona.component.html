@@ -2,7 +2,7 @@
     <div class="col-6">
         <div class="form-group">
             <label for="nombrePersona" class="">Nombre</label>
-            <input type="text" class="form-control" name="nombrePersona" id="nombrePersona"
+            <input type="text" class="form-control col-12" name="nombrePersona" id="nombrePersona"
                 placeholder="Ingrese nombre persona" [(ngModel)]="cliente.cliente.persona.nombrePersona" required [disabled]="diabledInputClientePersona">
             <div class="alert alert-info" *ngIf="validarnombre">
                 Por favor ingrese su nombre
@@ -22,7 +22,7 @@
     </div>
 
 </div>
-<div class="row">
+<div class="row p-3 text-center">
     <div class="col-6">
         <div class="form-group">
             <label for="paterno">Apellido paterno</label>
@@ -36,7 +36,7 @@
     </div>
     <div class="col-6">
         <div class="form-group">
-            <label for="materno">Apellido pmterno</label>
+            <label for="materno">Apellido paterno</label>
             <input type="text" class="form-control" name="maternoPersona" id="materno" placeholder="Ingrese su materno" [disabled]="diabledInputClientePersona"
                 [(ngModel)]="cliente.cliente.persona.maternoPersona" required>
 
@@ -44,6 +44,31 @@
                 Por favor ingrese su apellido materno
             </div>
         </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="mostrarBottonCliente">
+    <div class="col-8">
+        <div class="alert alert-dark" role="alert" 
+        *ngIf="buttonGuardarClienteDisabled">
+            Por favor espere, se está guardando ...
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        </div>
+
+        <div class="alert alert-dark" role="alert" 
+        *ngIf="guardarBoolean">
+           El cliente se guardo correctamente
+            
+        </div>
+
+    </div>
+
+    <div class="col-4">
+        <button class="btn btn-primary" 
+        [disabled]="buttonGuardarCliente" (click)="btnGuardarCliente();">
+            
+            Gardar cliente
+        </button>
     </div>
 </div>
 

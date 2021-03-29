@@ -21,33 +21,36 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
     private router: Router, private _ngZone: NgZone,
     private render: Renderer2) { }
 
-    nocumole: Boolean = false;
+  nocumole: Boolean = false;
 
   mostrarTemplate: Boolean = true;
   btnAgregar: Boolean = false;
 
   btnMensaje: Boolean = false;
   btnMensajeAgregar: Boolean = false;
-
+  mostrarBottonCliente: Boolean = false;
   udateCliente$: Observable<any>;
+  guardarClientePerson$: Observable<ICliente>;
 
   diabledInputClientePersona: Boolean = false;
-
+  buttonGuardarCliente: Boolean = false;
+  buttonGuardarClienteDisabled: Boolean = false;
+  guardarBoolean: Boolean = false;
 
   selectedItem: Boolean = false;
   mensajeEditar: Boolean = false;
 
 
 
-      validarnombre: Boolean = false;
-      validartelefono: Boolean = false;
-      validarpaterno: Boolean = false;
-      validarmaterno: Boolean = false;
-    seguimos: Boolean = false;
+  validarnombre: Boolean = false;
+  validartelefono: Boolean = false;
+  validarpaterno: Boolean = false;
+  validarmaterno: Boolean = false;
+  seguimos: Boolean = false;
 
 
-    mensajeAgregar = '';
-    mostrarMensaje: string;
+  mensajeAgregar = '';
+  mostrarMensaje: string;
 
   subscription: Subscription;
   pathString = '';
@@ -59,63 +62,55 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
   cliente = new Cliente();
 
-  sessionProducto = new Sessiones( this.router );
+  sessionProducto = new Sessiones(this.router);
 
 
   ngOnInit(): void {
 
     this.mensajeAgregar = this.router.url;
 
-   
-    
-    if(this.mensajeAgregar == "/mostrarproductos")
-    {
-        this.chechVenta = true;
-    }
-    if(this.mensajeAgregar == "/editarcliente")
-    {
-      
-        this.editarClientex = sessionStorage.getItem("ediatrCliente") != null ?
-        JSON.parse(sessionStorage.getItem("ediatrCliente")) : null;
-  
-        this.mostrarMensaje = 'Editar cliente';
-        
-  
-  
-        this.cliente.cliente = this.editarClientex[0];
-        if( this.cliente.cliente.id != 0 )
-        {
-          
-   
-  
-        }
-      
 
-      
+
+    if (this.mensajeAgregar == "/productos/buscar") {
+      this.chechVenta = true;
     }
-    if(this.mensajeAgregar == "/cliente")
-    {
+    if (this.mensajeAgregar == "/editarcliente") {
+      this.editarClientex = sessionStorage.getItem("ediatrCliente") != null ?
+        JSON.parse(sessionStorage.getItem("ediatrCliente")) : null;
+      this.mostrarMensaje = 'Editar cliente';
+
+      this.cliente.cliente = this.editarClientex[0];
+      if (this.cliente.cliente.id != 0) {
+
+
+
+      }
+
+
+
+    }
+    if (this.mensajeAgregar == "/clientes/nuevo") {
       this.mostrarMensaje = 'Nuevo cliente';
+      this.mostrarBottonCliente = true;
     }
 
 
     this.sessionProducto.eliminarSession("datosEditarProducto");
-    
+
 
     // this.cliente.cliente.persona.generoPersona = this.cliente.cliente.persona.generoPersona == "" ? "Seleccione su género" : this.cliente.cliente.persona.generoPersona;
   }
 
-  seguimosVenta()
-  {
+  seguimosVenta() {
 
-  this.mostrarMensajeValidadr();
+    this.mostrarMensajeValidadr();
 
     // if(this.cliente.cliente.persona.nombrePersona == '' )
     // {
     //   this.nocumole = true;
-      
+
     //   setTimeout(() => {
-       
+
     //     this.nocumole = false;
     //   }, 1500);
     // }
@@ -125,12 +120,12 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
 
   agregarCliente() {
-  //  let genero = (<HTMLSelectElement>document.getElementById('genero')).value;
+    //  let genero = (<HTMLSelectElement>document.getElementById('genero')).value;
 
     if (this.cliente.cliente.persona.nombrePersona == '' ||
       this.cliente.cliente.persona.paternoPersona == '' ||
       this.cliente.cliente.persona.maternoPersona == '' ||
-      this.cliente.cliente.persona.telefonoPersona == '' 
+      this.cliente.cliente.persona.telefonoPersona == ''
     ) {
       this.validForm();
     }
@@ -139,11 +134,11 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
         this.cliente.cliente.persona.nombrePersona != '' &&
         this.cliente.cliente.persona.paternoPersona != '' &&
         this.cliente.cliente.persona.maternoPersona != '' &&
-        this.cliente.cliente.persona.telefonoPersona != '' 
+        this.cliente.cliente.persona.telefonoPersona != ''
 
       ) {
-        if (this.mensajeAgregar == "/cliente") {
-          
+        if (this.mensajeAgregar == "/clientes/nuevo") {
+
 
           this.btnMensaje = true;
 
@@ -160,36 +155,90 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
         }
         if (this.mensajeAgregar == "/editarcliente") {
-          
+
           this.udateCliente$ = this.serviceFerreteria
-          .serviceCliente.actualizarCliente(this.cliente.cliente);
+            .serviceCliente.actualizarCliente(this.cliente.cliente);
           this.udateCliente$.subscribe
-          (
-            res=>
-            {
-              sessionStorage.removeItem("ediatrCliente");
-              this.mensajeEditar = true; 
-              setTimeout(() => 
-              {
-                this.mensajeEditar = false;
-                this.router.navigateByUrl('/buscarcliente');
-              }, 2000);
-             
-              
-            },
-            err=> console.log(err)
-          );
-          
+            (
+              res => {
+                sessionStorage.removeItem("ediatrCliente");
+                this.mensajeEditar = true;
+                setTimeout(() => {
+                  this.mensajeEditar = false;
+                  this.router.navigateByUrl('/buscarcliente');
+                }, 2000);
+
+
+              },
+              err => console.log(err)
+            );
+
         }
 
       }
   }
 
 
-  editarCliente(): Boolean 
-  {
+  editarCliente(): Boolean {
 
     return true;
+  }
+  btnGuardarCliente() 
+  {
+    this.validarnombre = 
+    Validar.validarInputPersona(this.cliente.cliente.persona.nombrePersona);
+    this.validartelefono = 
+    Validar.validarInputPersona(this.cliente.cliente.persona.telefonoPersona);
+    this.validarpaterno = 
+    Validar.validarInputPersona(this.cliente.cliente.persona.paternoPersona);
+    this.validarmaterno = 
+    Validar.validarInputPersona(this.cliente.cliente.persona.maternoPersona);
+    
+    if( !this.validarnombre && !this.validartelefono && 
+      !this.validarpaterno && !this.validarmaterno )
+    {
+      this.buttonGuardarClienteDisabled = true;
+      this.buttonGuardarCliente = true;
+      this.serverGuardarCliente();
+    }
+  }
+
+  serverGuardarCliente() {
+
+    this._ngZone.runOutsideAngular(() => {
+      this.guardarClientePerson$ = this.serviceFerreteria.serviceCliente
+        .guardarCliente(this.cliente.cliente);
+      this.guardarClientePerson$.subscribe
+        (
+          (res: ICliente) => {
+            this._ngZone.run(()=>
+            {
+              if(res.id != 0)
+              {
+              //  this.btnMensajeAgregar = true;
+                setTimeout(()=>
+                {
+                  this.buttonGuardarClienteDisabled = false;
+                }, 1500);
+                setTimeout(() => 
+                {
+                  this.guardarBoolean = true;
+                  this.limpiarInput();
+                }, 2000);
+
+                setTimeout(() => {
+                  this.router.navigateByUrl('/clientes/buscar');
+                }, 3500);
+                
+
+              }
+             
+            });
+          },
+          err => console.log(err)
+        );
+    });
+
   }
 
   guardarCliente() {
@@ -197,12 +246,10 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
     this._ngZone.runOutsideAngular(() => {
       this.udateCliente$ = this.serviceFerreteria.serviceCliente
         .guardarCliente(this.cliente.cliente);
-        this.udateCliente$.subscribe
+      this.udateCliente$.subscribe
         (
           res => {
             this.limpiarInput();
-            
-
           },
           err => console.log(err)
         );
@@ -242,42 +289,43 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
     this.cliente.cliente.persona.paternoPersona = '';
     this.cliente.cliente.persona.maternoPersona = '';
     this.cliente.cliente.persona.telefonoPersona = '';
-    
+
 
   }
 
-  cancelarSeguimos()
-  {
+  cancelarSeguimos() {
     this.seguimos = false;
     this.diabledInputClientePersona = false;
   }
-mostrarMensajeValidadr()
-{
-  let validarCampos = new Validar();
-
-    
-  this.validarnombre = validarCampos
-   .validarInput(this.cliente.cliente.persona.nombrePersona);
-   this.validartelefono = validarCampos
-   .validarInput(this.cliente.cliente.persona.telefonoPersona);
-   this.validarmaterno = validarCampos
-   .validarInput(this.cliente.cliente.persona.maternoPersona);
-   this.validarpaterno = validarCampos
-   .validarInput(this.cliente.cliente.persona.paternoPersona);
-   
-   if( !this.validarnombre && !this.validartelefono && 
-      !this.validarmaterno && !this.validarpaterno)
-   {
-    this.seguimos = true;
-    this.diabledInputClientePersona = true;
-    this.serviceFerreteria.serviceVenta.ventaCliente$.emit(this.cliente.cliente);
-   }
+  mostrarMensajeValidadr() {
+    let validarCampos = new Validar();
 
 
-}
+    this.validarnombre = validarCampos
+      .validarInput(this.cliente.cliente.persona.nombrePersona);
+    this.validartelefono = validarCampos
+      .validarInput(this.cliente.cliente.persona.telefonoPersona);
+    this.validarmaterno = validarCampos
+      .validarInput(this.cliente.cliente.persona.maternoPersona);
+    this.validarpaterno = validarCampos
+      .validarInput(this.cliente.cliente.persona.paternoPersona);
 
-  ngOnDestroy(): void {
-  //  this.subscription.unsubscribe();
+    if (!this.validarnombre && !this.validartelefono &&
+      !this.validarmaterno && !this.validarpaterno) {
+      this.seguimos = true;
+      this.diabledInputClientePersona = true;
+      this.serviceFerreteria.serviceVenta.ventaCliente$.emit(this.cliente.cliente);
+    }
+
+
+  }
+
+
+
+
+  ngOnDestroy(): void 
+  {
+    //  this.subscription.unsubscribe();
   }
 
 

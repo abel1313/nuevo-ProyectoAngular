@@ -62,18 +62,19 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
     this.btnDisablePagoVenta = this.dtoVentaPago.ventasPagos.idVenta != 0? true: false;
  }
 
+ onChangePagoVenta( event: any )
+ {
+
+this.resultado =  parseFloat(event) - this.dtoVentaPago.ventasPagos.totalResta ;
+ }
  onKeyUpPagoVenta(event: any)
  {
-   
-  
    this.resultado =  parseFloat(event) - this.dtoVentaPago.ventasPagos.totalResta ;
-
  }
  guardarPago()
  {
   if( this.datosPagoVenta.pago != 0 )
   {
-
     this.saveVentasPagadas();
   }
  }
@@ -100,7 +101,6 @@ this.suscription = this.serviceFerreteria.serivicePagosVenta.getPagosVentaAll()
   {
     if( this.datosPagoVenta.pago >= this.dtoVentaPago.ventasPagos.totalResta )
     {
-    
       this.datosVentaPagada.estatusventa = 1;
       this.ventasPagadas.ventasPagadas.estatusVenta.id = 1;
       this.ventasPagadas.ventasPagadas.venta.id = this.datosVentaPagada.idVenta;
@@ -164,6 +164,9 @@ this.suscription = this.serviceFerreteria.serivicePagosVenta.getPagosVentaAll()
             this.mostrarMensaje = false;
             this.mensaje = "";
           }, 1200);
+          setTimeout(() => {
+            this.router.navigateByUrl('/productos/buscar');
+          }, 2000);
         }else{
           this.mostrarMensaje = true;
           this.mensajeVentaPagada = false;
@@ -171,7 +174,10 @@ this.suscription = this.serviceFerreteria.serivicePagosVenta.getPagosVentaAll()
         setTimeout(() => {
           this.mostrarMensaje = false;
           this.mensaje = "";
-        }, 2500);
+        }, 1200);
+        setTimeout(() => {
+          this.router.navigateByUrl('/productos/buscar');
+        }, 2000);
         }
 
 

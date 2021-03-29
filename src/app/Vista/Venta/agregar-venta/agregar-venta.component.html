@@ -56,11 +56,13 @@
                             </div>
                             <div class="col-7">
                                 <div class="ng-autocomplete col-12 d-flex">
-                                    <ng-autocomplete 
+                                    <ng-autocomplete #auto
+                                        
                                         [data]="datosCliente" 
                                         [searchKeyword]="keyword"
                                         placeholder="Ingrese nombre del cliente" 
                                         (selected)='selectEvent($event)'
+                                        
                                         (inputChanged)='onChangeSearch($event)' 
                                         (inputFocused)='onFocused($event)'
                                         [itemTemplate]="itemTemplate" 
@@ -70,6 +72,7 @@
                                             Por favor ingrese el nombre
                                         </div>
                                     </ng-autocomplete>
+                                    <p> {{ ex }} </p>
 
                                     <ng-template #itemTemplate let-item>
                                         <a [innerHTML]="item.nombrePersona"></a>
@@ -139,7 +142,11 @@
 
                         <div class="row p-2">
                             <div class="col-12 d-flex justify-content-end">
-                                <button class="btn btn-secondary col-6" (click)="agregarVenta()"> Pagar</button>
+                                <button [disabled]="disabledPagar" class="btn btn-secondary col-6" (click)="agregarVenta()"> 
+                                    <span *ngIf="disabledPagar" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>    Pagar
+                                </button>
+                 
+
                             </div>
                         </div>
 
@@ -149,7 +156,7 @@
                 <div class="row" *ngIf="showMessage">
                     <div class="col-12">
                         <div class="alert alert-danger text-justify" role="alert">
-                            El pago debe ser mayor al total
+                            El pago debe ser mayor a 0
                           </div>
                     </div>
                 </div>
@@ -157,7 +164,7 @@
                 <div class="row" *ngIf="showMessageRespuesta">
                     <div class="col-12">
                         <div class="alert alert-danger text-justify" role="alert">
-                            <p class="text-center" id="resp"> Gracias por la compra </p>
+                            <p class="text-center" id="resp"> {{ mensajesErrorSave }} </p>
                           </div>
                     </div>
                 </div>

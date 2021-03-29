@@ -37,6 +37,15 @@ import { AgregarPermisosComponent } from './Vista/Permisos/AgregarPermisos/agreg
 import { MostrarPermisosComponent } from './Vista/Permisos/MostrarPermisos/mostrar-permisos/mostrar-permisos.component';
 import { EditarProductosComponent } from './Vista/Productos/editar-productos/editar-productos.component';
 import { AgregarDireccionComponent } from './Vista/Direccion/agregar-direccion/agregar-direccion.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatButtonModule } from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+
+import { MatInputModule } from '@angular/material/input';
+
+//import { MateriaModule } from "./Module/materia/materia.module";
+
 
 @NgModule({
   declarations: [
@@ -80,7 +89,10 @@ import { AgregarDireccionComponent } from './Vista/Direccion/agregar-direccion/a
             FormsModule,
             
             ReactiveFormsModule,
-            AutocompleteLibModule
+            AutocompleteLibModule,
+            MatButtonModule,
+            MatCardModule,
+            MatInputModule
     
         
   ],

@@ -12,7 +12,7 @@
     
             <thead>
                 <tr>
-                    <th colspan="2" class="border">Ciente</th>
+                    <th colspan="2">Ciente</th>
                     <th>Total de la venta</th>
                     <th>Total de pagos dado</th>
                     <th>Resto del pago</th>
@@ -45,13 +45,13 @@
 
         <div class="card">
             <div class="card-header bg-secondary text-white">
-                <h3 class="card-title text-center">Realizar pago</h3>
+                <h3 class="card-title fw-bolder fw-5 text-center mt-3">Realizar pago</h3>
             </div>
             <div class="car-body">
 
                 <form>
                     <fieldset class="text-center">
-                        <legend> pagara : {{ this.dtoVentaPago.ventasPagos.cliente.persona.nombrePersona }}
+                        <legend class="p-3"> Pagará : {{ this.dtoVentaPago.ventasPagos.cliente.persona.nombrePersona }}
                                             {{ this.dtoVentaPago.ventasPagos.cliente.persona.paternoPersona }}
                                             {{ this.dtoVentaPago.ventasPagos.cliente.persona.maternoPersona }}
                         </legend>
@@ -101,7 +101,8 @@
                                 <div class="form-group d-flex justify-content-start">
                                     <input type="number" class="form-control  col-10 text-center" #pagoVenta
                                     name="pago" id="" placeholder="ingrese el pago" 
-                                    (keyup)="onKeyUpPagoVenta(pagoVenta.value)"  [disabled]="!btnDisablePagoVenta" [(ngModel)]="datosPagoVenta.pago"
+                                    (change)="onChangePagoVenta(pagoVenta.value);"
+                                    (keyup)="onKeyUpPagoVenta(pagoVenta.value);"  [disabled]="!btnDisablePagoVenta" [(ngModel)]="datosPagoVenta.pago"
                                     >
                                 </div>
                             </div>

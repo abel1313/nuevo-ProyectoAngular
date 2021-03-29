@@ -33,6 +33,11 @@ export class Validar
           return (cajaText  == '') ? true: false;
      
         }
+        static validarInputPersona( cajaText: string ): Boolean
+        {
+          return (cajaText  == '') ? true: false;
+     
+        }
 
         validarInputNumber( cajaText: number ): Boolean
         {

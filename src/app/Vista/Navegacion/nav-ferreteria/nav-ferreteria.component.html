@@ -19,9 +19,9 @@
           Permisos
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" [routerLink]="['agregarpermisos']"
+          <a class="dropdown-item" [routerLink]="['permisos/nuevo']"
             [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
-          <a class="dropdown-item" [routerLink]="['mostrarpermisos']"
+          <a class="dropdown-item" [routerLink]="['permisos/buscar']"
           [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
           
         </div>
@@ -37,9 +37,9 @@
           Clientes
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" [routerLink]="['cliente']"
+          <a class="dropdown-item" [routerLink]="['clientes/nuevo']"
             [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
-          <a class="dropdown-item" [routerLink]="['buscarcliente']"
+          <a class="dropdown-item" [routerLink]="['clientes/buscar']"
             [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
 
         </div>
@@ -55,9 +55,9 @@
           Productos
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" [routerLink]="['agregarProducto']"
+          <a class="dropdown-item" [routerLink]="['productos/nuevo']"
             [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
-          <a class="dropdown-item" [routerLink]="['mostrarProducto']"
+          <a class="dropdown-item" [routerLink]="['productos/buscar']"
             [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
           
         </div>
@@ -73,9 +73,9 @@
           Ventas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" [routerLink]="['agregarventa']"
+          <a class="dropdown-item" [routerLink]="['ventas/nueva']"
             [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
-          <a class="dropdown-item" [routerLink]="['mostrarventas']"
+          <a class="dropdown-item" [routerLink]="['ventas/buscar']"
             [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
           
         </div>
@@ -87,7 +87,7 @@
       <li class="nav-item dropdown" *ngIf="nombreUsuarioAcceso != '' ">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false">
-          {{ nombreUsuarioAcceso.toUpperCase() }}
+          {{ nombreUsuarioAcceso | uppercase }}
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <div class="row">
