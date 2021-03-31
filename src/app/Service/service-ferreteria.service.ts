@@ -16,6 +16,7 @@ import { ServiceMenu  } from "./ServiceMenu/ServiceMenu";
 import { ServicePermisos } from './ServicePermisos/ServicePermisos';
 import { ServicePedido } from './ServicePedido/ServicePedido';
 import { ServiceDireccion } from './ServiceDireccion/ServiceDireccion';
+import { ServiceReportes } from './ServiceReportes/ServiceReportes';
 
 
 
@@ -100,6 +101,8 @@ servicePermisos = new ServicePermisos(this.http);
 servicePedido = new ServicePedido(this.http);
 
 serviceDireccion = new ServiceDireccion(this.http);
+
+serviceReportes = new ServiceReportes( this.http );
 
 
 /*

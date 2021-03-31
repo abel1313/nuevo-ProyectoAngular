@@ -41,7 +41,7 @@ this.per$ = this.serviceFerreteria.serviceUsuario.permisosVentas$;
 this.per$.subscribe
 (
     
-      res=>console.log(res, " res 2")
+      res=> {} //console.log(res, " res 2")
     
   )
 
@@ -65,7 +65,7 @@ mostrarNavegacion()
   }else
   if( this.sessionUsuarioAcceso != null )
   {
-      console.log(this.sessionUsuarioAcceso.usuario.nombre_Usuario, "Lista");
+     // console.log(this.sessionUsuarioAcceso.usuario.nombre_Usuario, "Lista");
      this.permisosVentas =
       (this.sessionUsuarioAcceso.listaPermiso.includes(3) &&
       this.sessionUsuarioAcceso.listaPermiso != null ) ? true: false;
@@ -98,7 +98,7 @@ mostrarNavegacion()
   (
     res=>
     {
-      console.log(res, " res");
+     // console.log(res, " res");
       this.nombreUsuarioAcceso = res;
     },
     err=> console.log(err)

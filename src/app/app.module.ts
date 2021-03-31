@@ -41,12 +41,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatButtonModule } from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { MatInputModule } from '@angular/material/input';
 import { ReportePagoComponent } from './Vista/Reportes/reporte-pago/reporte-pago.component';
 import { PaginaNoEncontradaComponent } from './Vista/PaginaNoEncontrada/pagina-no-encontrada/pagina-no-encontrada.component';
+import { FechasVentaComponent } from './Vista/Reportes/fechas-venta/fechas-venta.component';
+import { GenerarReportesComponent } from './Vista/Reportes/generar-reportes/generar-reportes.component';
 
 //import { MateriaModule } from "./Module/materia/materia.module";
+
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import { GenerarReportesPagosComponent } from './Vista/Reportes/generar-reportes-pagos/generar-reportes-pagos.component';
+import { GenerarReportesVentasComponent } from './Vista/Reportes/generar-reportes-ventas/generar-reportes-ventas.component';
+
 
 
 @NgModule({
@@ -79,6 +89,11 @@ import { PaginaNoEncontradaComponent } from './Vista/PaginaNoEncontrada/pagina-n
     AgregarDireccionComponent,
     ReportePagoComponent,
     PaginaNoEncontradaComponent,
+    FechasVentaComponent,
+    GenerarReportesComponent,
+    GenerarReportesPagosComponent,
+    GenerarReportesVentasComponent
+    
     
 
 
@@ -96,7 +111,11 @@ import { PaginaNoEncontradaComponent } from './Vista/PaginaNoEncontrada/pagina-n
             AutocompleteLibModule,
             MatButtonModule,
             MatCardModule,
-            MatInputModule
+            MatInputModule,
+            MatDatepickerModule,
+            MatNativeDateModule,
+            BrowserAnimationsModule,
+            MatAutocompleteModule
     
         
   ],

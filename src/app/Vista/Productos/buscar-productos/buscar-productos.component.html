@@ -22,7 +22,7 @@
 <div class="container border" >
     
     <!--  poner el ! en el mostrar productos y quitarselos al dee carrito detalle -->
-    <app-mostrar-productos *ngIf="verCarritoCompras"></app-mostrar-productos>
-    <app-carrito-detalle *ngIf="!verCarritoCompras"></app-carrito-detalle>
+    <app-mostrar-productos *ngIf="!verCarritoCompras"></app-mostrar-productos>
+    <app-carrito-detalle *ngIf="verCarritoCompras"></app-carrito-detalle>
 </div>
 

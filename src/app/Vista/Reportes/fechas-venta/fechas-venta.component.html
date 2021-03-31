@@ -1,0 +1,93 @@
+
+
+    <div class="col-8 offset-2 ">
+                <mat-card>
+                    <div class="row p-3">
+                        <div class="col-12 d-flex justify-content-center">
+                            <mat-card-header>
+                      
+                                      <mat-card-title><p class="text-center">Por favor elija las fechas {{ mensajeReportes }}</p></mat-card-title>
+                                
+                              </mat-card-header>
+                        </div>
+                    </div>
+                    <mat-card-content>
+                        <div class="row">
+                            <div class="col-6">
+    
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Elija la fecha inicio</mat-label>
+                                    <input matInput [matDatepicker]="fechaInicio" [(ngModel)]="reporteVentas.reporteVentas.fechaInicio" name="fechaInicio">
+                                    <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+                                    <mat-datepicker #fechaInicio></mat-datepicker>
+                                </mat-form-field>
+                    
+                            </div>
+                            <div class="col-6">
+                    
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Elija la fecha fin</mat-label>
+                                    <input matInput [matDatepicker]="fechaFin" [(ngModel)]="reporteVentas.reporteVentas.fechaFin" name="fechaFind">
+                                    <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
+                                    <mat-datepicker #fechaFin></mat-datepicker>
+                                </mat-form-field>
+                    
+                            </div>
+                        </div>
+
+                        <div class="row p-2" *ngIf="mostrarAutocompleteCliente">
+                            <div class="col-12">
+                                <ng-autocomplete #auto
+                                        
+                                [data]="datosCliente$ | async" 
+                                [searchKeyword]="keyword"
+                                placeholder="Ingrese nombre del cliente" 
+                                (selected)='selectEvent($event)'
+                                
+                                (inputChanged)='onChangeSearch($event)' 
+                                (inputFocused)='onFocused($event)'
+                                [itemTemplate]="itemTemplate" 
+                                [notFoundTemplate]="notFoundTemplate"
+                                requiered>
+                                <div class="invalid-feedback">
+                                    Por favor ingrese el nombre
+                                </div>
+                            </ng-autocomplete>
+                            <ng-template #itemTemplate let-item>
+                                <a [innerHTML]="item.nombrePersona"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                    <div class="row" *ngIf="mensajeAlert">
+                        <div class="col-12">
+                            <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                                {{ mensajeReportes }}
+                              </div>
+                        </div>
+                    </div>
+        
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-end" *ngIf="reporteVenta">
+                            <mat-card-actions>
+                                <button mat-button (click)="buscarReporteVenta()" [disabled]="spinnerReporteVenta">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="spinnerReporteVenta"></span>
+                                    Buscar ventas
+                                </button>
+                              </mat-card-actions>
+                        </div>
+                        <div class="col-12 d-flex justify-content-end" *ngIf="reportePagos">
+                            <mat-card-actions>
+                                <button mat-button (click)="buscarReportePagos()">Buscar pagos</button>
+                              </mat-card-actions>
+                        </div>
+                    </div>
+                  </mat-card>
+   
+     
+    </div>
+

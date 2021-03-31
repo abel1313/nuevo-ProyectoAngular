@@ -1,0 +1,29 @@
+<div class="container-fluid p-3">
+    <div class="row">
+      <div id="htmlData">
+        <h2>Reporte de las ventas</h2>
+        <table class="table table-bordered mt-4">
+          <tr class="table-primary">
+            <th>Cliente</th>
+            <th>Total de la venta</th>
+            <th>Fecha de la venta</th>            
+          </tr>
+          <tr *ngFor="let item of reporteVenta">
+            <th>{{ item.nombreCliente }}</th>
+            <td>{{ item.totalVenta | currency }}</td>
+            
+            <td>{{ item.fechaVenta | date:'medium' }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="row">
+    <div class="col-12 d-flex justify-content-end">
+        <button mat-raised-button color="warn" class="col-4" 
+        (click)="pdf();" [disabled]="spinerGenerarReporte">
+        <span *ngIf="spinerGenerarReporte" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Generar reporte
+    </button>
+    </div>
+</div>

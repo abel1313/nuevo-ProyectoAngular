@@ -111,7 +111,6 @@ export class AccederUsuarioComponent implements OnInit {
               sessionStorage.setItem("sessionUsuario", JSON.stringify(this.datAccesoUsr) );
            
               //console.log(sessionStorage.setItem("sessionUsuario", JSON.stringify(this.datAccesoUsr) ));
-
               this.mensajeSpinner = true;
 
               setTimeout(() => {
@@ -155,7 +154,7 @@ export class AccederUsuarioComponent implements OnInit {
         {
           if(err != null)
           {
-            console.log(" errorsisimo");
+         //   console.log(" errorsisimo");
           }
         }
       );

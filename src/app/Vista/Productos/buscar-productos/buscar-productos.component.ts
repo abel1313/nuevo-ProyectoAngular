@@ -148,10 +148,7 @@ export class BuscarProductosComponent implements OnInit, OnDestroy {
 
   verDetalle()
   {
-    
     this.verCarritoCompras = true;
-
-
   }
 
   countProductoDetalle()

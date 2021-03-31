@@ -6,6 +6,7 @@ import { Observable, throwError } from 'rxjs';
 
 import { catchError, retry } from 'rxjs/operators';
 import { ICliente } from 'src/app/Model/Clientes/ICliente';
+import { IDTOClientePersona } from 'src/app/Model/Clientes/IDTOClientePersona';
 import { Productos } from 'src/app/Model/Productos/Producto';
 import { UriJava } from 'src/app/URISERVER/UriJava';
 
@@ -21,6 +22,10 @@ export class ServiceCliente {
   buscarClienteKeyUp$ = new EventEmitter<string>();
 
   // ------------------------------ Clientes ------------------------------------------ //
+
+  getClientesAutoComplete(): Observable<IDTOClientePersona[]> {
+    return this.http.get<IDTOClientePersona[]>(`${this.uri.UriJavaFerreteria}/clientes/buscarclientes`)
+  }
 
   getClientesAll(): Observable<any> {
     return this.http.get(`${this.uri.UriJavaFerreteria}/clientes/buscarclientes`)
