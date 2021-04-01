@@ -36,23 +36,38 @@ export class FechasVentaComponent implements OnInit {
   reportePagos: Boolean = false;
 
   spinnerReporteVenta: Boolean = false;
-
+  spinnerReportePagos: Boolean = false;
 
   mensajeReportes: string = '';
   mensajeAlert: Boolean = false;
 
   keyword = 'nombrePersona';
-  datosCliente: IDTOClientePersona [] = [];
+  datosCliente: IDTOClientePersona[] = [];
 
-  datosCliente$: Observable<IDTOClientePersona>;
+  datosCliente$: Observable<IDTOClientePersona[]>;
+  itemCliente: IDTOClientePersona;
+
+  datosVentasPagos$: Observable<IDTOPagoReporte[]>;
 
   mostrarAutocompleteCliente: Boolean = false;
+  mostrarPagosCliente: Boolean = false;
 
+  boolCall: Observable<Boolean>;
+
+  auto: any;
 
   ngOnInit(): void {
 
-    
+
+
+
+    this.mostrarPagosCliente = sessionStorage.getItem('sesionMostrarPagos') != null ? 
+    JSON.parse(sessionStorage.getItem('sesionMostrarPagos')) : false;
     this.obtenerEventButton();
+  }
+  guardando()
+  {
+
   }
   buscarReporteVenta() {
     if (this.reporteVentas.reporteVentas.fechaInicio == "" ||
@@ -78,23 +93,20 @@ export class FechasVentaComponent implements OnInit {
         let fechaFin = new Date(this.reporteVentas.reporteVentas.fechaFin)
         let buscarFechaInicio =
           `${fechaInicio.getFullYear()}-${fechaInicio.getMonth() + 1}-${fechaInicio.getDate()}`;
-
         let buscarFechaFin =
           `${fechaFin.getFullYear()}-${fechaFin.getMonth() + 1}-${fechaFin.getDate()} `
-
         this.spinnerReporteVenta = true;
-
         this.serverBuscarReportesVentas(buscarFechaInicio, buscarFechaFin);
 
       }
     }
-
   }
 
 
   // obtener el dato del evento que emite el bono de la vista
   // generar-venta.component
-  obtenerEventButton() {
+  obtenerEventButton() 
+  {
     this.reporteEmit$ =
       this.serviceFerreteria.serviceReportes
         .reportesVenta$;
@@ -102,31 +114,110 @@ export class FechasVentaComponent implements OnInit {
       .subscribe
       (
         res => {
-       if( res === 'reporteVenta')
-          {
+          if (res === 'reporteVenta') {
             this.reporteVenta = true;
             this.mensajeReportes = ' para buscar las ventas';
             this.mostrarAutocompleteCliente = false;
-          } else{  this.reporteVenta = false }
-          if( res === 'reportePagosCliente')
-          {
+          } else { this.reporteVenta = false }
+          if (res === 'reportePagosCliente') {
             this.getClientesAutoComplete();
             this.reportePagos = true;
             this.mostrarAutocompleteCliente = true;
             this.mensajeReportes = ' para buscar los pagos';
-          } else { this.reportePagos = false;}
+
+          } else { this.reportePagos = false; }
 
         }
-    
+
       );
 
   }
 
-  buscarReportePagos() 
-  {
+  buscarReportePagos() {
+
+    let autocomplete = this.auto == 'undefined' ? null : this.auto;
+
+    if (this.reporteVentas.reporteVentas.fechaInicio == "" ||
+      this.reporteVentas.reporteVentas.fechaFin == "" ||
+      autocomplete == null) {
+      this.mensajeAlert = true;
+      this.mensajeReportes = 'Por favor no deje campos vacíos';
+      setTimeout(() => {
+        this.mensajeAlert = false;
+        this.mensajeReportes = '';
+      }, 1500);
+    } else {
+      if (this.reporteVentas.reporteVentas.fechaInicio >
+        this.reporteVentas.reporteVentas.fechaFin) {
+
+        this.mensajeAlert = true;
+        this.mensajeReportes = 'La fecha de inicio no debe ser mayor que la fecha final';
+        setTimeout(() => {
+          this.mensajeAlert = false;
+          this.mensajeReportes = '';
+        }, 2500);
+
+      } else {
+
+        let clienteEncontrado: IDTOClientePersona = this.auto;
+
+        let fechaInicio = new Date(this.reporteVentas.reporteVentas.fechaInicio)
+        let fechaFin = new Date(this.reporteVentas.reporteVentas.fechaFin)
+        let buscarFechaInicio =
+          `${fechaInicio.getFullYear()}-${fechaInicio.getMonth() + 1}-${fechaInicio.getDate()}`;
+
+        let buscarFechaFin =
+          `${fechaFin.getFullYear()}-${fechaFin.getMonth() + 1}-${fechaFin.getDate()} `
+
+        this.spinnerReportePagos = true;
+
+        this.serverBuscarReportesPagos
+          (buscarFechaInicio, buscarFechaFin, clienteEncontrado.idCliente);
+
+        // this.serverBuscarReportesVentas(buscarFechaInicio, buscarFechaFin);
+
+      }
+    }
+  }
+
+  serverBuscarReportesPagos(fechaInicio: string, fechaFin: string, id: number) {
+    this._ngZone.runOutsideAngular(() => {
+      this.reporteVentas$ = this.serviceFerreteria.serviceReportes
+        .obtenerReportesPagos(fechaInicio, fechaFin, id);
+      this.reporteVentas$.subscribe
+        (
+          (res: IDTOPagoReporte[]) => {
+            this._ngZone.run(() => {
+              setTimeout(() => {
+
+                if (Object.keys(res).length > 0) {
+
+                  sessionStorage.setItem('sesionPagos', JSON.stringify(res));
+
+                  this.spinnerReportePagos = false;
+                  this.mostrarPagosCliente = true;
+                  this.serviceFerreteria.serviceReportes.mostrandoVistasReportes$.emit(true);
+
+                } else {
+                  this.mensajeAlert = true;
+                  this.mensajeReportes = 'No existen ventas en las fechas que ingresó';
+                  setTimeout(() => {
+                    this.mensajeAlert = false;
+                    this.mensajeReportes = '';
+                    this.spinnerReportePagos = false;
+                  }, 3000);
+                }
+              }, 2500);
+
+            });
+          }
+        );
+    });
+
 
   }
 
+  // método para buscar las ventas
   serverBuscarReportesVentas(inicio: string, fin: string) {
     this._ngZone.runOutsideAngular(() => {
       this.reporteVentas$ = this.serviceFerreteria.serviceReportes
@@ -136,17 +227,15 @@ export class FechasVentaComponent implements OnInit {
           (res: IReporteVenta) => {
             this._ngZone.run(() => {
               setTimeout(() => {
-               
-                if( Object.keys(res).length > 0  )
-                {
-                this.router.navigateByUrl('reportes/generarreporteventas');
-                   sessionStorage.setItem('reporteVenta', JSON.stringify(res));
-       
+
+                if (Object.keys(res).length > 0) {
+                  this.router.navigateByUrl('reportes/generarreporteventas');
+                  sessionStorage.setItem('reporteVenta', JSON.stringify(res));
+
                   this.spinnerReporteVenta = false;
 
-                  
-                }else
-                {
+
+                } else {
                   this.mensajeAlert = true;
                   this.mensajeReportes = 'No existen ventas en las fechas que ingresó';
                   setTimeout(() => {
@@ -164,16 +253,18 @@ export class FechasVentaComponent implements OnInit {
   }
 
   getClientesAutoComplete() {
-    
-    this.datosCliente$ = this.serviceFerreteria.serviceCliente.getClientesAll();
-
+    this.datosCliente$ = this.serviceFerreteria.serviceCliente.getClientesAutoComplete();
   }
 
   selectEvent(item: any) {
     // do something with selected item
- }
+    this.itemCliente = item;
 
-  onChangeSearch(item: string) {
+  }
+
+  onChangeSearch(item: any) {
+
+
     // fetch remote data from here
     // And reassign the 'data' which is binded to 'data' property.
   }

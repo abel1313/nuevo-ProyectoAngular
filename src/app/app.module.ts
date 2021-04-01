@@ -56,14 +56,14 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 import { GenerarReportesPagosComponent } from './Vista/Reportes/generar-reportes-pagos/generar-reportes-pagos.component';
 import { GenerarReportesVentasComponent } from './Vista/Reportes/generar-reportes-ventas/generar-reportes-ventas.component';
+import { VerPagosClienteComponent } from './Vista/Reportes/ReportesPagosCliente/ver-pagos-cliente/ver-pagos-cliente.component';
+import { ReportesPagosComponent } from './Vista/Reportes/ReportesPagosCliente/reportes-pagos/reportes-pagos.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-
-
     NavFerreteriaComponent,
     FootFerreteriaComponent,
     AgregarProductoComponent,
@@ -92,11 +92,10 @@ import { GenerarReportesVentasComponent } from './Vista/Reportes/generar-reporte
     FechasVentaComponent,
     GenerarReportesComponent,
     GenerarReportesPagosComponent,
-    GenerarReportesVentasComponent
+    GenerarReportesVentasComponent,
+    VerPagosClienteComponent,
+    ReportesPagosComponent
     
-    
-
-
   ],
   imports: [
     BrowserModule,

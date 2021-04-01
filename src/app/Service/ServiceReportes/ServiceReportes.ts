@@ -6,6 +6,8 @@ import { Usuario } from "../../Model/Usuarios/Usuario";
 import { EventEmitter } from "@angular/core";
 import { IReporteVenta } from "src/app/Model/Reportes/IReporteVenta";
 import { IDTOReportesVentas } from "src/app/Model/Reportes/IDTOReportesVentas";
+import { IDTOPagoReporte } from "src/app/Model/DTO/DROPagosRepostes/IDTOPagoReporte";
+import { IDTOPagosServer } from "src/app/Model/DTO/DROPagosRepostes/IDTOPagosServer";
 
 
 
@@ -21,13 +23,28 @@ export class ServiceReportes
     private uri = new UriJava();
 
     reportesVenta$ = new EventEmitter<string>();
+    reportesPagosVentas$ = new EventEmitter<IDTOPagoReporte[]>();
+
+    mostrandoVistasReportes$ = new EventEmitter<Boolean>();
+
+    calandostring$ = new EventEmitter<string>();
  
     
  
      obtenerReportesVentas( inicio: string, fin: string ): Observable<IReporteVenta[]>
     {
-        
         return this.http.get<IReporteVenta[]>(`${this.uri.UriJavaFerreteria}/reportes/ventas/${inicio}/${fin}`);
+    }
+    obtenerReportesPagos
+    ( inicio: string, fin: string, idCliente: number ): Observable<IReporteVenta[]>
+    {
+        return this.http.get<IReporteVenta[]>(`${this.uri.UriJavaFerreteria}/reportes/pagos/${inicio}/${fin}/${idCliente}`);
+    }
+    obtenerReportesPagosCliente
+    ( idVenta: number ): Observable<IDTOPagosServer>
+    {
+        return this.http.get<IDTOPagosServer>
+        (`${this.uri.UriJavaFerreteria}/reportes/pagosclientes/${idVenta}`);
     }
     // accesoSistema( usuario: Usuario): Observable<Usuario[]>
     // {

@@ -19,10 +19,14 @@ export class GenerarReportesComponent implements OnInit {
     private _ngZone: NgZone
   ) { }
 
+  
+
+  mostrarVistas: Boolean = false;
+  mostrarVistas$: Observable<Boolean>;
 
   ngOnInit(): void 
   {
-
+this.mostrarVista();
   }
 
   eventReporteVentas()
@@ -34,6 +38,17 @@ export class GenerarReportesComponent implements OnInit {
     this.serviceFerreteria.serviceReportes.reportesVenta$.emit('reportePagosCliente');
   }
 
+mostrarVista()
+{
+  this.mostrarVistas$ = this.serviceFerreteria.serviceReportes.mostrandoVistasReportes$;
+  this.mostrarVistas$.subscribe
+  (
+    ( res: Boolean )=>
+    {
+      this.mostrarVistas = res;
+    }
+  );
+}
 
 
 

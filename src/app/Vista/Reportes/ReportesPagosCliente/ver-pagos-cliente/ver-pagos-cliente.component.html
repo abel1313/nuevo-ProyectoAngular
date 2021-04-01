@@ -1,0 +1,30 @@
+<div class="container-fluid p-3">
+    <div class="row">
+      <div id="htmlData">
+        <h2 class="d-flex justify-content-center">Ver los pagos que el cliente ha realizado </h2>
+        <table class="table table-bordered mt-4">
+          <tr class="table-primary">
+            <th>Cliente</th>
+            <th>Total de la venta</th>
+            <th>Fecha de pagos</th>
+            <th>Acción</th>
+            
+          </tr>
+          <tr *ngFor="let item of datosPagosVentas">
+            <th>{{ item.nombreCliente }}</th>
+            <td>{{ item.totalVenta | currency }}</td>
+            <td>{{ item.fechaDeposito | date:'medium' }}</td>
+            <td class="d-flex justify-content-center" (click)="verPagos(item);"><button mat-stroked-button color="primary" >Ver pagos</button> </td>
+        
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+            <div class="col-12 d-flex justify-content-end">
+                <button mat-stroked-button color="accent" class=" d-flex justify-content-center" (click)="cancelarReporteVentas()">Cancelar</button>
+            </div>
+
+        </div>
+  </div>
+

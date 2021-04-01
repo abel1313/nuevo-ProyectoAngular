@@ -10,6 +10,7 @@ import { MostrarPermisosComponent } from './Vista/Permisos/MostrarPermisos/mostr
 import { AgregarProductoComponent } from './Vista/Productos/agregar-producto/agregar-producto.component';
 import { BuscarProductosComponent } from './Vista/Productos/buscar-productos/buscar-productos.component';
 import { EditarProductosComponent } from './Vista/Productos/editar-productos/editar-productos.component';
+import { GenerarReportesPagosComponent } from './Vista/Reportes/generar-reportes-pagos/generar-reportes-pagos.component';
 import { GenerarReportesVentasComponent } from './Vista/Reportes/generar-reportes-ventas/generar-reportes-ventas.component';
 import { GenerarReportesComponent } from './Vista/Reportes/generar-reportes/generar-reportes.component';
 import { ReportePagoComponent } from './Vista/Reportes/reporte-pago/reporte-pago.component';
@@ -39,7 +40,8 @@ const routes: Routes =
  { path: 'reportes/reportepago', component: ReportePagoComponent },
  { path: 'reportes/generarreportes', component: GenerarReportesComponent },
  { path: 'reportes/generarreporteventas', component: GenerarReportesVentasComponent },
-
+ { path: 'reportes/generar-reportes-pagos', component: GenerarReportesPagosComponent },
+ 
  { path: '**', redirectTo: 'productos/buscar', pathMatch: 'full' }
 
 

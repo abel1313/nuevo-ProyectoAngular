@@ -31,7 +31,7 @@ this.dtoPagoReporte = sessionStorage.getItem('iReportePago') != null ?
 }
 
   pdf() {
-    console.log("diste");
+    
     this.downloadPdf();
   }
   downloadPdf() {
