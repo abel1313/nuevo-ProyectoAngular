@@ -23,29 +23,27 @@ export class ServiceReportes
     private uri = new UriJava();
 
     reportesVenta$ = new EventEmitter<string>();
-    reportesPagosVentas$ = new EventEmitter<IDTOPagoReporte[]>();
-
-    mostrandoVistasReportes$ = new EventEmitter<Boolean>();
-
-    calandostring$ = new EventEmitter<string>();
  
+    mostrandoVistasReportes$ = new EventEmitter<Boolean>();
     
+    datosReporteClientes$ = new EventEmitter<IDTOPagoReporte[]>();
  
      obtenerReportesVentas( inicio: string, fin: string ): Observable<IReporteVenta[]>
     {
+        
         return this.http.get<IReporteVenta[]>(`${this.uri.UriJavaFerreteria}/reportes/ventas/${inicio}/${fin}`);
     }
-    obtenerReportesPagos
-    ( inicio: string, fin: string, idCliente: number ): Observable<IReporteVenta[]>
+    obtenerReportesPagos( inicio: string, fin: string, idCliente: number ): Observable<IReporteVenta[]>
     {
+        
         return this.http.get<IReporteVenta[]>(`${this.uri.UriJavaFerreteria}/reportes/pagos/${inicio}/${fin}/${idCliente}`);
     }
-    obtenerReportesPagosCliente
-    ( idVenta: number ): Observable<IDTOPagosServer>
+    obtenerReportesPagosCliente( idCliente: number ): Observable<IDTOPagosServer>
     {
-        return this.http.get<IDTOPagosServer>
-        (`${this.uri.UriJavaFerreteria}/reportes/pagosclientes/${idVenta}`);
+        
+        return this.http.get<IDTOPagosServer>(`${this.uri.UriJavaFerreteria}/reportes/pagosclientes/${idCliente}`);
     }
+
     // accesoSistema( usuario: Usuario): Observable<Usuario[]>
     // {
     //     return this.http.post<Usuario[]>(`${this.uri.UriJavaFerreteria}/usuarios/accesousuario`, usuario);

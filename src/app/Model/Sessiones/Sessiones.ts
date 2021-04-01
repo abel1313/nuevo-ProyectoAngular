@@ -20,7 +20,7 @@ export class Sessiones
             sessionStorage.removeItem( nombreSesion );
         }
     }
-   static eliminarSessionesReportes( nombreSesion: string ) {
+    static eliminarSessionesReportes( nombreSesion: string ) {
 
         if ( sessionStorage.getItem( nombreSesion ) != null) 
         {

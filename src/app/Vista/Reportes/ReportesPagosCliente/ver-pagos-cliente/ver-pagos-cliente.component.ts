@@ -50,18 +50,18 @@ this.obtenerDatosVentas();
   verPagos( item: IDTOPagoReporte )
   {
     
-    this.datosPagosRealizados$ = this.serviceFerreteria.serviceReportes
-    .obtenerReportesPagosCliente( item.id);
-    this.datosPagosRealizados$
-    .subscribe
-    (
-      ( res: IDTOPagosServer )=>
-      {
-        console.log(res, " res");
-        sessionStorage.setItem('generarReportePagos', JSON.stringify(res));
-this.router.navigateByUrl('reportes/generar-reportes-pagos');
-      }
-    );
+//     this.datosPagosRealizados$ = this.serviceFerreteria.serviceReportes
+//     .obtenerReportesPagosCliente( item.id);
+//     this.datosPagosRealizados$
+//     .subscribe
+//     (
+//       ( res: IDTOPagosServer )=>
+//       {
+//         console.log(res, " res");
+//         sessionStorage.setItem('generarReportePagos', JSON.stringify(res));
+// this.router.navigateByUrl('reportes/generar-reportes-pagos');
+//       }
+//     );
     
   }
 

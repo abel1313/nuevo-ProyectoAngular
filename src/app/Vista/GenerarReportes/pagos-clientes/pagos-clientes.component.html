@@ -10,19 +10,21 @@
             <th>Acción</th>
             
           </tr>
-          <!-- <tr *ngFor="let item of datosPagosVentas">
+          <tr *ngFor="let item of datosPagosVentas">
             <th>{{ item.nombreCliente }}</th>
             <td>{{ item.totalVenta | currency }}</td>
             <td>{{ item.fechaDeposito | date:'medium' }}</td>
             <td class="d-flex justify-content-center" (click)="verPagos(item);"><button mat-stroked-button color="primary" >Ver pagos</button> </td>
-        
-          </tr> -->
+          </tr>
         </table>
       </div>
     </div>
     <div class="row">
             <div class="col-12 d-flex justify-content-end">
-                <button mat-stroked-button color="accent" class=" d-flex justify-content-center" (click)="cancelarReporteVentas()">Cancelar</button>
+                <button mat-stroked-button color="accent" class=" d-flex justify-content-center" (click)="cancelarReporteVentas()">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ></span>
+                    Cancelar
+                </button>
             </div>
 
         </div>

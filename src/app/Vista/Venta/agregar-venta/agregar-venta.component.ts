@@ -202,8 +202,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
     this.datosEmitAgregarDireccion();
 
     this.sessionUsuario.eliminarSession("datosEditarProducto");
-    this.sessionUsuario.eliminarSession("sesionPagos");
-    
+
     this.sessionSistema = sessionStorage.getItem("sessionUsuario") != null ?
       JSON.parse(sessionStorage.getItem("sessionUsuario")) : this.router.navigateByUrl("acceso");
 

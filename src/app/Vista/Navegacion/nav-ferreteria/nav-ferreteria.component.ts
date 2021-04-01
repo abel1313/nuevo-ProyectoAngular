@@ -1,7 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 @Component({
@@ -124,9 +123,6 @@ cerrarSession()
     }
     sessionStorage.removeItem("sessionUsuario");
     sessionStorage.removeItem("datosClientes");
-
-    Sessiones.eliminarSessionesReportes('sesionPagos');
-    
     
     this.router.navigateByUrl('/acceso');
   }
