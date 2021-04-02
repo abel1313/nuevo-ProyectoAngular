@@ -42,7 +42,12 @@ const routes: Routes =
  { path: 'reportes/generarreporteventas', component: GenerarReportesVentasComponent },
  { path: 'reportes/ventaspagoscliente', component: VentasPagosComponent },
 
- { path: '**', redirectTo: 'productos/buscar', pathMatch: 'full' }
+ { path: 'marcas', 
+ loadChildren: ()=> import('./Module/Marcas/module-marca/module-marca.module')
+ .then( m=> m.ModuleMarcaModule )
+},
+
+ { path: '**', redirectTo: 'marcas/buscar', pathMatch: 'full' }
 
 
 ];

@@ -61,6 +61,7 @@ import { VentasPagosComponent } from './Vista/GenerarReportes/ventas-pagos/venta
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -120,7 +121,8 @@ import { VentasPagosComponent } from './Vista/GenerarReportes/ventas-pagos/venta
             MatDatepickerModule,
             MatNativeDateModule,
             BrowserAnimationsModule,
-            MatAutocompleteModule
+            MatAutocompleteModule,
+            
     
         
   ],

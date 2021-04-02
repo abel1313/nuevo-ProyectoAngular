@@ -1,0 +1,86 @@
+<div class="container">
+    <div class="row border mt-3">
+        <div class="col-8 mt-4 offset-2">
+
+            <mat-card class="">
+
+                <div class="row center border">
+                    <div class="col-4 offset-5">
+                        <div class="box">
+                            <mat-card-header>
+                                <mat-card-title> Marcas </mat-card-title>
+                            </mat-card-header>
+                        </div>
+                    </div>
+                </div>
+
+                <mat-card-content>
+
+
+                    <form [formGroup]="profileForm" (ngSubmit)="onSubmit($event)">
+
+
+                        <div class="row p-3 border">
+                            <div class="col-6 ">
+                                <div class="box">
+                                    <mat-form-field class="row">
+                                        <mat-label>Favorite food</mat-label>
+                                        <input matInput placeholder="Ex. Pizza" formControlName="nombreMarca" required>
+                                    </mat-form-field>
+
+                                    <div class="alert alert-danger" role="alert"
+                                        *ngIf="profileForm.get('nombreMarca').hasError('required') && profileForm.get('nombreMarca').touched">
+                                        Esta campo es obligatorio
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 ">
+                                <div class="box">
+                                    <div class="ng-autocomplete col-12">
+                                        <ng-autocomplete [data]="datosProveedor$ | async" [searchKeyword]="keyword"
+                                            placeholder="Ingrese nombre del proveedor" (selected)='selectEvent($event)'
+                                            (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                                            [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+                                            formControlName="proveedor" required
+                                            >
+                                        </ng-autocomplete>
+                                        <ng-template #itemTemplate let-item>
+                                            <a [innerHTML]="item.nombreProveedor"></a>
+                                        </ng-template>
+                                        <ng-template #notFoundTemplate let-notFound>
+                                            <div [innerHTML]="notFound"></div>
+                                        </ng-template>
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Por favor ingrese el nombre
+                                    </div>
+                                </div>
+                                <div class="alert alert-danger" role="alert"
+                                *ngIf="profileForm.get('proveedor').hasError('required') && profileForm.get('proveedor').touched">
+                                Esta campo es obligatorio
+                            </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12 d-flex justify-content-end">
+                                <button mat-raised-button color="accent" type="submit" [disabled]="!profileForm.valid" class="col-4">
+                                    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true" *ngIf="spinner"></span>
+                                    Agregar</button>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-success" role="alert" *ngIf="mensaje">
+                           <p class="text-center fw-bolder"> Se registró correctamente</p>
+                          </div>
+                    </form>
+                </mat-card-content>
+  
+            </mat-card>
+
+        </div>
+    </div>
+
+
+
+
+</div>

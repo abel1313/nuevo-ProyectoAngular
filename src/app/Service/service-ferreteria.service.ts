@@ -17,6 +17,7 @@ import { ServicePermisos } from './ServicePermisos/ServicePermisos';
 import { ServicePedido } from './ServicePedido/ServicePedido';
 import { ServiceDireccion } from './ServiceDireccion/ServiceDireccion';
 import { ServiceReportes } from './ServiceReportes/ServiceReportes';
+import { ServiceMarca } from './ServiceMarcas/ServiceMarca';
 
 
 
@@ -103,6 +104,8 @@ servicePedido = new ServicePedido(this.http);
 serviceDireccion = new ServiceDireccion(this.http);
 
 serviceReportes = new ServiceReportes( this.http );
+
+servicemarca = new ServiceMarca( this.http );
 
 
 /*

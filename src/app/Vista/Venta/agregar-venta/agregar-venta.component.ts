@@ -191,9 +191,8 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
     }
 
 
-  ngOnInit(): void {
-
-
+  ngOnInit(): void 
+  {
 
     this.tomarDetalle();
     this.getClientes();
@@ -442,6 +441,8 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
 
 
   tomarDetalle() {
+
+
 
     let venta = JSON.parse(sessionStorage.getItem("carritoventa"));
 
