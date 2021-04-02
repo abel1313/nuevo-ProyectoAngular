@@ -49,7 +49,7 @@ export class AccederUsuarioComponent implements OnInit {
   {
 
     if( sessionStorage.getItem("sessionUsuario") != null )
-        this.router.navigateByUrl('mostrarproductos');
+        this.router.navigateByUrl('productos/buscar');
   }
 
   accederSistema()
@@ -76,10 +76,6 @@ export class AccederUsuarioComponent implements OnInit {
 
   buscarUsuarioServidor()
   {
-
-  
-
-
     this._ngZone.runOutsideAngular(()=>
     {
       this.subscription = this.serviceFerreteria.serviceUsuario
@@ -91,12 +87,9 @@ export class AccederUsuarioComponent implements OnInit {
           this._ngZone.run(()=>
           {
             this.datAccesoUsr = res;
-
-           
             if( this.datAccesoUsr.usuario == null )
             {
               this.mensajeSpinner = true;
-
               setTimeout(() => {
                 this.mensajeErrorAcceso = true;
                 this.mensajeSpinner = false;

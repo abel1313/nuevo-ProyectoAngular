@@ -21,8 +21,8 @@
     </div>
     <div class="row">
             <div class="col-12 d-flex justify-content-end">
-                <button mat-stroked-button color="accent" class=" d-flex justify-content-center" (click)="cancelarReporteVentas()">
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" ></span>
+                <button mat-stroked-button color="accent" class=" d-flex justify-content-center" [disabled]="btnCancelarPagos" (click)="cancelarReporteVentas()">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="spinnerPagos"></span>
                     Cancelar
                 </button>
             </div>

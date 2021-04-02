@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 @Component({
@@ -23,6 +24,7 @@ export class GenerarReportesComponent implements OnInit {
   ngOnInit(): void 
   {
 
+    Sessiones.eliminarSessionesReportes('editarMarca');
   }
 
   eventReporteVentas()

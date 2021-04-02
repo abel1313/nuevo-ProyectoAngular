@@ -29,7 +29,7 @@ export class GenerarReportesVentasComponent implements OnInit {
   ngOnInit(): void 
   {
 
-
+    Sessiones.eliminarSessionesReportes('editarMarca');
  this.sesionesReportes();
 }
 

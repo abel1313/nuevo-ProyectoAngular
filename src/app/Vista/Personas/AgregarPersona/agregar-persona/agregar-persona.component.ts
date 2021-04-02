@@ -67,6 +67,7 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    Sessiones.eliminarSessionesReportes('editarMarca');
     this.mensajeAgregar = this.router.url;
 
 

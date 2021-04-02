@@ -17,7 +17,7 @@
                     <th>{{ item.nombreMarca}}</th>
                     <td>{{ item.proveedores.nombreProveedor}}</td>
                     <td>
-                        <button mat-raised-button color="accent">Editar</button>
+                        <button mat-raised-button color="accent" (click)="editarMarca(item);">Editar</button>
                     </td>
                   </tr>
                 </tbody>

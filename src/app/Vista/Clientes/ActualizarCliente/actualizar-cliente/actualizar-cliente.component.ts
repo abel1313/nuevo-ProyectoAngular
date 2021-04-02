@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 
 @Component({
   selector: 'app-actualizar-cliente',
@@ -9,7 +10,10 @@ export class ActualizarClienteComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+
+    Sessiones.eliminarSessionesReportes('editarMarca');
   }
 
 }

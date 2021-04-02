@@ -58,6 +58,7 @@ export class AgregarPermisosComponent implements OnInit, OnDestroy {
     this.getUsuarios();
 
     this.sessionProducto.eliminarSession("datosEditarProducto");
+    Sessiones.eliminarSessionesReportes('editarMarca');
 
   }
 

@@ -30,6 +30,7 @@ export class VerPagosClienteComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    Sessiones.eliminarSessionesReportes('editarMarca');
 this.obtenerDatosVentas();
   }
 

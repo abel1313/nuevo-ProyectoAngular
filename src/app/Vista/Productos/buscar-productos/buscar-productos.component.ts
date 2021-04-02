@@ -115,7 +115,7 @@ export class BuscarProductosComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void 
   {
-    
+    Sessiones.eliminarSessionesReportes('editarMarca');
      this.countProductoDetalle();
     this.controlCarritoVenta();
    this.validarCarritoCompraO();

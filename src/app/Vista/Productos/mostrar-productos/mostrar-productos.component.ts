@@ -116,6 +116,9 @@ export class MostrarProductosComponent implements OnInit {
  this.mostrarproductos();   
  this.sessionesProducto.eliminarSession("datosEditarProducto");
  this.sessionesProducto.eliminarSession("reporteVenta");
+
+ this.sessionesProducto.eliminarSession('editarMarca');
+ Sessiones.eliminarSessionesReportes('editarMarca');
   }
 
   addArray : any = [];

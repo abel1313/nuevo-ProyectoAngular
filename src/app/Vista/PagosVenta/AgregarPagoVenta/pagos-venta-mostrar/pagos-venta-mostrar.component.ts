@@ -16,6 +16,7 @@ export class PagosVentaMostrarComponent implements OnInit {
   {
 
     this.sessionProducto.eliminarSession("datosEditarProducto");
+    Sessiones.eliminarSessionesReportes('editarMarca');
   }
 
 }

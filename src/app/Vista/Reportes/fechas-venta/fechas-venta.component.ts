@@ -9,6 +9,7 @@ import { IDTOPagoReporte } from 'src/app/Model/DTO/DROPagosRepostes/IDTOPagoRepo
 import { DTOReportesVentas } from 'src/app/Model/Reportes/DTOReportesVentas';
 import { IDTOReportesVentas } from 'src/app/Model/Reportes/IDTOReportesVentas';
 import { IReporteVenta } from 'src/app/Model/Reportes/IReporteVenta';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 import { GenerarReportesVentasComponent } from '../generar-reportes-ventas/generar-reportes-ventas.component';
 
@@ -57,7 +58,7 @@ export class FechasVentaComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+    Sessiones.eliminarSessionesReportes('editarMarca');
     this.obtenerEventButton();
   }
   buscarReporteVenta() {

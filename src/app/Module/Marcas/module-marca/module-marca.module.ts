@@ -27,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { MateriaModule } from '../../materia/materia.module';
 
 
 @NgModule({
@@ -43,12 +44,14 @@ EditarMarcaComponent
     // HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatCardModule,
-    MatButtonModule,
-    MatInputModule,
-    AutocompleteLibModule,
-    MatPaginatorModule,
-    MatTableModule,
+    // MatCardModule,
+    // MatButtonModule,
+    // MatInputModule,
+    // AutocompleteLibModule,
+    // MatPaginatorModule,
+    // MatTableModule,
+
+    MateriaModule
     
 
     

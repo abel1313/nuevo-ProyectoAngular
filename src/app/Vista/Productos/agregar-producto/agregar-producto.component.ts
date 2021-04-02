@@ -18,8 +18,8 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class AgregarProductoComponent implements OnInit, OnDestroy {
 
-  constructor(private serviceProducto: ServiceFerreteriaService , private _ngZone: NgZone,
-               private router: Router ) { }
+  constructor(private serviceProducto: ServiceFerreteriaService, private _ngZone: NgZone,
+    private router: Router) { }
 
   suscription: Subscription;
   datosProveedor$: Observable<any[]>
@@ -27,7 +27,7 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
 
   tornilleria = new Tornilleria();
 
-  check: Boolean ;
+  check: Boolean;
   disa: Boolean = false;
   btnAgregarProveedor: Boolean = false;
 
@@ -39,34 +39,34 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
   // a la que pertenece el producto
   datosCategorias: any = [];
 
-  sessionesProducto = new Sessiones( this.router );
+  sessionesProducto = new Sessiones(this.router);
 
 
-  producto: Productos = 
-  {
-    idProducto: 0,
-    nombreProducto: '',
-    codigoBarrasProducto: '',
-    descripcionProducto: '',
-    caracteristicasProducto: '',
-    existenciaProducto: 0,
-    precioProducto: 0,
-    proveedor:
+  producto: Productos =
     {
-       id: 0, 
-       nombreProveedor: ''
-    }
+      idProducto: 0,
+      nombreProducto: '',
+      codigoBarrasProducto: '',
+      descripcionProducto: '',
+      caracteristicasProducto: '',
+      existenciaProducto: 0,
+      precioProducto: 0,
+      proveedor:
+      {
+        id: 0,
+        nombreProveedor: ''
+      }
 
-}
+    }
 
 
   keyword = 'nombreProveedor';
   keywordCategoria = 'nombreCategoria';
 
- // public pro: Subscription;
-  
-  ngOnInit(): void 
-  {
+  // public pro: Subscription;
+
+  ngOnInit(): void {
+    Sessiones.eliminarSessionesReportes('editarMarca');
     this.getDataProveedores();
     this.getCategorias();
 
@@ -76,20 +76,18 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
 
   }
 
-  
-  getDataProveedores(): void
-  {
-    this.suscription =  this.serviceProducto.serviceProveedor.obtenerProveedores()
-    .subscribe
-    (
-      res => 
-      {
-       // console.log(res);
-        this.datosProveedores = res;
-        //  console.log(this.datosProveedores);
-      },
-      error => console.log(error)
-    );
+
+  getDataProveedores(): void {
+    this.suscription = this.serviceProducto.serviceProveedor.obtenerProveedores()
+      .subscribe
+      (
+        res => {
+          // console.log(res);
+          this.datosProveedores = res;
+          //  console.log(this.datosProveedores);
+        },
+        error => console.log(error)
+      );
 
   }
 
@@ -106,139 +104,124 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
     // fetch remote data from here
     // And reassign the 'data' which is binded to 'data' property.
   }
-  
-  onFocused(e: any){
+
+  onFocused(e: any) {
     // do something when input is focused
   }
-  changeS(eve: any)
-  {
-    if(eve.target.value === "true")
-    {
-      this.disa  = true;
-      setTimeout(()=>{ // this will make the execution after the above boolean has changed
+  changeS(eve: any) {
+    if (eve.target.value === "true") {
+      this.disa = true;
+      setTimeout(() => { // this will make the execution after the above boolean has changed
         let nomProveedor = document.getElementById("lblNomProveedor");
         nomProveedor.focus();
         this.producto.proveedor.id = 0;
-        
-      
-      },100); 
+
+
+      }, 100);
       this.btnAgregarProveedor = true;
-    }else{
-      this.disa  = false;
+    } else {
+      this.disa = false;
       this.btnAgregarProveedor = false;
-      setTimeout(()=>{ // this will make the execution after the above boolean has changed
-        
-      },100); 
-      
+      setTimeout(() => { // this will make the execution after the above boolean has changed
+
+      }, 100);
+
     }
-    
+
   }
   // evento click para agregar un producto
-  eventAgregarProducto()
-  {
+  eventAgregarProducto() {
     // validamos que el alguna caja este vacía
-    if(this.producto.nombreProducto == "" || this.producto.codigoBarrasProducto == "" ||this.producto. descripcionProducto == "" || 
-    this.producto.caracteristicasProducto == "" || this.producto.existenciaProducto == 0 || this.producto.precioProducto == 0 || 
-    this.producto.proveedor.nombreProveedor == ""  || this.tornilleria.tornilleria.categoria.id == 0 )
-    {
+    if (this.producto.nombreProducto == "" || this.producto.codigoBarrasProducto == "" || this.producto.descripcionProducto == "" ||
+      this.producto.caracteristicasProducto == "" || this.producto.existenciaProducto == 0 || this.producto.precioProducto == 0 ||
+      this.producto.proveedor.nombreProveedor == "" || this.tornilleria.tornilleria.categoria.id == 0) {
       // si alguna caja está vacía  se ejecuta este método que solo muestra un mensaje en la vista para el ususario
       this.validarFormulario();
-      
-      alert( "Llene los campos ");
+
+      alert("Llene los campos ");
 
       // valoda que las casas de texto no esten vacías
-    }else  if(this.producto.nombreProducto != "" || this.producto.codigoBarrasProducto != "" ||this.producto. descripcionProducto != "" || 
-    this.producto.caracteristicasProducto != "" || ( this.producto.existenciaProducto != 0 && isNaN( this.producto.existenciaProducto ) ) || 
-    ( this.producto.precioProducto != 0 && isNaN( this.producto.precioProducto ) ) || 
-    this.producto.proveedor.nombreProveedor != "" &&  this.tornilleria.tornilleria.categoria.id != 0 )
-    {
+    } else if (this.producto.nombreProducto != "" || this.producto.codigoBarrasProducto != "" || this.producto.descripcionProducto != "" ||
+      this.producto.caracteristicasProducto != "" || (this.producto.existenciaProducto != 0 && isNaN(this.producto.existenciaProducto)) ||
+      (this.producto.precioProducto != 0 && isNaN(this.producto.precioProducto)) ||
+      this.producto.proveedor.nombreProveedor != "" && this.tornilleria.tornilleria.categoria.id != 0) {
       // valida que el proveedor y el nombre de proveedor se agregen
-      if( this.producto.proveedor.id > 0 && this.producto.proveedor.nombreProveedor != "" )
-      {
+      if (this.producto.proveedor.id > 0 && this.producto.proveedor.nombreProveedor != "") {
         this.btnAgregarProducto = true;
-        setTimeout(() => 
-        {
+        setTimeout(() => {
           this._ngZone.runOutsideAngular(() => {
             // realiza el service para agregar el producto
-              
-            this.suscription =  this.serviceProducto.serviceProducto.guardarProducto(this.producto)
-            .subscribe
-            (
-              res => 
-              {
-                  
-                 // this.tornilleria.tornilleria.producto.id = res.id;
+
+            this.suscription = this.serviceProducto.serviceProducto.guardarProducto(this.producto)
+              .subscribe
+              (
+                res => {
+
+                  // this.tornilleria.tornilleria.producto.id = res.id;
 
 
-              },
-              error => console.log(error)
-            );
+                },
+                error => console.log(error)
+              );
             // reenter the Angular zone and display done
-            this._ngZone.run(() => { 
-            //  console.log('Outside Done!'); 
-            
+            this._ngZone.run(() => {
+              //  console.log('Outside Done!'); 
+
             });
-       
-        });
-        this.limpiarProducto();
-        this.btnAgregarProducto = false;
+
+          });
+          this.limpiarProducto();
+          this.btnAgregarProducto = false;
         }, 3000);
 
         this.mostrarMensaje = true;
-        setTimeout(() => 
-        {
-         this.mostrarMensaje = false;
+        setTimeout(() => {
+          this.mostrarMensaje = false;
         }, 3500);
 
       }
       // si el usuario agrega un proveedor lo agrega y despúes agrega el producto
-      else if(  this.producto.proveedor.id == 0 && this.producto.proveedor.nombreProveedor != "" )
-      {
+      else if (this.producto.proveedor.id == 0 && this.producto.proveedor.nombreProveedor != "") {
         //console.log("nuevo proveedor ");
         this.btnAgregarProducto = true;
 
-       setTimeout(() =>
-       {
-        this._ngZone.runOutsideAngular(() => {
-          // realiza el service para agregar el proveedor
-          this.suscription =  this.serviceProducto.serviceProveedor.guardarProveedor(this.producto.proveedor)
-          .subscribe
-          (
-            res => 
-            {
-           
-                this.producto.proveedor.id = res.id;
-                this.suscription =  this.serviceProducto.serviceProducto.guardarProducto(this.producto)
-                .subscribe
-                (
-                  res => 
-                  {
-       
-                     // console.log(res);
-                  },
-                  error => console.log(error)
-                );
-            },
-            error => console.log(error)
-          );
-          // reenter the Angular zone and display done
-          this._ngZone.run(() => 
-          {
-            // console.log('Outside Done!'); 
+        setTimeout(() => {
+          this._ngZone.runOutsideAngular(() => {
+            // realiza el service para agregar el proveedor
+            this.suscription = this.serviceProducto.serviceProveedor.guardarProveedor(this.producto.proveedor)
+              .subscribe
+              (
+                res => {
+
+                  this.producto.proveedor.id = res.id;
+                  this.suscription = this.serviceProducto.serviceProducto.guardarProducto(this.producto)
+                    .subscribe
+                    (
+                      res => {
+
+                        // console.log(res);
+                      },
+                      error => console.log(error)
+                    );
+                },
+                error => console.log(error)
+              );
+            // reenter the Angular zone and display done
+            this._ngZone.run(() => {
+              // console.log('Outside Done!'); 
             });
-     
-      });
-      this.limpiarProducto();
-        this.btnAgregarProducto = false;
-       }, 3000);
-       this.mostrarMensaje = true;
-       setTimeout(() => 
-       {
+
+          });
+          this.limpiarProducto();
+          this.btnAgregarProducto = false;
+        }, 3000);
         this.mostrarMensaje = true;
-       }, 2000);
+        setTimeout(() => {
+          this.mostrarMensaje = true;
+        }, 2000);
 
       }
-     // console.log(this.producto);
+      // console.log(this.producto);
 
 
 
@@ -247,89 +230,83 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
 
 
     }
-    
+
   }
 
-  
+
   onKey(event: any) { // without type info
     this.valueKeyUp += event.target.value + ' | ';
   }
 
-  validarFormulario()
-  {
+  validarFormulario() {
     // Example starter JavaScript for disabling form submissions if there are invalid fields
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
 
-  // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form: any) {
-      form.addEventListener('submit', function (event: any) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-     
-        }
-        form.classList.add('was-validated')
-      }, false)
-    });
-  
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form: any) {
+        form.addEventListener('submit', function (event: any) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+
+          }
+          form.classList.add('was-validated')
+        }, false)
+      });
+
   }
 
 
 
 
-  selectEventCategoria(val: any) 
-  {
+  selectEventCategoria(val: any) {
     // fetch remote data from here
     // And reassign the 'data' which is binded to 'data' property.
     this.tornilleria.tornilleria.categoria.id = val.id;
-    
+
   }
-  
-  onChangeSearchCategoria(e: any){
+
+  onChangeSearchCategoria(e: any) {
     // do something when input is focused
   }
-  onFocusedCategoria(even: any)
-  {
+  onFocusedCategoria(even: any) {
 
-    
+
   }
 
 
 
-getCategorias()
-{
-  this.suscription = this.serviceProducto.seriviceCategoria
-  .getCategorias()
-  .subscribe
-  (
-    res=> 
-    {
-      this.datosCategorias = res;
-    },
-     err=> console.log(err)
-  );
-}
+  getCategorias() {
+    this.suscription = this.serviceProducto.seriviceCategoria
+      .getCategorias()
+      .subscribe
+      (
+        res => {
+          this.datosCategorias = res;
+        },
+        err => console.log(err)
+      );
+  }
 
 
   ngOnDestroy(): void {
     this.suscription.unsubscribe();
   }
 
-  limpiarProducto()
-  {
+  limpiarProducto() {
 
-     this.producto.idProducto = 0;
-     this.producto.nombreProducto = '';
-     this.producto.codigoBarrasProducto = '';
-     this.producto.descripcionProducto = '';
-     this.producto.caracteristicasProducto = '';
-     this.producto.existenciaProducto = 0;
-     this.producto.precioProducto = 0;
-     this.producto.proveedor.id = 0;
-     this.producto.proveedor.nombreProveedor = '';
+    this.producto.idProducto = 0;
+    this.producto.nombreProducto = '';
+    this.producto.codigoBarrasProducto = '';
+    this.producto.descripcionProducto = '';
+    this.producto.caracteristicasProducto = '';
+    this.producto.existenciaProducto = 0;
+    this.producto.precioProducto = 0;
+    this.producto.proveedor.id = 0;
+    this.producto.proveedor.nombreProveedor = '';
 
   }
 

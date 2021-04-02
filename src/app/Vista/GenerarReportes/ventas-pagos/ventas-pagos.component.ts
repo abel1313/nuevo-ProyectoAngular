@@ -5,6 +5,7 @@ import jsPDF from 'jspdf';
 import { Observable } from 'rxjs';
 import { IDTOPagosServer } from 'src/app/Model/DTO/DROPagosRepostes/IDTOPagosServer';
 import { IDTOVentaPago } from 'src/app/Model/DTO/DROPagosRepostes/IDTOVentaPago';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 
 @Component({
   selector: 'app-ventas-pagos',
@@ -26,6 +27,7 @@ export class VentasPagosComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    Sessiones.eliminarSessionesReportes('editarMarca');
 this.obtenerDatosPagosCliente();
   }
   obtenerDatosPagosCliente()

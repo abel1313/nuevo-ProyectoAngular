@@ -62,8 +62,8 @@ existenciasActuales: number = 0;
 
 
     // método para redireccionar a la vista de mostrarProducto
-    this.sessionUsuario.sessionEditarUsuario( 'mostrarProducto' );
-
+    this.sessionUsuario.sessionEditarUsuario( 'productos/buscas' );
+    Sessiones.eliminarSessionesReportes('editarMarca');
     this.getProveedores();
 
 this.obtenerProductoEditar();
@@ -134,6 +134,7 @@ this.obtenerProductoEditar();
    obtenerProductoEditar()
   {
 
+    
       this.editarProducto = 
       sessionStorage.getItem("datosEditarProducto") != null ?
       JSON.parse( sessionStorage.getItem("datosEditarProducto") ) :

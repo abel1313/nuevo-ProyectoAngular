@@ -34,7 +34,7 @@ const routes: Routes =
  { path: 'clientes/nuevo', component: AgregarClienteComponent },
  { path: 'clientes/buscar', component: BuscarClienteComponent },
  { path: 'editarcliente', component: ActualizarClienteComponent },
- { path: 'acceso', component: InicioSessionComponent },
+//  { path: 'acceso', component: InicioSessionComponent },
  { path: 'permisos/nuevo', component: AgregarPermisosComponent },
  { path: 'permisos/buscar', component: MostrarPermisosComponent },
  { path: 'reportes/reportepago', component: ReportePagoComponent },
@@ -42,12 +42,23 @@ const routes: Routes =
  { path: 'reportes/generarreporteventas', component: GenerarReportesVentasComponent },
  { path: 'reportes/ventaspagoscliente', component: VentasPagosComponent },
 
+ {
+  path: 'sistema',
+  loadChildren: ()=> import('./Module/AccesosSistema/acceso/acceso.module')
+  .then( m=> m.AccesoModule )
+},
+
  { path: 'marcas', 
  loadChildren: ()=> import('./Module/Marcas/module-marca/module-marca.module')
  .then( m=> m.ModuleMarcaModule )
 },
+{
+  path: 'proveedores',
+  loadChildren: ()=> import('./Module/Proveedor/module-proveedor/module-proveedor.module')
+  .then( m=> m.ModuleProveedorModule )
+},
 
- { path: '**', redirectTo: 'marcas/buscar', pathMatch: 'full' }
+ { path: '**', redirectTo: 'sistema/accesar', pathMatch: 'full' }
 
 
 ];

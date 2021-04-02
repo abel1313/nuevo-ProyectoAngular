@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 @Component({
@@ -24,6 +25,7 @@ export class CarritoDetalleComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    Sessiones.eliminarSessionesReportes('editarMarca');
     this.mostrarCarrito();
 
   }

@@ -5,6 +5,7 @@ import { jsPDF } from "jspdf";
 import html2canvas from 'html2canvas';
 import { IDTOPagoReporte } from 'src/app/Model/DTO/DROPagosRepostes/IDTOPagoReporte';
 import { Router } from '@angular/router';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 
 
 @Component({
@@ -15,20 +16,20 @@ import { Router } from '@angular/router';
 export class ReportePagoComponent implements OnInit {
 
   constructor
-  (
-    private router: Router
-  ) { }
+    (
+      private router: Router
+    ) { }
 
   dtoPagoReporte: IDTOPagoReporte;
- 
 
-  ngOnInit(): void 
-  {
-this.dtoPagoReporte = sessionStorage.getItem('iReportePago') != null ?
- JSON.parse(sessionStorage.getItem('iReportePago')): this.router.navigateByUrl('/ventas/buscar') ;
 
- 
-}
+  ngOnInit(): void {
+    Sessiones.eliminarSessionesReportes('editarMarca');
+    this.dtoPagoReporte = sessionStorage.getItem('iReportePago') != null ?
+      JSON.parse(sessionStorage.getItem('iReportePago')) : this.router.navigateByUrl('/ventas/buscar');
+
+
+  }
 
   pdf() {
     console.log("diste");

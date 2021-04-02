@@ -17,7 +17,7 @@ import { AgregarProductoComponent } from './Vista/Productos/agregar-producto/agr
 import { NavFerreteriaComponent } from './Vista/Navegacion/nav-ferreteria/nav-ferreteria.component';
 import { FootFerreteriaComponent } from './Vista/Footer/foot-ferreteria/foot-ferreteria.component';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
-import { AgregarProveedorComponent } from './Vista/Proveedores/agregar-proveedor/agregar-proveedor.component';
+
 import { BuscarProductosComponent } from './Vista/Productos/buscar-productos/buscar-productos.component';
 import { MostrarProductosComponent } from './Vista/Productos/mostrar-productos/mostrar-productos.component';
 import { CarritoDetalleComponent } from './Vista/DetalleVenta/carrito-detalle/carrito-detalle.component';
@@ -70,7 +70,7 @@ import { VentasPagosComponent } from './Vista/GenerarReportes/ventas-pagos/venta
     NavFerreteriaComponent,
     FootFerreteriaComponent,
     AgregarProductoComponent,
-    AgregarProveedorComponent,
+    
     BuscarProductosComponent,
     MostrarProductosComponent,
     CarritoDetalleComponent,
@@ -82,9 +82,7 @@ import { VentasPagosComponent } from './Vista/GenerarReportes/ventas-pagos/venta
     BuscarClienteComponent,
     AgregarPersonaComponent,
     ActualizarClienteComponent,
-    InicioSessionComponent,
-    RegistrarUsuarioComponent,
-    AccederUsuarioComponent,
+
     ExampleUsuarioComponent,
     AgregarPermisosComponent,
     MostrarPermisosComponent,

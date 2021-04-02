@@ -8,6 +8,7 @@ import { IMarca } from 'src/app/Model/Marcas/IMarca';
 import { IMarcas } from 'src/app/Model/Marcas/IMarcas';
 import { Marcas } from 'src/app/Model/Marcas/Marcas';
 import { IProveedor } from 'src/app/Model/Proveedores/IProveedor';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 @Component({
@@ -48,6 +49,7 @@ profileForm = new FormGroup({
 
   ngOnInit(): void 
   {
+    Sessiones.eliminarSessionesReportes('editarMarca');
     this.getDataProveedores();
   }
 

@@ -193,7 +193,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void 
   {
-
+    Sessiones.eliminarSessionesReportes('editarMarca');
     this.tomarDetalle();
     this.getClientes();
 

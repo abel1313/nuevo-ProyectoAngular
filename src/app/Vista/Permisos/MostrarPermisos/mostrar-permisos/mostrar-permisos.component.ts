@@ -18,6 +18,7 @@ export class MostrarPermisosComponent implements OnInit {
   {
 
     this.sessionProducto.eliminarSession("datosEditarProducto");
+    Sessiones.eliminarSessionesReportes('editarMarca');
   }
 
 }

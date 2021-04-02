@@ -20,6 +20,8 @@ export class ServiceMarca
 
   //  eventKeyUp$ = new EventEmitter<string>();
 
+  marcas$ = new EventEmitter<IMarcas>();
+
     constructor(private http: HttpClient){}
 
 

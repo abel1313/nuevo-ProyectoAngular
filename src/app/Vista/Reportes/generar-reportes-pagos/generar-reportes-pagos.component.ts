@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 
 @Component({
   selector: 'app-generar-reportes-pagos',
@@ -9,7 +10,9 @@ export class GenerarReportesPagosComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
+    Sessiones.eliminarSessionesReportes('editarMarca');
   }
 
 }

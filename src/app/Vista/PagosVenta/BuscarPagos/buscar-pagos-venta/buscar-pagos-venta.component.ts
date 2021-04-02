@@ -11,43 +11,40 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class BuscarPagosVentaComponent implements OnInit, OnDestroy {
 
-  constructor( private serviceFerreteria: ServiceFerreteriaService, private _ngZone: NgZone,
-                private router: Router ) { }
+  constructor(private serviceFerreteria: ServiceFerreteriaService, private _ngZone: NgZone,
+    private router: Router) { }
 
 
 
-                sessionProducto = new Sessiones( this.router );
+  sessionProducto = new Sessiones(this.router);
 
-  ngOnInit(): void 
-  {
+  ngOnInit(): void {
 
-
+    Sessiones.eliminarSessionesReportes('editarMarca');
     this.sessionProducto.eliminarSession("datosEditarProducto");
   }
 
-  keyupBuscarPago( event: KeyboardEvent )
-  {
-    
+  keyupBuscarPago(event: KeyboardEvent) {
+
   }
 
-  ngZona()
-  {
+  ngZona() {
     this._ngZone.runOutsideAngular(() => {
-      
-        // reenter the Angular zone and display done
-        this._ngZone.run(() => { console.log('Outside Done!'); });
-      
+
+      // reenter the Angular zone and display done
+      this._ngZone.run(() => { console.log('Outside Done!'); });
+
     });
   }
 
 
-  
+
 
 
 
 
   ngOnDestroy(): void {
-    
+
     // this.suscription.unsubscribe();
   }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class BuscarClienteComponent implements OnInit {
   ngOnInit(): void 
   {
 
+    Sessiones.eliminarSessionesReportes('editarMarca');
   }
   keyUpBuscarCliente( event: any)
   {

@@ -39,6 +39,8 @@ keyUpBuscarCliente: string = "";
     this.obtenerClientes();
 
     this.sessionesProducto.eliminarSession("datosEditarProducto");
+
+    Sessiones.eliminarSessionesReportes('editarMarca');
     
   }
 

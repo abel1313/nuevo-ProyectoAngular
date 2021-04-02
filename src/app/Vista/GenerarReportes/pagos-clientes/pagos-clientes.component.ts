@@ -29,8 +29,13 @@ export class PagosClientesComponent implements OnInit {
   datosPagosRealizados$: Observable<IDTOPagosServer>;
 
   datosReporteVentas$: Observable<IDTOPagoReporte[]>;
+
+
+  spinnerPagos: Boolean = false;
+  btnCancelarPagos: Boolean = false;
   ngOnInit(): void {
     this.obtenerDatosVentas();
+    Sessiones.eliminarSessionesReportes('editarMarca');
   }
 
 

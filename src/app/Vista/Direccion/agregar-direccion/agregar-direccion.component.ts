@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Direccion } from 'src/app/Model/Direccion/Direccion';
+import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { Validar } from 'src/app/Model/Validar/Validar';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
@@ -33,6 +34,8 @@ export class AgregarDireccionComponent implements OnInit {
 
   ngOnInit(): void 
   {
+
+    Sessiones.eliminarSessionesReportes('editarMarca');
   }
 
   // evento click para enviar la direccion a la venta y guardarla
