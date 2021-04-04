@@ -26,14 +26,15 @@ const routes: Routes =
  //  { path: 'persona', component: AgregarPersonaAppComponent },
  // { path: 'direccion', component: AgregarDireccionAppComponent },
  // { path: 'permiso', component: AgregarPermisoAppComponent },
- { path: 'productos/nuevo', component: AgregarProductoComponent },
- { path: 'productos/buscar', component: BuscarProductosComponent },
- { path: 'editarProducto', component: EditarProductosComponent },
+//  { path: 'productos/nuevo', component: AgregarProductoComponent },
+//  { path: 'productos/buscar', component: BuscarProductosComponent },
+//  { path: 'editarProducto', component: EditarProductosComponent },
  { path: 'ventas/nueva', component: AgregarVentaComponent },
  { path: 'ventas/buscar', component: PagosVentaMostrarComponent },
  { path: 'clientes/nuevo', component: AgregarClienteComponent },
  { path: 'clientes/buscar', component: BuscarClienteComponent },
- { path: 'editarcliente', component: ActualizarClienteComponent },
+ { path: 'clientes/editarcliente', component: ActualizarClienteComponent },
+
 //  { path: 'acceso', component: InicioSessionComponent },
  { path: 'permisos/nuevo', component: AgregarPermisosComponent },
  { path: 'permisos/buscar', component: MostrarPermisosComponent },
@@ -57,8 +58,37 @@ const routes: Routes =
   loadChildren: ()=> import('./Module/Proveedor/module-proveedor/module-proveedor.module')
   .then( m=> m.ModuleProveedorModule )
 },
+{
+  path: 'barras',
+  loadChildren: ()=> import('./Module/CodigoBarra/module-codigo-barra/module-codigo-barra.module')
+  .then( m=> m.ModuleCodigoBarraModule )
+},
+{
+  path: 'productos', 
+  loadChildren: ()=> import( './Module/Productos/module-producto/module-producto.module' )
+  .then(m=> m.ModuleProductoModule )
+},
+{
+  path: 'clientes', 
+  loadChildren: ()=> import( './Module/Clientes/module-cliente/module-cliente.module' )
+  .then(m=> m.ModuleClienteModule )
+},
 
- { path: '**', redirectTo: 'sistema/accesar', pathMatch: 'full' }
+{
+  path: 'error',
+  loadChildren: ()=> import('./Module/PaginaNoEncontrada/module-pagina-no-encontrada/module-pagina-no-encontrada.module')
+  .then( m=> m.ModulePaginaNoEncontradaModule )
+},
+
+{
+  path: 'ejemplos',
+  loadChildren: ()=> import('./Module/Ejemplo/PrimerEjemplo/primer-ejemplo/primer-ejemplo.module')
+  .then( m=> m.PrimerEjemploModule )
+},
+
+
+{ path: '**', redirectTo: 'ejemplos/primero', pathMatch: 'full' }
+//  { path: '**', redirectTo: 'error/paginanoencontrada', pathMatch: 'full' }
 
 
 ];

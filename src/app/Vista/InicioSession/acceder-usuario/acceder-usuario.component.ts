@@ -89,6 +89,7 @@ export class AccederUsuarioComponent implements OnInit {
             this.datAccesoUsr = res;
             if( this.datAccesoUsr.usuario == null )
             {
+             
               this.mensajeSpinner = true;
               setTimeout(() => {
                 this.mensajeErrorAcceso = true;
@@ -102,14 +103,15 @@ export class AccederUsuarioComponent implements OnInit {
   
             }else{
               sessionStorage.setItem("sessionUsuario", JSON.stringify(this.datAccesoUsr) );
-           
+              
               //console.log(sessionStorage.setItem("sessionUsuario", JSON.stringify(this.datAccesoUsr) ));
               this.mensajeSpinner = true;
 
               setTimeout(() => {
-                this.mensajeErrorAcceso = true;
+                this.router.navigateByUrl('productos/buscar');
+                this.mensajeErrorAcceso = false;
                 this.mensajeSpinner = false;
-                this.router.navigateByUrl('/productos/buscar');
+                
              
              //console.log(this.datAccesoUsr.listaPermiso.includes(3) , " permisos venta");
 

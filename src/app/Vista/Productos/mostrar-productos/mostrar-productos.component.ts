@@ -112,6 +112,9 @@ export class MostrarProductosComponent implements OnInit {
 
   ngOnInit(): void 
   {
+    if( sessionStorage.getItem("sessionUsuario") == null )
+        this.router.navigateByUrl('sistema/acceso');
+
     this.obtenerProductosServidor();
  this.mostrarproductos();   
  this.sessionesProducto.eliminarSession("datosEditarProducto");
@@ -119,6 +122,8 @@ export class MostrarProductosComponent implements OnInit {
 
  this.sessionesProducto.eliminarSession('editarMarca');
  Sessiones.eliminarSessionesReportes('editarMarca');
+
+ this.sessionesProducto.sesionUsuario('sistema/acceso');
   }
 
   addArray : any = [];

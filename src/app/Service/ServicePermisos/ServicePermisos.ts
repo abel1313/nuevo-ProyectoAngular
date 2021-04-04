@@ -17,9 +17,9 @@ export class ServicePermisos
     // ------------------------------ Productos ------------------------------------------ //
 
 
-       guardarPermisos( permisos: IPermisos )
+       guardarPermisos( permisos: IPermisos ): Observable<IPermisos>
        { 
-           return  this.http.post(`${this.uri.UriJavaFerreteria}/permisos/permisosAdd`, permisos);
+           return  this.http.post<IPermisos>(`${this.uri.UriJavaFerreteria}/permisos/permisosAdd`, permisos);
        } 
 
              // Returns an observable 

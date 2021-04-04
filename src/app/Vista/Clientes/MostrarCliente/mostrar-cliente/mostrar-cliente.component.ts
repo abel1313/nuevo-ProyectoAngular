@@ -53,7 +53,7 @@ keyUpBuscarCliente: string = "";
   });
 
   sessionStorage.setItem("ediatrCliente", JSON.stringify(datoEditar) );
-  this.router.navigateByUrl('/editarcliente');
+  this.router.navigateByUrl('clientes/editarcliente');
   }
 
   eventKeyUp()

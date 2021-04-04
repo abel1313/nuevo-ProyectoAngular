@@ -7,47 +7,77 @@
 
             <div class="card-body">
 
-<form>
-    <div class="row">
-        <div class="col-5">
-            <label for="lblCliente">Cliente</label>
-        </div>
-        <div class="col-7">
-            <div class="ng-autocomplete col-12 d-flex">
-                <ng-autocomplete [data]="datosUsuarios$ | async" 
-                    [searchKeyword]="keywordUsuario"
-                    placeholder="Ingrese nombre del cliente" (selected)='selectEvent($event)'
-                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate" requiered>
-                    <div class="invalid-feedback">
-                        Por favor ingrese el nombre
+                <form [formGroup]="formPermisos" (ngSubmit)="agregarPermisos($event)">
+                    <div class="row">
+                        <div class="col-2">
+                            <label for="lblCliente">Usuario</label>
+                        </div>
+                        <div class="col-10">
+                            <div class="ng-autocomplete col-10">
+                                <ng-autocomplete [data]="datosUsuarios$ | async" [searchKeyword]="keywordUsuario"
+                                    placeholder="Ingrese nombre del usuario" (selected)='selectEvent($event)'
+                                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
+                                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
+                                    formControlName="nombreUsuario" requiered>
+                                    <div class="invalid-feedback">
+                                        Por favor ingrese el nombre
+                                    </div>
+                                </ng-autocomplete>
+
+                                <ng-template #itemTemplate let-item>
+                                    <a [innerHTML]="item.nombre_Usuario"></a>
+                                </ng-template>
+
+                                <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                </ng-template>
+                            </div>
+                            <div class="alert alert-danger" role="alert"
+                            *ngIf="formPermisos.get('nombreUsuario').hasError('required') && formPermisos.get('nombreUsuario').touched">
+                            Esta campo es obligatorio
+                        </div>
+                        </div>
                     </div>
-                </ng-autocomplete>
+                    <div class="row p-3">
 
-                <ng-template #itemTemplate let-item>
-                    <a [innerHTML]="item.nombre_Usuario"></a>
-                </ng-template>
+                        <div class="col-4" *ngFor="let menu of menu$ | async">
+                            <div class="form-check form-check-inline p-2">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                    (change)="cambiando($event, valor.value)" #valor value="{{ menu.id }}">
+                                <label class="form-check-label" for="inlineCheckbox1"> {{ menu.nombreMenu }}</label>
+                            </div>
+                        </div>
+                    </div>
 
-                <ng-template #notFoundTemplate let-notFound>
-                    <div [innerHTML]="notFound"></div>
-                </ng-template>
-            </div>
-        </div>
-    </div>
-    <div class="row p-3">
+                    <div class="row" *ngIf="!btnGuardar">
+                        <div class="col-12 d-flex justify-content-end">
+                            <button [disabled]="!formPermisos.valid" class="btn btn-success col-6" type="submit">
+                                
+                                Agregar permisos</button>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="guardando">
+                        <div class="col-12">
+                            <div class="alert alert-info">  
+                                 <p class="text-center fw-bolder mt-3">Guardando 
+                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                 <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                                </p>
+                        </div>
+                        </div>
+                    </div>
 
-        <div class="col-4" *ngFor="let menu of datosMenu">
-            <div class="form-check form-check-inline p-2">
-                <input class="form-check-input" type="checkbox" 
-                id="inlineCheckbox1" (change)="cambiando($event, valor.value)" #valor value="{{ menu.id }}">
-                <label class="form-check-label" for="inlineCheckbox1"> {{ menu.nombreMenu }} {{ menu.id }}</label>
-              </div>
-        </div>
-    </div>
+                    <div class="row" *ngIf="mensaje">
+                        <div class="col-12">
+                            <div class="alert alert-info">  
+                                 <p class="text-center fw-bolder mt-3">Guardando correctamente
+                                </p>
+                        </div>
+                        </div>
+                    </div>
 
-    <button class="btn btn-success" (click)="agregarPermisos();">add</button>
-
-</form>
+                </form>
 
 
             </div>

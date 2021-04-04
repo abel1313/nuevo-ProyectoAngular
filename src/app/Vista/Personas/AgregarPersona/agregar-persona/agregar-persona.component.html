@@ -3,7 +3,8 @@
         <div class="form-group">
             <label for="nombrePersona" class="">Nombre</label>
             <input type="text" class="form-control col-12" name="nombrePersona" id="nombrePersona"
-                placeholder="Ingrese nombre persona" [(ngModel)]="cliente.cliente.persona.nombrePersona" required [disabled]="diabledInputClientePersona">
+                placeholder="Ingrese nombre persona" [(ngModel)]="cliente.cliente.persona.nombrePersona" required
+                [disabled]="diabledInputClientePersona">
             <div class="alert alert-info" *ngIf="validarnombre">
                 Por favor ingrese su nombre
             </div>
@@ -14,7 +15,8 @@
         <div class="form-group">
             <label for="telefonopersona">Teléfono</label>
             <input type="number" class="form-control" name="telefonoPersona" id="telefonopersona"
-                placeholder="Ingrese su teléfono" [(ngModel)]="cliente.cliente.persona.telefonoPersona" required [disabled]="diabledInputClientePersona">
+                placeholder="Ingrese su teléfono" [(ngModel)]="cliente.cliente.persona.telefonoPersona" required
+                [disabled]="diabledInputClientePersona">
             <div class="alert alert-info" *ngIf="validartelefono">
                 Por favor ingrese su teléfono
             </div>
@@ -26,8 +28,8 @@
     <div class="col-6">
         <div class="form-group">
             <label for="paterno">Apellido paterno</label>
-            <input type="text" class="form-control" name="paternoPersona" id="paterno" placeholder="Ingrese su paterno" [disabled]="diabledInputClientePersona"
-                [(ngModel)]="cliente.cliente.persona.paternoPersona" required>
+            <input type="text" class="form-control" name="paternoPersona" id="paterno" placeholder="Ingrese su paterno"
+                [disabled]="diabledInputClientePersona" [(ngModel)]="cliente.cliente.persona.paternoPersona" required>
 
             <div class="alert alert-info" *ngIf="validarpaterno">
                 Por favor ingrese su apellido paterno
@@ -37,8 +39,8 @@
     <div class="col-6">
         <div class="form-group">
             <label for="materno">Apellido paterno</label>
-            <input type="text" class="form-control" name="maternoPersona" id="materno" placeholder="Ingrese su materno" [disabled]="diabledInputClientePersona"
-                [(ngModel)]="cliente.cliente.persona.maternoPersona" required>
+            <input type="text" class="form-control" name="maternoPersona" id="materno" placeholder="Ingrese su materno"
+                [disabled]="diabledInputClientePersona" [(ngModel)]="cliente.cliente.persona.maternoPersona" required>
 
             <div class="alert alert-info" *ngIf="validarmaterno">
                 Por favor ingrese su apellido materno
@@ -49,24 +51,17 @@
 
 <div class="row" *ngIf="mostrarBottonCliente">
     <div class="col-8">
-        <div class="alert alert-dark" role="alert" 
-        *ngIf="buttonGuardarClienteDisabled">
-            Por favor espere, se está guardando ...
+        <div class="alert alert-dark" role="alert" *ngIf="buttonGuardarClienteDisabled">
+            {{ mensajeEspera }}
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         </div>
-
-        <div class="alert alert-dark" role="alert" 
-        *ngIf="guardarBoolean">
-           El cliente se guardo correctamente
-            
+        <div class="alert alert-dark" role="alert" *ngIf="guardarBoolean">
+           {{ mensajeGuardado }}
         </div>
-
     </div>
-
     <div class="col-4">
-        <button class="btn btn-primary" 
-        [disabled]="buttonGuardarCliente" (click)="btnGuardarCliente();">
-            
+        <button class="btn btn-primary" [disabled]="buttonGuardarCliente" (click)="btnGuardarCliente();">
+
             Gardar cliente
         </button>
     </div>
@@ -98,7 +93,8 @@
         <button *ngIf="seguimos" (click)="cancelarSeguimos()" class="btn btn-danger">cancelar</button>
     </div>
     <div class="col-2">
-        <label *ngIf="seguimos" class="form-check-label d-flex justify-content-end d-flex align-items-center" for="defaultCheck1">
+        <label *ngIf="seguimos" class="form-check-label d-flex justify-content-end d-flex align-items-center"
+            for="defaultCheck1">
             Listo
         </label>
     </div>

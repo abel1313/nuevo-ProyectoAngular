@@ -12,6 +12,14 @@ export class Sessiones
             this.router.navigateByUrl( path );
         }
     }
+     sesionUsuario( path: string )
+    {
+        if( sessionStorage.getItem("sessionUsuario") == null )
+        {
+            this.router.navigateByUrl( path );
+         
+        }
+    }
     
     eliminarSession( nombreSesion: string ) {
 

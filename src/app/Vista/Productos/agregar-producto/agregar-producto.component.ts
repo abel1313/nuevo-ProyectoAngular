@@ -138,7 +138,7 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
       // si alguna caja está vacía  se ejecuta este método que solo muestra un mensaje en la vista para el ususario
       this.validarFormulario();
 
-      alert("Llene los campos ");
+      
 
       // valoda que las casas de texto no esten vacías
     } else if (this.producto.nombreProducto != "" || this.producto.codigoBarrasProducto != "" || this.producto.descripcionProducto != "" ||

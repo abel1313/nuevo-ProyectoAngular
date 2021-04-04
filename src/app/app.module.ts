@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule  } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AgregarProductoComponent } from './Vista/Productos/agregar-producto/agregar-producto.component';
+
 
 
 import { NavFerreteriaComponent } from './Vista/Navegacion/nav-ferreteria/nav-ferreteria.component';
@@ -29,9 +29,7 @@ import { MostrarClienteComponent } from './Vista/Clientes/MostrarCliente/mostrar
 import { BuscarClienteComponent } from './Vista/Clientes/BuscarCliente/buscar-cliente/buscar-cliente.component';
 import { AgregarPersonaComponent } from './Vista/Personas/AgregarPersona/agregar-persona/agregar-persona.component';
 import { ActualizarClienteComponent } from './Vista/Clientes/ActualizarCliente/actualizar-cliente/actualizar-cliente.component';
-import { InicioSessionComponent } from './Vista/InicioSession/inicio-session/inicio-session.component';
-import { RegistrarUsuarioComponent } from './Vista/InicioSession/registrar-usuario/registrar-usuario.component';
-import { AccederUsuarioComponent } from './Vista/InicioSession/acceder-usuario/acceder-usuario.component';
+
 import { ExampleUsuarioComponent } from './Vista/InicioSession/example-usuario/example-usuario.component';
 import { AgregarPermisosComponent } from './Vista/Permisos/AgregarPermisos/agregar-permisos/agregar-permisos.component';
 import { MostrarPermisosComponent } from './Vista/Permisos/MostrarPermisos/mostrar-permisos/mostrar-permisos.component';
@@ -58,6 +56,10 @@ import { GenerarReportesPagosComponent } from './Vista/Reportes/generar-reportes
 import { GenerarReportesVentasComponent } from './Vista/Reportes/generar-reportes-ventas/generar-reportes-ventas.component';
 import { PagosClientesComponent } from './Vista/GenerarReportes/pagos-clientes/pagos-clientes.component';
 import { VentasPagosComponent } from './Vista/GenerarReportes/ventas-pagos/ventas-pagos.component';
+import { CodigoBarrasComponent } from './Vista/CodigoBarra/codigo-barras/codigo-barras.component';
+import { ModuleProductoModule } from './Module/Productos/module-producto/module-producto.module';
+import { PrimerEjemploComponent } from './Vista/Ejemplos/PrimerEjemplo/primer-ejemplo/primer-ejemplo.component';
+
 
 
 
@@ -69,36 +71,30 @@ import { VentasPagosComponent } from './Vista/GenerarReportes/ventas-pagos/venta
 
     NavFerreteriaComponent,
     FootFerreteriaComponent,
-    AgregarProductoComponent,
     
-    BuscarProductosComponent,
-    MostrarProductosComponent,
-    CarritoDetalleComponent,
-    AgregarVentaComponent,
-    PagosVentaMostrarComponent,
-    BuscarPagosVentaComponent,
-    AgregarClienteComponent,
-    MostrarClienteComponent,
-    BuscarClienteComponent,
-    AgregarPersonaComponent,
-    ActualizarClienteComponent,
-
+  
     ExampleUsuarioComponent,
     AgregarPermisosComponent,
     MostrarPermisosComponent,
-    EditarProductosComponent,
-    AgregarDireccionComponent,
+    
+  
     ReportePagoComponent,
-    PaginaNoEncontradaComponent,
+    
     FechasVentaComponent,
     GenerarReportesComponent,
     GenerarReportesPagosComponent,
     GenerarReportesVentasComponent,
     PagosClientesComponent,
-    VentasPagosComponent
+    VentasPagosComponent,
+    CodigoBarrasComponent,
+
+    AgregarVentaComponent,
+    PagosVentaMostrarComponent,
+    BuscarPagosVentaComponent,
     
-    
-    
+    AgregarDireccionComponent,
+
+
 
 
   ],
@@ -120,6 +116,7 @@ import { VentasPagosComponent } from './Vista/GenerarReportes/ventas-pagos/venta
             MatNativeDateModule,
             BrowserAnimationsModule,
             MatAutocompleteModule,
+         
             
     
         

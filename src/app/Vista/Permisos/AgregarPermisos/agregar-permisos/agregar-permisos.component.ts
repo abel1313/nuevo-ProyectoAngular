@@ -1,9 +1,11 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { ICliente } from 'src/app/Model/Clientes/ICliente';
 import { IMenu } from 'src/app/Model/Menu/IMenu';
 import { Menu } from 'src/app/Model/Menu/Menu';
+import { IPermisos } from 'src/app/Model/Permisos/IPermisos';
 import { Permisos } from 'src/app/Model/Permisos/Permisos';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { Usuario } from 'src/app/Model/Usuarios/Usuario';
@@ -20,8 +22,18 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class AgregarPermisosComponent implements OnInit, OnDestroy {
 
+  formPermisos: FormGroup;
   constructor(private serviceFerreteria: ServiceFerreteriaService,
-    private router: Router, private __ngZone: NgZone) { }
+    private router: Router, private __ngZone: NgZone, private fb: FormBuilder) 
+    {
+
+      this.formPermisos = this.fb.group
+      ({
+        nombreUsuario: new FormControl('', [ Validators.required ]),
+        
+      });
+
+     }
 
 
   datosMenu: any = [];
@@ -52,59 +64,74 @@ export class AgregarPermisosComponent implements OnInit, OnDestroy {
   
   sessionProducto = new Sessiones( this.router );
 
+  menu$: Observable<IMenu[]>;
+  permiso$: Observable<IPermisos>;
+
+  guardando: Boolean = false;
+  mensaje: Boolean = false;
+  btnGuardar: Boolean = false;
+
 
   ngOnInit(): void {
     this.getMenu();
     this.getUsuarios();
+
+    
 
     this.sessionProducto.eliminarSession("datosEditarProducto");
     Sessiones.eliminarSessionesReportes('editarMarca');
 
   }
 
-  getMenu() {
+  getMenu() 
+  {
 
-    this.subscription = this.serviceFerreteria.serviceMenu
-      .getMenus()
-      .subscribe
-      (
-        menu => {
-          this.datosMenu = menu;
+    this.menu$ = this.serviceFerreteria.serviceMenu
+      .getMenus();
 
-        }
-      );
   }
 
-  getUsuarios() {
+  getUsuarios() 
+  {
     this.datosUsuarios$ = this.serviceFerreteria.serviceUsuario.getUsuarios();
   }
 
-  agregarPermisos() {
+  agregarPermisos( e: Event ) {
+
+    if( ! this.formPermisos.invalid)
+    {      
+      this.btnGuardar = true;
+      this.guardando = true;
+
+      this.calandoArreglo.forEach(element => {
+
+        this.mx.menu.id = parseInt(element) ;
+        this.permisos.permisos.menu = this.mx.menu;
+        this.__ngZone.runOutsideAngular(()=>
+        {
+          this.permiso$ = this.serviceFerreteria.servicePermisos
+          .guardarPermisos( this.permisos.permisos );
+        });
+      });
+
+      setTimeout(() => {
+
+       this.formPermisos.get('nombreUsuario').setValue('');   
+        
+        this.guardando = false;
+        this.mensaje = true;
+        setTimeout(() => {
+          this.btnGuardar = false;
+          this.mensaje = false;
+        }, 2000);
+      }, 2000);
+      
+    }
+
+    e.preventDefault();
 
 
-
-
-this.calandoArreglo.forEach(element => {
   
-
-  this.mx.menu.id = parseInt(element) ;
-
-  this.permisos.permisos.menu = this.mx.menu;
-
-  this.subscription = this.serviceFerreteria.servicePermisos
-.guardarPermisos( this.permisos.permisos )
-.subscribe
-(
-  res=>
-  {
-    console.log(res);
-  }, err=>console.log(err)
-);
-
-  console.log( this.permisos.permisos );
-});
-
-
 
 
 

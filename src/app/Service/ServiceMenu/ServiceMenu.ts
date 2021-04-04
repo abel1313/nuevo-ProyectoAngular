@@ -21,10 +21,10 @@ export class ServiceMenu
 
     // ------------------------------ Menu ------------------------------------------ //
 
-      getMenus(): Observable<any>
+      getMenus(): Observable<IMenu[]>
       {
         
-        return this.http.get(`${this.uri.UriJavaFerreteria}/menus`)
+        return this.http.get<IMenu[]>(`${this.uri.UriJavaFerreteria}/menus`)
       }
       getOneMenu(nombreProducto:string)
       {

@@ -64,6 +64,8 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
   sessionProducto = new Sessiones(this.router);
 
+  mensajeEspera: string = '';
+  mensajeGuardado: string = '';
 
   ngOnInit(): void {
 
@@ -75,11 +77,13 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
     if (this.mensajeAgregar == "/productos/buscar") {
       this.chechVenta = true;
     }
-    if (this.mensajeAgregar == "/editarcliente") {
+    if (this.mensajeAgregar == "/clientes/editarcliente") {
       this.editarClientex = sessionStorage.getItem("ediatrCliente") != null ?
         JSON.parse(sessionStorage.getItem("ediatrCliente")) : null;
       this.mostrarMensaje = 'Editar cliente';
-
+      this.mostrarBottonCliente = true;
+this.mensajeEspera = 'Por favor espere, se está guardando ...';
+this.mensajeGuardado = ' El cliente se actualizó correctamente';
       this.cliente.cliente = this.editarClientex[0];
       if (this.cliente.cliente.id != 0) {
 
@@ -92,6 +96,8 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
     }
     if (this.mensajeAgregar == "/clientes/nuevo") {
       this.mostrarMensaje = 'Nuevo cliente';
+      this.mensajeEspera = 'Por favor espere, se está guardando ...';
+      this.mensajeGuardado = ' El cliente se guardo correctamente';
       this.mostrarBottonCliente = true;
     }
 
@@ -139,23 +145,14 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
       ) {
         if (this.mensajeAgregar == "/clientes/nuevo") {
-
-
           this.btnMensaje = true;
-
           this.guardarCliente();
-
           setTimeout(() => { this.btnMensaje = false; }, 2000);
-
           setTimeout(() => { this.btnMensajeAgregar = false; }, 2000);
-
           setTimeout(() => { this.btnMensajeAgregar = true; }, 2100);
-
           setTimeout(() => { this.btnMensajeAgregar = false; }, 3200);
-
-
         }
-        if (this.mensajeAgregar == "/editarcliente") {
+        if (this.mensajeAgregar == "/clientes/editarcliente") {
 
           this.udateCliente$ = this.serviceFerreteria
             .serviceCliente.actualizarCliente(this.cliente.cliente);
