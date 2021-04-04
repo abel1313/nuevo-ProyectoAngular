@@ -5,14 +5,14 @@ import { AgregarVentaComponent } from 'src/app/Vista/Venta/agregar-venta/agregar
 
 const routes: Routes = 
 [
-  // {
-  //   path: '',
-  //   children: 
-  //   [
-  //     { path: 'nueva', component: AgregarVentaComponent },
-  //     { path: 'buscar', component: PagosVentaMostrarComponent },
-  //   ]
-  // }
+  {
+    path: '',
+    children: 
+    [
+      { path: 'nueva', component: AgregarVentaComponent },
+      { path: 'buscar', component: PagosVentaMostrarComponent },
+    ]
+  }
 ];
 
 @NgModule({

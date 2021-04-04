@@ -29,11 +29,7 @@ const routes: Routes =
 //  { path: 'productos/nuevo', component: AgregarProductoComponent },
 //  { path: 'productos/buscar', component: BuscarProductosComponent },
 //  { path: 'editarProducto', component: EditarProductosComponent },
- { path: 'ventas/nueva', component: AgregarVentaComponent },
- { path: 'ventas/buscar', component: PagosVentaMostrarComponent },
- { path: 'clientes/nuevo', component: AgregarClienteComponent },
- { path: 'clientes/buscar', component: BuscarClienteComponent },
- { path: 'clientes/editarcliente', component: ActualizarClienteComponent },
+
 
 //  { path: 'acceso', component: InicioSessionComponent },
  { path: 'permisos/nuevo', component: AgregarPermisosComponent },
@@ -73,6 +69,16 @@ const routes: Routes =
   loadChildren: ()=> import( './Module/Clientes/module-cliente/module-cliente.module' )
   .then(m=> m.ModuleClienteModule )
 },
+{
+  path: 'ventas',
+  loadChildren: ()=> import('./Module/Ventas/module-venta/module-venta.module')
+  .then( m=> m.ModuleVentaModule )
+},
+{
+  path: 'ejemplo',
+  loadChildren: ()=> import('./Module/Ejemplo/PrimerEjemplo/primer-ejemplo/primer-ejemplo.module')
+  .then( m=> m.PrimerEjemploModule )
+},
 
 {
   path: 'error',
@@ -80,15 +86,11 @@ const routes: Routes =
   .then( m=> m.ModulePaginaNoEncontradaModule )
 },
 
-{
-  path: 'ejemplos',
-  loadChildren: ()=> import('./Module/Ejemplo/PrimerEjemplo/primer-ejemplo/primer-ejemplo.module')
-  .then( m=> m.PrimerEjemploModule )
-},
 
 
-{ path: '**', redirectTo: 'ejemplos/primero', pathMatch: 'full' }
-//  { path: '**', redirectTo: 'error/paginanoencontrada', pathMatch: 'full' }
+
+//{ path: '**', redirectTo: 'ejemplos/primero', pathMatch: 'full' }
+  { path: '**', redirectTo: 'error/paginanoencontrada', pathMatch: 'full' }
 
 
 ];

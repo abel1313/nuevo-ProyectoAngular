@@ -1,4 +1,5 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Observable, Subscription } from 'rxjs';
@@ -18,8 +19,22 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class AgregarProductoComponent implements OnInit, OnDestroy {
 
+  formPrducto: FormControl;
+
   constructor(private serviceProducto: ServiceFerreteriaService, private _ngZone: NgZone,
-    private router: Router) { }
+    private router: Router, private fb: FormBuilder ) 
+    {
+     this.formPrducto = fb.control
+      ({
+        nombreProducto: new FormControl(''),
+        codigoBarraProducto: new FormControl(''),
+        DesciptcionProducto: new FormControl(''),
+        CaracteriasticasProducto: new FormControl(''),
+        existenciasProducto: new FormControl(''),
+        precioProducto: new FormControl(''),
+        proveedor: new FormControl(''),
+      });
+     }
 
   suscription: Subscription;
   datosProveedor$: Observable<any[]>

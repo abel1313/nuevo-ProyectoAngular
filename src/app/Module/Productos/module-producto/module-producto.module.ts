@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MostrarProductosComponent } from 'src/app/Vista/Productos/mostrar-productos/mostrar-productos.component';
 import { CarritoDetalleComponent } from 'src/app/Vista/DetalleVenta/carrito-detalle/carrito-detalle.component';
 import { AppModule } from 'src/app/app.module';
+import { CarritoDetalleModule } from '../../CarritoDetalle/carrito-detalle/carrito-detalle.module';
 
 
 @NgModule({
@@ -20,7 +21,7 @@ import { AppModule } from 'src/app/app.module';
     EditarProductosComponent,
     BuscarProductosComponent,
     MostrarProductosComponent,
-    CarritoDetalleComponent
+    
     
   ],
   imports: [
@@ -29,6 +30,7 @@ import { AppModule } from 'src/app/app.module';
     MateriaModule,
     FormsModule,
     ReactiveFormsModule,
+    CarritoDetalleModule
     
   ],
   exports:

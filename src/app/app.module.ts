@@ -23,7 +23,7 @@ import { MostrarProductosComponent } from './Vista/Productos/mostrar-productos/m
 import { CarritoDetalleComponent } from './Vista/DetalleVenta/carrito-detalle/carrito-detalle.component';
 import { AgregarVentaComponent } from './Vista/Venta/agregar-venta/agregar-venta.component';
 import { PagosVentaMostrarComponent } from './Vista/PagosVenta/pagos-venta-mostrar/pagos-venta-mostrar.component';
-import { BuscarPagosVentaComponent } from './Vista/PagosVenta/BuscarPagos/buscar-pagos-venta/buscar-pagos-venta.component';
+
 import { AgregarClienteComponent } from './Vista/Clientes/AgregarCliente/agregar-cliente/agregar-cliente.component';
 import { MostrarClienteComponent } from './Vista/Clientes/MostrarCliente/mostrar-cliente/mostrar-cliente.component';
 import { BuscarClienteComponent } from './Vista/Clientes/BuscarCliente/buscar-cliente/buscar-cliente.component';
@@ -88,12 +88,9 @@ import { PrimerEjemploComponent } from './Vista/Ejemplos/PrimerEjemplo/primer-ej
     VentasPagosComponent,
     CodigoBarrasComponent,
 
-    AgregarVentaComponent,
-    PagosVentaMostrarComponent,
-    BuscarPagosVentaComponent,
     
-    AgregarDireccionComponent,
-
+    
+    
 
 
 
@@ -108,7 +105,7 @@ import { PrimerEjemploComponent } from './Vista/Ejemplos/PrimerEjemplo/primer-ej
             FormsModule,
             
             ReactiveFormsModule,
-            AutocompleteLibModule,
+            
             MatButtonModule,
             MatCardModule,
             MatInputModule,
