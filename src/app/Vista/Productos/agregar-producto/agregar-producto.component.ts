@@ -20,7 +20,7 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
   templateUrl: './agregar-producto.component.html',
   styleUrls: ['./agregar-producto.component.css']
 })
-export class AgregarProductoComponent implements OnInit, OnDestroy {
+export class AgregarProductoComponent implements OnInit {
 
 
   formCalando: FormGroup;
@@ -405,9 +405,7 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(): void {
-    this.suscription.unsubscribe();
-  }
+
 
   limpiarProducto() {
 

@@ -35,10 +35,14 @@ const routes: Routes =
  { path: 'permisos/nuevo', component: AgregarPermisosComponent },
  { path: 'permisos/buscar', component: MostrarPermisosComponent },
  { path: 'reportes/reportepago', component: ReportePagoComponent },
- { path: 'reportes/generarreportes', component: GenerarReportesComponent },
- { path: 'reportes/generarreporteventas', component: GenerarReportesVentasComponent },
+//  { path: 'reportes/generarreportes', component: GenerarReportesComponent },
+//  { path: 'reportes/generarreporteventas', component: GenerarReportesVentasComponent },
  { path: 'reportes/ventaspagoscliente', component: VentasPagosComponent },
 
+ {
+   path: 'reportes',
+   loadChildren: ()=> import('./Module/Reportes/module-reportes/module-reportes.module').then(m=> m.ModuleReportesModule )
+ },
  {
   path: 'sistema',
   loadChildren: ()=> import('./Module/AccesosSistema/acceso/acceso.module')

@@ -14,6 +14,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 
 
@@ -34,6 +35,8 @@ import { MatTableModule } from '@angular/material/table';
     AutocompleteLibModule,
     MatPaginatorModule,
     MatTableModule,
+    MatInputModule,
+    MatDatepickerModule,
 
   ]
 })

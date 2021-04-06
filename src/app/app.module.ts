@@ -80,11 +80,11 @@ import { PrimerEjemploComponent } from './Vista/Ejemplos/PrimerEjemplo/primer-ej
   
     ReportePagoComponent,
     
-    FechasVentaComponent,
-    GenerarReportesComponent,
+    
+    
     GenerarReportesPagosComponent,
-    GenerarReportesVentasComponent,
-    PagosClientesComponent,
+    
+    
     VentasPagosComponent,
     CodigoBarrasComponent,
 
@@ -108,8 +108,7 @@ import { PrimerEjemploComponent } from './Vista/Ejemplos/PrimerEjemplo/primer-ej
             
             MatButtonModule,
             MatCardModule,
-            MatInputModule,
-            MatDatepickerModule,
+
             MatNativeDateModule,
             BrowserAnimationsModule,
             MatAutocompleteModule,

@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
@@ -9,10 +9,11 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
   templateUrl: './nav-ferreteria.component.html',
   styleUrls: ['./nav-ferreteria.component.css']
 })
-export class NavFerreteriaComponent implements OnInit {
+export class NavFerreteriaComponent implements OnInit, OnDestroy {
 
   constructor( public serviceFerreteria: ServiceFerreteriaService,
               private router: Router, _ngZone: NgZone ) { }
+
 
   nombreUsuario: string;
 
@@ -131,6 +132,8 @@ cerrarSession()
   }
 }
 
-
+ngOnDestroy(): void {
+  this.subscription.unsubscribe();
+}
 
 }

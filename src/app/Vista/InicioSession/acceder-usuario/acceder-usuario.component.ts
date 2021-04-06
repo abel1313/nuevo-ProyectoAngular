@@ -63,6 +63,7 @@ export class AccederUsuarioComponent implements OnInit {
     if( this.usuarioAcceder.usuarioAcceso.nombre_Usuario != ''
     && this.usuarioAcceder.usuarioAcceso.contra_Usuario != '')
     {
+      this.mensajeSpinner = true;
       this.buscarUsuarioServidor();
     }
     
@@ -91,7 +92,7 @@ export class AccederUsuarioComponent implements OnInit {
             if( this.datAccesoUsr.usuario == null )
             {
              
-              this.mensajeSpinner = true;
+             
               setTimeout(() => {
                 this.mensajeErrorAcceso = true;
                 this.mensajeSpinner = false;
@@ -179,7 +180,9 @@ export class AccederUsuarioComponent implements OnInit {
   
   }
 
-  ngOnDestroy(): void {
+  ngOnDestroy(): void 
+  {
+    this.subscription.unsubscribe();
   
   }
 

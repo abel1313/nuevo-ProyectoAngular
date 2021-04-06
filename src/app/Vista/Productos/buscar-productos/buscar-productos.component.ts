@@ -1,6 +1,6 @@
 import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IDetalleVenta } from 'src/app/Model/DetalleVenta/DetalleVenta';
 import { IVenta } from 'src/app/Model/Venta/Venta';
 import { IProducto } from 'src/app/Model/Productos/IProducto';
@@ -27,6 +27,8 @@ export class BuscarProductosComponent implements OnInit, OnDestroy {
   countProductoBuscarProducto: number = 0;
 
   verCarritoCompras: Boolean = false; 
+
+  verCarritoCompras$: Observable<Boolean>;
 
   sessionesProducto = new Sessiones( this.router );
 

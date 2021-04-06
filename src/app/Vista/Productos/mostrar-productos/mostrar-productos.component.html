@@ -9,7 +9,7 @@
                     </div>
                     <div class="col-4 d-flex justify-content-end">
                         <button value="{{ prod.id }}" #vas>
-                            <img [src]="['../../../../assets/ImagenesFerreteria/iconFerreteria/icono-agregar.jpg']"
+                            <img [src]="['./assets/ImagenesFerreteria/iconFerreteria/icono-agregar.jpg']" title="agregar al detalle"
                                 class="rounded" alt="" (click)="agregarproductodetalle(vas.value);">
                         </button>
                     </div>
@@ -18,12 +18,12 @@
             <div class="card-body">
                 <div class="row border border-black">
                     <div class="col-8">
-                        <img [src]="['../../../../assets/ImagenesFerreteria/iconFerreteria/icon-eliminar.png']"
+                        <img [src]="['./assets/ImagenesFerreteria/iconFerreteria/icon-eliminar.png']"
                             class="rounded" alt="" (click)="eliminarproducto();">
                     </div>
                     <div class="col-4 d-flex justify-content-end">
                         <button value="{{ prod.id }}" #productoEditar>
-                            <img [src]="['../../../../assets/ImagenesFerreteria/iconFerreteria/icon-editar.jpg']"
+                            <img [src]="['./assets/ImagenesFerreteria/iconFerreteria/icon-editar.jpg']" title="editar"
                                 class="rounded" alt="" (click)="editarproducto(prod);">
                         </button>
                     </div>
