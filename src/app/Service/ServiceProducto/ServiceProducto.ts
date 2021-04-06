@@ -6,14 +6,15 @@ import { catchError, retry } from 'rxjs/operators';
 import { IProducto } from 'src/app/Model/Productos/IProducto';
 import { IProductoAll } from 'src/app/Model/Productos/IProductoAll';
 import { Productos } from 'src/app/Model/Productos/Producto';
+import { ProductoServer } from 'src/app/Model/Productos/ProductoServer';
 import { UriJava } from 'src/app/URISERVER/UriJava';
 
 export class ServiceProducto
 {
     private URI_JAVA_Productos = 'http://localhost:8080/ferreteria/productos';
-    private uri = new UriJava();
+    
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string ){}
 
     caracterKeyUp$ = new EventEmitter<string>();
     caracterInput$ = new EventEmitter<string>();
@@ -32,17 +33,17 @@ export class ServiceProducto
     }
   getProductoAll(): Observable<any[]>
   {
-    return this.http.get<any[]>(`${this.uri.UriJavaFerreteria}/productos`)
+    return this.http.get<any[]>(`${this.uriServer}/productos`)
   }
 
   // verificarCodigoBarra( codigoBarra: string )
   // {
-  //   return this.http.get(`${this.uri.UriJavaFerreteria}/proveedores/existsproveedor/${codigoBarra}`);
+  //   return this.http.get(`${this.uriServer}/proveedores/existsproveedor/${codigoBarra}`);
   // }
   getOneProduct(nombreProducto:string)
   {
     //console.log(`${this.URI_JAVA_Productos}/all/${nombreProducto}`);
-    return this.http.get(`${this.uri.UriJavaFerreteria}/productos/buscarProductos/${nombreProducto}`);
+    return this.http.get(`${this.uriServer}/productos/buscarProductos/${nombreProducto}`);
   }
       // Returns an observable 
       saveProduct(file: Object):Observable<any> { 
@@ -53,6 +54,15 @@ export class ServiceProducto
            // with formData as req 
            return  this.http.post(this.URI_JAVA_Productos, file);
        } 
+
+       nuevoProducto( producto: IProducto ): Observable<IProducto>
+       {
+        return  this.http.post<IProducto>(`${this.uriServer}/productos/guardarProducto` , producto );
+       }
+       existeCodigoBarra( codigoBarra: string ): Observable<Boolean>
+       {
+        return  this.http.get<Boolean>(`${this.uriServer}/productos/buscarCodigo/${codigoBarra}` );
+       }
 
        guardarProducto( producto: Productos ):Observable<any> { 
   
@@ -65,12 +75,12 @@ export class ServiceProducto
        } 
        editarrProductoServer( producto: IProductoAll ): Observable<any> { 
 
-   return  this.http.put<IProductoAll>(`${this.uri.UriJavaFerreteria}/productos/editarProducto` , producto);
+   return  this.http.put<IProductoAll>(`${this.uriServer}/productos/editarProducto` , producto);
              } 
        existsCodigoBarraEditar( producto: IProductoAll ): Observable<any>
        {
          
-         return this.http.post(`${this.uri.UriJavaFerreteria}/productos/buscarCodigoEditar`, producto);
+         return this.http.post(`${this.uriServer}/productos/buscarCodigoEditar`, producto);
        }
 
              // Returns an observable 

@@ -17,17 +17,17 @@ export class ServicePedido
 
     // direccion$ = new EventEmitter<IDireccion>();
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string ){}
     
-    private uri = new UriJava();
+    
  
      obtenerPedidos(): Observable<IPedido[]>
     {
-        return this.http.get<IPedido[]>(`${this.uri.UriJavaFerreteria}/pedidos`);
+        return this.http.get<IPedido[]>(`${this.uriServer}/pedidos`);
     }
     guardarPedido( pedido: IPedido ): Observable<IPedido>
     {
-        return this.http.post<IPedido>(`${this.uri.UriJavaFerreteria}/pedidos/guardarPedido`, pedido);
+        return this.http.post<IPedido>(`${this.uriServer}/pedidos/guardarPedido`, pedido);
     }
 
 

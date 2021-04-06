@@ -8,7 +8,7 @@ import { UsuarioAcceso } from 'src/app/Model/Usuarios/UsuarioAcceso';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 
-
+import { environment } from "../../../../environments/environment";
 
 
 
@@ -47,6 +47,7 @@ export class AccederUsuarioComponent implements OnInit {
 
   ngOnInit(): void 
   {
+  
 
     if( sessionStorage.getItem("sessionUsuario") != null )
         this.router.navigateByUrl('productos/buscar');

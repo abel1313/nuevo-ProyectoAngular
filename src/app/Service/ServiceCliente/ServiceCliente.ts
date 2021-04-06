@@ -14,7 +14,7 @@ export class ServiceCliente {
 
   private uri = new UriJava();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private uriServer: string) { }
 
   mensajeAgregarService$ = new EventEmitter<string>();
   mensajeGuardarClientePersona$ = new EventEmitter<string>();
@@ -24,19 +24,19 @@ export class ServiceCliente {
   // ------------------------------ Clientes ------------------------------------------ //
 
   getClientesAutoComplete(): Observable<IDTOClientePersona[]> {
-    return this.http.get<IDTOClientePersona[]>(`${this.uri.UriJavaFerreteria}/clientes/buscarclientes`)
+    return this.http.get<IDTOClientePersona[]>(`${this.uriServer}/clientes/buscarclientes`)
   }
 
   getClientesAll(): Observable<any> {
-    return this.http.get(`${this.uri.UriJavaFerreteria}/clientes/buscarclientes`)
+    return this.http.get(`${this.uriServer}/clientes/buscarclientes`)
   }
   getOneCliente( nombreCliente: string ): Observable<ICliente[]> {
     //console.log(`${this.URI_JAVA_Productos}/all/${nombreProducto}`);
-    return this.http.get<ICliente[]>(`${this.uri.UriJavaFerreteria}/clientes/ObtenerUnCliente/${nombreCliente}`);
+    return this.http.get<ICliente[]>(`${this.uriServer}/clientes/ObtenerUnCliente/${nombreCliente}`);
   }
 
   obtenerClientesService(): Observable<any> {
-    return this.http.get<ICliente[]>(`${this.uri.UriJavaFerreteria}/clientes`)
+    return this.http.get<ICliente[]>(`${this.uriServer}/clientes`)
   }
 
   // Returns an observable 
@@ -46,7 +46,7 @@ export class ServiceCliente {
 
     // Make http post request over api 
     // with formData as req 
-    return this.http.post( `${this.uri.UriJavaFerreteria}/clientes/savecliente`, cliente);
+    return this.http.post( `${this.uriServer}/clientes/savecliente`, cliente);
   }
 
   guardarProducto(producto: Productos): Observable<any> {
@@ -56,14 +56,14 @@ export class ServiceCliente {
 
     // Make http post request over api 
     // with formData as req 
-    return this.http.post(`${this.uri.UriJavaFerreteria}/guardarProducto`, producto);
+    return this.http.post(`${this.uriServer}/guardarProducto`, producto);
   }
 
   // Returns an observable 
 
   actualizarCliente( cliente: ICliente ): Observable<any> {
 
-    return this.http.put<ICliente[]>(`${this.uri.UriJavaFerreteria}/clientes/updateClient/${cliente.id}`, cliente);
+    return this.http.put<ICliente[]>(`${this.uriServer}/clientes/updateClient/${cliente.id}`, cliente);
   }
 
   // Returns an observable 

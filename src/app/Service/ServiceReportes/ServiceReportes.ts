@@ -18,9 +18,9 @@ import { IDTOPagosServer } from "src/app/Model/DTO/DROPagosRepostes/IDTOPagosSer
 export class ServiceReportes
 {
     
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string ){}
     
-    private uri = new UriJava();
+    
 
     reportesVenta$ = new EventEmitter<string>();
  
@@ -31,36 +31,36 @@ export class ServiceReportes
      obtenerReportesVentas( inicio: string, fin: string ): Observable<IReporteVenta[]>
     {
         
-        return this.http.get<IReporteVenta[]>(`${this.uri.UriJavaFerreteria}/reportes/ventas/${inicio}/${fin}`);
+        return this.http.get<IReporteVenta[]>(`${this.uriServer}/reportes/ventas/${inicio}/${fin}`);
     }
     obtenerReportesPagos( inicio: string, fin: string, idCliente: number ): Observable<IReporteVenta[]>
     {
         
-        return this.http.get<IReporteVenta[]>(`${this.uri.UriJavaFerreteria}/reportes/pagos/${inicio}/${fin}/${idCliente}`);
+        return this.http.get<IReporteVenta[]>(`${this.uriServer}/reportes/pagos/${inicio}/${fin}/${idCliente}`);
     }
     obtenerReportesPagosCliente( idCliente: number ): Observable<IDTOPagosServer>
     {
         
-        return this.http.get<IDTOPagosServer>(`${this.uri.UriJavaFerreteria}/reportes/pagosclientes/${idCliente}`);
+        return this.http.get<IDTOPagosServer>(`${this.uriServer}/reportes/pagosclientes/${idCliente}`);
     }
 
     // accesoSistema( usuario: Usuario): Observable<Usuario[]>
     // {
-    //     return this.http.post<Usuario[]>(`${this.uri.UriJavaFerreteria}/usuarios/accesousuario`, usuario);
+    //     return this.http.post<Usuario[]>(`${this.uriServer}/usuarios/accesousuario`, usuario);
     // }
 
     // guardarUsuarioServer( usuario: Usuario): Observable<Usuario>
     // {
-    //     return this.http.post<Usuario>(`${this.uri.UriJavaFerreteria}/usuarios/guardarusuario`, usuario);
+    //     return this.http.post<Usuario>(`${this.uriServer}/usuarios/guardarusuario`, usuario);
     // }
 
     // existsUsuario( nombreUsuario: string): Observable<Boolean>
     // {
-    //     return this.http.get<Boolean>(`${this.uri.UriJavaFerreteria}/usuarios/existsusuario/${nombreUsuario}`);
+    //     return this.http.get<Boolean>(`${this.uriServer}/usuarios/existsusuario/${nombreUsuario}`);
     // }
 
     // getUsuarios(): Observable<Usuario[]>
     // {
-    //     return this.http.get<Usuario[]>(`${this.uri.UriJavaFerreteria}/usuarios`);
+    //     return this.http.get<Usuario[]>(`${this.uriServer}/usuarios`);
     // }
 }

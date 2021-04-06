@@ -16,23 +16,23 @@ import { UriJava } from "src/app/URISERVER/UriJava";
 export class ServiceVentasPagadas
 {
     
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string ){}
     
-    private uri = new UriJava();
+    
  
      obtenerVentasPagadas()
     {
-        return this.http.get(`${this.uri.UriJavaFerreteria}/ventas`);
+        return this.http.get(`${this.uriServer}/ventas`);
     }
     guardarVentasPagadas( ventasPagadas: IVentasPagadas ): Observable<any>
     {
      
-        return this.http.post( `${this.uri.UriJavaFerreteria}/ventaspagadas/guardarventapagada`, ventasPagadas );
+        return this.http.post( `${this.uriServer}/ventaspagadas/guardarventapagada`, ventasPagadas );
     }
 
     guardarVentaPagadaNew( ventasPagadas: IVentasPagadas ): Observable<any>
     {
-        return this.http.post( `${this.uri.UriJavaFerreteria}/ventaspagadas/guardarventapagada`, ventasPagadas );
+        return this.http.post( `${this.uriServer}/ventaspagadas/guardarventapagada`, ventasPagadas );
     }
 
 

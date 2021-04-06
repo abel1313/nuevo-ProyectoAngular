@@ -5,7 +5,7 @@ import { UriJava } from "../../URISERVER/UriJava";
 import { Usuario } from "../../Model/Usuarios/Usuario";
 import { EventEmitter } from "@angular/core";
 
-
+import { environment } from "../../../environments/environment";
 
 
 // import { ServiceAppService } from "../service-app.service";
@@ -14,7 +14,7 @@ import { EventEmitter } from "@angular/core";
 export class ServiceUsuario
 {
     
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string ){}
     
     private uri = new UriJava();
 
@@ -28,27 +28,26 @@ export class ServiceUsuario
  
      obtenerUsuarios()
     {
-        return this.http.get(`${this.uri.UriJavaFerreteria}/`);
+        return this.http.get(`${this.uriServer}/`);
     }
     accesoSistema( usuario: Usuario): Observable<Usuario[]>
     {
-        
-        return this.http.post<Usuario[]>(`${this.uri.UriJavaFerreteria}/usuarios/accesousuario`, usuario);
+        return this.http.post<Usuario[]>(`${this.uriServer}/usuarios/accesousuario`, usuario);
     }
 
     guardarUsuarioServer( usuario: Usuario): Observable<Usuario>
     {
-        return this.http.post<Usuario>(`${this.uri.UriJavaFerreteria}/usuarios/guardarusuario`, usuario);
+        return this.http.post<Usuario>(`${this.uriServer}/usuarios/guardarusuario`, usuario);
     }
 
     existsUsuario( nombreUsuario: string): Observable<Boolean>
     {
-        return this.http.get<Boolean>(`${this.uri.UriJavaFerreteria}/usuarios/existsusuario/${nombreUsuario}`);
+        return this.http.get<Boolean>(`${this.uriServer}/usuarios/existsusuario/${nombreUsuario}`);
     }
 
     getUsuarios(): Observable<Usuario[]>
     {
-        return this.http.get<Usuario[]>(`${this.uri.UriJavaFerreteria}/usuarios`);
+        return this.http.get<Usuario[]>(`${this.uriServer}/usuarios`);
     }
 
 

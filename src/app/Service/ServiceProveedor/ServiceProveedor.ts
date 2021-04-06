@@ -16,29 +16,32 @@ export class ServiceProveedor
     datosProveedor$ = new EventEmitter<IProveedor>();
 
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string){}
     
-    private uri = new UriJava();
+    
 
   
  
-     obtenerProveedores()
+     obtenerProveedores(): Observable<IProveedor[]>
     {
-        return this.http.get(`${this.uri.UriJavaFerreteria}/proveedores`);
+        return this.http.get<IProveedor[]>(`${this.uriServer}/proveedoress`);
     }
-   
+    nuevoProveedor(proveedor: IProveedor): Observable<IProveedor>
+    {
+        return this.http.post<IProveedor>(`${this.uriServer}/proveedoress`, proveedor);
+    }
     guardarProveedor(proveedor: IProveedor): Observable<any>
     {
-        return this.http.post(`${this.uri.UriJavaFerreteria}/proveedores`, proveedor);
+        return this.http.post(`${this.uriServer}/proveedores`, proveedor);
     }
 
     getAllProveedores(): Observable<IProveedorAll[]>
     {
-        return this.http.get<IProveedorAll[]>(`${this.uri.UriJavaFerreteria}/proveedores`);
+        return this.http.get<IProveedorAll[]>(`${this.uriServer}/proveedores`);
     }
     obtenerProveedoresMarcas(): Observable<IProveedor[]>
     {
-        return this.http.get<IProveedor[]>(`${this.uri.UriJavaFerreteria}/proveedores`);
+        return this.http.get<IProveedor[]>(`${this.uriServer}/proveedores`);
     }
 
 

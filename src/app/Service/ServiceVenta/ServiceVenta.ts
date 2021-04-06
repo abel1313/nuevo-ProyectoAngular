@@ -22,18 +22,18 @@ export class ServiceVenta
 
     direccion$ = new EventEmitter<IDireccion>();
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string ){}
     
-    private uri = new UriJava();
+    
  
      obtenerProveedores()
     {
-        return this.http.get(`${this.uri.UriJavaFerreteria}/ventas`);
+        return this.http.get(`${this.uriServer}/ventas`);
     }
     guardarProveedor( venta: IVenta ): Observable<any>
     {
        
-        return this.http.post(`${this.uri.UriJavaFerreteria}/ventas/saveVenta`, venta);
+        return this.http.post(`${this.uriServer}/ventas/saveVenta`, venta);
     }
 
 

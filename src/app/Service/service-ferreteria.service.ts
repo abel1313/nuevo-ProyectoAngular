@@ -19,93 +19,57 @@ import { ServiceDireccion } from './ServiceDireccion/ServiceDireccion';
 import { ServiceReportes } from './ServiceReportes/ServiceReportes';
 import { ServiceMarca } from './ServiceMarcas/ServiceMarca';
 
-
+import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServiceFerreteriaService {
   producto$ = new EventEmitter();
-
+  uri: string = '';
 
   // 2do Iniciar el contructor con las solicitudes del cliente
-constructor(private http: HttpClient) { }
+constructor(private http: HttpClient) 
+{
+
+ }
 
 // 3ero Métodos del cliente
 
 // ------------------------------ Usuarios ------------------------------------------ //
 
-/*
-
-  obtenerUsuario(idUsurio: number): Observable<Usuario>
-{
-  return this.http.get(`${this.URI_JAVA}/usuario/login/${idUsurio}`);
-}
-getOneUsuario(usr: object)
-{
-// console.log(usr);
-  //console.log(`${this.URI_JAVA_Productos}/all/${nombreProducto}`);
-  return this.http.post(`${this.URI_JAVA_USUARIOS}`, usr);
-}
-obtenerUsuarios(): any
-{
-  return this.http.get(`${this.URI_JAVA}/usuario/login`);
-}
-guardarUsuario(usuario: Usuario): Observable<Usuario>
-{
-  return this.http.post(`${this.URI_JAVA}/usuario/login`, usuario);
-}
-eliminarUsuario(id: number): Observable<Usuario>
-{
-  return this.http.delete(`${this.URI_JAVA}/usuario/login/${id}`);
-}
-editarUsuario(id: number, updateUsuario: Usuario): Observable<Usuario>
-{
-  return this.http.put(`${this.URI_JAVA}/usuario/login/${id}`, updateUsuario);
-}
-
-*/
-
-// ------------------------------ Usuarios ------------------------------------------ //
 
 // ------------------------------ Productos ------------------------------------------ //
 
-// generarDetalle(idProducto: number) { 
-//return this.http.post(`${this.URI_JAVA_Productos}/generarDetalle/${idProducto}`, 2);
-//} 
+serviceProducto = new ServiceProducto(this.http, environment.appUri );
+serviceProveedor = new ServiceProveedor(this.http, environment.appUri );
+serviceDetalle = new ServiceDetalle(this.http, environment.appUri);
+
+serviceVenta = new ServiceVenta(this.http, environment.appUri);
+
+serviceCliente = new ServiceCliente(this.http, environment.appUri);
+
+serivicePagosVenta = new ServicePagoVenta(this.http, environment.appUri);
 
 
-// ------------------------------ Productos ------------------------------------------ //
-
-serviceProducto = new ServiceProducto(this.http);
-serviceProveedor = new ServiceProveedor(this.http);
-serviceDetalle = new ServiceDetalle(this.http);
-
-serviceVenta = new ServiceVenta(this.http);
-
-serviceCliente = new ServiceCliente(this.http);
-
-serivicePagosVenta = new ServicePagoVenta(this.http);
-
-
-seriviceVentasPagadas = new ServiceVentasPagadas(this.http);
+seriviceVentasPagadas = new ServiceVentasPagadas(this.http, environment.appUri);
 
 // clase service para las categoria
-seriviceCategoria = new ServiceCategoria(this.http);
+seriviceCategoria = new ServiceCategoria(this.http, environment.appUri);
 
-serviceUsuario = new ServiceUsuario(this.http);
+serviceUsuario = new ServiceUsuario(this.http, environment.appUri);
 
-serviceMenu = new ServiceMenu(this.http);
+serviceMenu = new ServiceMenu(this.http, environment.appUri);
 
-servicePermisos = new ServicePermisos(this.http);
+servicePermisos = new ServicePermisos(this.http, environment.appUri);
 
-servicePedido = new ServicePedido(this.http);
+servicePedido = new ServicePedido(this.http, environment.appUri);
 
-serviceDireccion = new ServiceDireccion(this.http);
+serviceDireccion = new ServiceDireccion(this.http, environment.appUri);
 
-serviceReportes = new ServiceReportes( this.http );
+serviceReportes = new ServiceReportes( this.http , environment.appUri);
 
-servicemarca = new ServiceMarca( this.http );
+servicemarca = new ServiceMarca( this.http , environment.appUri);
 
 
 /*

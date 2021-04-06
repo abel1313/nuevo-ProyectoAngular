@@ -7,7 +7,7 @@
         </mat-card-header>
 
         <mat-card-content>
-            <form class="needs-validation" novalidate>
+            <form  [formGroup]="formProducto" (ngSubmit)="eventAgregarProducto($event)">
                 <legend class="text-center fw-bolder fs-5">Datos del producto</legend>
 
                 <fieldset>
@@ -16,10 +16,10 @@
                         <div class="col-6">
                             <div class="form-floating mb-3">
                                 <input type="text" class="form-control" id="NomPorudcto" placeholder=""
-                                    name="nombreProducto" [(ngModel)]="producto.nombreProducto" required>
+                                    name="nombreProducto"  required  formControlName="nombreProducto" >
                                 <label for="NomPorudcto">Nombre del producto</label>
                             </div>
-                            <div class="invalid-feedback">
+                            <div class="alert alert-danger"  *ngIf="formProducto.get('nombreProducto').hasError('required') && formProducto.get('nombreProducto').touched">
                                 Por favor ingrese el nombre
                             </div>
 
@@ -28,13 +28,16 @@
                         </div>
                         <div class="col-6">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="CodBarra" placeholder=""
-                                    name="codigo_Barras_Producto" (keyup)="onKey($event)"
-                                    [(ngModel)]='producto.codigoBarrasProducto' required>
+                                <input type="text" class="form-control" id="CodBarra" placeholder="" #vls
+                                    name="codigo_Barras_Producto" (keyup)="onKey($event)" (blur)="buscarCodigo(vls.value)"
+                                    required formControlName="codigoBarraProducto">
                                 <label for="CodBarra">Código de barra</label>
                             </div>
-                            <div class="invalid-feedback">
-                                Por favor ingrese el nombre
+                            <div class="alert alert-danger" *ngIf="formProducto.get('codigoBarraProducto').hasError('required') && formProducto.get('codigoBarraProducto').touched">
+                                Por favor ingrese el código
+                            </div>
+                            <div class="alert alert-danger" *ngIf="existeCodigoBarra">
+                               Este código ya existe, ingreso alguno diferente
                             </div>
                         </div>
                     </div>
@@ -44,21 +47,21 @@
                             <div class="form-floating">
                                 <textarea class="form-control" placeholder="" id="DescProducto"
                                     name="descripcion_Producto" style="height: 100px"
-                                    [(ngModel)]='producto.descripcionProducto' required></textarea>
+                                    required formControlName="descripccionProducto"></textarea>
                                 <label for="DescProducto">Descripción</label>
                             </div>
-                            <div class="invalid-feedback">
-                                Por favor ingrese el nombre
+                            <div class="alert alert-danger" *ngIf="formProducto.get('descripccionProducto').hasError('required') && formProducto.get('descripccionProducto').touched">
+                                Por favor ingrese la descripción
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-floating">
                                 <textarea class="form-control" placeholder="" id="CaracProducto"
                                     name="caracteristicas_Producto" style="height: 100px"
-                                    [(ngModel)]='producto.caracteristicasProducto' required></textarea>
+                                    required formControlName="caracteristicasProducto"></textarea>
                                 <label for="CaracProducto">Caracteristicas</label>
-                                <div class="invalid-feedback">
-                                    Por favor ingrese las caracteristicas
+                                <div class="alert alert-danger"  *ngIf="formProducto.get('caracteristicasProducto').hasError('required') && formProducto.get('caracteristicasProducto').touched">
+                                    Por favor ingrese las características
                                 </div>
                             </div>
 
@@ -69,60 +72,69 @@
                         <div class="col-6">
                             <div class="form-floating mb-3">
                                 <input type="number" min="1" class="form-control" id="ExistProducto"
-                                    name="existencia_Producto" placeholder="" [(ngModel)]='producto.existenciaProducto'
-                                    required>
+                                    name="existencia_Producto" placeholder="" 
+                                    required formControlName="existenciasProducto">
                                 <label for="ExistProducto">Existencia</label>
-                                <div class="invalid-feedback">
-                                    Por favor ingrese las existencias
+                                <div class="alert alert-danger"  *ngIf="formProducto.get('existenciasProducto').hasError('required') && formProducto.get('existenciasProducto').touched">
+                                    Por favor ingrese el nombre
                                 </div>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-floating mb-3">
                                 <input type="number" min="1" class="form-control" id="precio_Producto"
-                                    name="precio_Producto" placeholder="" [(ngModel)]='producto.precioProducto'
-                                    required>
+                                    name="precio_Producto" placeholder=""
+                                    required formControlName="precioProducto">
                                 <label for="precio_Producto">Precio del producto</label>
                             </div>
-                            <div class="invalid-feedback">
-                                Por favor ingrese el precio
+                            <div class="alert alert-danger"  *ngIf="formProducto.get('precioProducto').hasError('required') && formProducto.get('precioProducto').touched">
+                                Por favor ingrese el nombre
                             </div>
                         </div>
                     </div>
 
                     <div class="row p-2">
 
-                        <div class="col-6">
+                        <div class="col-6" *ngIf="calandoX">
                             <div class="ng-autocomplete col-12">
-                                <ng-autocomplete [data]="datosProveedores" [searchKeyword]="keyword"
-                                    placeholder="Ingrese nombre del proveedor" (selected)='selectEvent($event)'
-                                    (inputChanged)='onChangeSearch($event)' (inputFocused)='onFocused($event)'
-                                    [itemTemplate]="itemTemplate" [notFoundTemplate]="notFoundTemplate"
-                                    [disabled]="disa">
+                                <ng-autocomplete [data]="datosProveedores$ | async" 
+                                    [searchKeyword]="keyword"
+                                    placeholder="Ingrese nombre del proveedor" 
+                                    (selected)='selectEvent($event)'
+                                    (inputChanged)='onChangeSearch($event)' 
+                                    (inputFocused)='onFocused($event)'
+                                    
+                                    [itemTemplate]="itemTemplatex"
+                                    [notFoundTemplate]="notFoundTemplatex" 
+                                    [formControl]="proveedor"
+                                    >
                                 </ng-autocomplete>
 
-                                <ng-template #itemTemplate let-item>
+                                <ng-template #itemTemplatex let-item>
                                     <a [innerHTML]="item.nombreProveedor"></a>
                                 </ng-template>
 
-                                <ng-template #notFoundTemplate let-notFound>
+                                <ng-template #notFoundTemplatex let-notFound>
                                     <div [innerHTML]="notFound"></div>
                                 </ng-template>
                             </div>
-                            <div class="invalid-feedback">
-                                Por favor ingrese el nombre
-                            </div>
+                           <div class="alert alert-danger" *ngIf="errorProveedor">
+                                Por favor, seleccione uno
+                            </div> 
 
                         </div>
 
                         <div class="col-6">
 
                             <div class="ng-autocomplete col-12">
-                                <ng-autocomplete [data]="datosCategorias" [searchKeyword]="keywordCategoria"
+                                <ng-autocomplete [data]="datosCategoria$ | async" [searchKeyword]="keywordCategoria"
                                     placeholder="Ingrese la categoría" (selected)='selectEventCategoria($event)'
                                     (inputChanged)='onChangeSearchCategoria($event)'
-                                    (inputFocused)='onFocusedCategoria($event)' [itemTemplate]="itemTemplate"
-                                    [notFoundTemplate]="notFoundTemplate" [disabled]="disa">
+                                    (inputFocused)='onFocusedCategoria($event)' 
+                                    [itemTemplate]="itemTemplate"
+                                    [notFoundTemplate]="notFoundTemplate" 
+                                    formControlName="categorias"
+                                    >
                                 </ng-autocomplete>
                                 <ng-template #itemTemplate let-item>
                                     <a [innerHTML]="item.nombreCategoria"></a>
@@ -130,6 +142,9 @@
                                 <ng-template #notFoundTemplate let-notFound>
                                     <div [innerHTML]="notFound"></div>
                                 </ng-template>
+                            </div>
+                            <div class="alert alert-danger" *ngIf="formProducto.get('categorias').hasError('required') && formProducto.get('categorias').touched">
+                                Por favor, seleccione uno
                             </div>
                         </div>
                     </div>
@@ -139,16 +154,18 @@
                             <p class="text-sm-justify"> Si no encuentra al proveeder agrege uno nuevo pulsando aqui</p>
                             <div class="form-group">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios"
-                                        id="exampleRadios1" (change)="changeS($event)" value="true">
+                                    <input class="form-check-input" type="radio" name="checkProveedor"
+                                        id="exampleRadios1" (change)="changeS($event)" value="true" 
+                                        formControlName="checkProveedor">
                                     <label class="form-check-label" for="exampleRadios1">
                                         Si
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="exampleRadios"
-                                        id="exampleRadios2" (change)="changeS($event)" #checkfalse value="false"
-                                        checked>
+                                    <input class="form-check-input" type="radio" name="checkProveedor"
+                                        id="exampleRadios2" (change)="changeS($event)"  value="false" checked 
+                                        formControlName="checkProveedor" 
+                                         >
                                     <label class="form-check-label" for="exampleRadios2">
                                         No
                                     </label>
@@ -158,20 +175,36 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="lblNomProveedor">Ingrese nuevo proveedor</label>
-                                <input type="text" [disabled]="!disa" class="form-control" id="lblNomProveedor"
-                                    name="nombreProveedor" [(ngModel)]="producto.proveedor.nombreProveedor"
-                                    placeholder="Nuevo proveedor">
+                                <input type="text"  class="form-control" id="lblNomProveedor"
+                                    name="newProveedor" formControlName="newProveedor"
+                                    placeholder="Nuevo proveedor"  >
+
+                                    <div class="alert alert-danger text-center" *ngIf="disabledNewProveedor">
+                                        Este campo es obligatorio
+                                    </div>
                             </div>
                         </div>
                     </div>
                     <div class="alert alert-primary" role="alert" *ngIf="mostrarMensaje">
-                        El producto se agregó correctamente
+                         {{ mostrarMensajeNuevoProducto }} 
+        
+                        <div *ngIf="spinnerAgregarProducto">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        </div>
+
+                        
                     </div>
 
-                    <div class="row p-2">
+                    <div class="row p-2" *ngIf="!spinnerAgregarProducto">
+                    
                         <div class="col-12 d-flex justify-content-end d-flex align-items-center">
-                            <button mat-raised-button color="primary" class="col-4" (click)="eventAgregarProducto()"
-                                [disabled]="btnAgregarProducto">agregar</button>
+                            <button mat-raised-button color="primary" class="col-4" type="submit" [disabled]="!formProducto.valid">
+                        
+                               
+                                Agregar
+                            </button>
                         </div>
 
                     </div>

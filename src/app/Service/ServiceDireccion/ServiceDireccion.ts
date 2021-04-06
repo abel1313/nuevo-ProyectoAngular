@@ -21,18 +21,18 @@ export class ServiceDireccion
 
     // direccion$ = new EventEmitter<IDireccion>();
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string ){}
     
     private uri = new UriJava();
  
      obtenerDireccion(): Observable<IDireccion[]>
     {
-        return this.http.get<IDireccion[]>(`${this.uri.UriJavaFerreteria}/direcciones`);
+        return this.http.get<IDireccion[]>(`${this.uriServer}/direcciones`);
     }
     guardarDireccion( direccion: IDireccion ): Observable<IDireccion>
     {
        
-        return this.http.post<IDireccion>(`${this.uri.UriJavaFerreteria}/direcciones`, direccion);
+        return this.http.post<IDireccion>(`${this.uriServer}/direcciones`, direccion);
     }
 
 

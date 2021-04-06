@@ -22,7 +22,7 @@ export class ServiceMarca
 
   marcas$ = new EventEmitter<IMarcas>();
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string){}
 
 
     // ------------------------------ Menu ------------------------------------------ //
@@ -30,23 +30,23 @@ export class ServiceMarca
       getMarcas(): Observable<IMarcas[]>
       {
         
-        return this.http.get<IMarcas[]>(`${this.uri.UriJavaFerreteria}/marcass`)
+        return this.http.get<IMarcas[]>(`${this.uriServer}/marcass`)
       }
       getOneMenu(nombreProducto:string)
       {
 
-        return this.http.get(`${this.uri.UriJavaFerreteria}/productos/buscarProductos/${nombreProducto}`);
+        return this.http.get(`${this.uriServer}/productos/buscarProductos/${nombreProducto}`);
       }
       // Returns an observable 
       savePagoVenta( pagoVenta: IPagosVenta ):Observable<any> 
       { 
-           return  this.http.post(`${this.uri.UriJavaFerreteria}/pagosventa/guardarPago`, pagoVenta);
+           return  this.http.post(`${this.uriServer}/pagosventa/guardarPago`, pagoVenta);
        } 
 
        guardarMarca( marcas: IMarcas ):Observable<IMarcas> 
        {    
         
-           return this.http.post<IMarcas>(`${this.uri.UriJavaFerreteria}/marcass` , marcas);
+           return this.http.post<IMarcas>(`${this.uriServer}/marcass` , marcas);
        } 
 
              // Returns an observable 

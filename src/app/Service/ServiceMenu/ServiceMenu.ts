@@ -16,7 +16,7 @@ export class ServiceMenu
 
   //  eventKeyUp$ = new EventEmitter<string>();
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string ){}
 
 
     // ------------------------------ Menu ------------------------------------------ //
@@ -24,17 +24,17 @@ export class ServiceMenu
       getMenus(): Observable<IMenu[]>
       {
         
-        return this.http.get<IMenu[]>(`${this.uri.UriJavaFerreteria}/menus`)
+        return this.http.get<IMenu[]>(`${this.uriServer}/menus`)
       }
       getOneMenu(nombreProducto:string)
       {
 
-        return this.http.get(`${this.uri.UriJavaFerreteria}/productos/buscarProductos/${nombreProducto}`);
+        return this.http.get(`${this.uriServer}/productos/buscarProductos/${nombreProducto}`);
       }
       // Returns an observable 
       savePagoVenta( pagoVenta: IPagosVenta ):Observable<any> 
       { 
-           return  this.http.post(`${this.uri.UriJavaFerreteria}/pagosventa/guardarPago`, pagoVenta);
+           return  this.http.post(`${this.uriServer}/pagosventa/guardarPago`, pagoVenta);
        } 
 
        guardarProducto( producto: Productos ):Observable<any> { 
@@ -44,7 +44,7 @@ export class ServiceMenu
         
            // Make http post request over api 
            // with formData as req 
-           return  this.http.post(`${this.uri.UriJavaFerreteria}/guardarProducto` , producto);
+           return  this.http.post(`${this.uriServer}/guardarProducto` , producto);
        } 
 
              // Returns an observable 

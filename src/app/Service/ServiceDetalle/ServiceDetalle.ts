@@ -9,17 +9,17 @@ import { UriJava } from "src/app/URISERVER/UriJava";
 export class ServiceDetalle
 {
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string ){}
     
     private uri = new UriJava();
  
      obtenerProveedores()
     {
-        return this.http.get(`${this.uri.UriJavaFerreteria}/ventas`);
+        return this.http.get(`${this.uriServer}/ventas`);
     }
     guardarProveedor( detalle: IDetalle): Observable<any>
     {
-        return this.http.post(`${this.uri.UriJavaFerreteria}/ventas/saveVenta`, detalle);
+        return this.http.post(`${this.uriServer}/ventas/saveVenta`, detalle);
     }
         
 }

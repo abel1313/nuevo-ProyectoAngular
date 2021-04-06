@@ -1,10 +1,13 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Observable, Subscription } from 'rxjs';
 import { ICategoria } from 'src/app/Model/Categorias/ICategoria';
+import { IProducto } from 'src/app/Model/Productos/IProducto';
 import { Productos } from 'src/app/Model/Productos/Producto';
+import { ProductoAll } from 'src/app/Model/Productos/ProductoAll';
+import { ProductoServer } from 'src/app/Model/Productos/ProductoServer';
 import { IProveedor } from 'src/app/Model/Proveedores/IProveedor';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { Tornilleria } from 'src/app/Model/Tornilleria/Tornilleria';
@@ -19,22 +22,44 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class AgregarProductoComponent implements OnInit, OnDestroy {
 
-  formPrducto: FormControl;
 
+  formCalando: FormGroup;
   constructor(private serviceProducto: ServiceFerreteriaService, private _ngZone: NgZone,
-    private router: Router, private fb: FormBuilder ) 
-    {
-     this.formPrducto = fb.control
-      ({
-        nombreProducto: new FormControl(''),
-        codigoBarraProducto: new FormControl(''),
-        DesciptcionProducto: new FormControl(''),
-        CaracteriasticasProducto: new FormControl(''),
-        existenciasProducto: new FormControl(''),
-        precioProducto: new FormControl(''),
-        proveedor: new FormControl(''),
-      });
-     }
+    private router: Router, private fb: FormBuilder) {
+
+
+
+  }
+  formProducto = this.fb.group
+    ({
+      nombreProducto: ['', Validators.required],
+      codigoBarraProducto: ['', Validators.required],
+      descripccionProducto: ['', Validators.required],
+      caracteristicasProducto: ['', Validators.required],
+      existenciasProducto: ['', Validators.required],
+      precioProducto: ['', Validators.required],
+
+      categorias: ['', Validators.required],
+      checkProveedor: ['false', Validators.required],
+      newProveedor: [{ value: '', disabled: false }]
+    });
+
+
+
+  proveedor = new FormControl('');
+
+
+
+
+  nuevoProducto$: Observable<Productos>;
+  nuevoProveedor$: Observable<IProveedor>;
+  existsCodigoBarra$: Observable<Boolean>;
+
+
+
+
+  existeCodigo: Boolean = false;
+
 
   suscription: Subscription;
   datosProveedor$: Observable<any[]>
@@ -43,18 +68,28 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
   tornilleria = new Tornilleria();
 
   check: Boolean;
-  disa: Boolean = false;
+  // disabledNewProveedor: Boolean = false;
   btnAgregarProveedor: Boolean = false;
 
   btnAgregarProducto: Boolean = false;
   mostrarMensaje: Boolean = false;
+  mostrarMensajeNuevoProducto: string = '';
   valueKeyUp = '';
-  datosProveedores: any = [];
+
   // datos categoría para mostrar en el autocomplete para elejir la categoría
   // a la que pertenece el producto
   datosCategorias: any = [];
+  datosCategoria$: Observable<ICategoria[]>;
+  datosProveedores$: Observable<IProveedor[]>;
 
+  disabledAutoProveedor: Boolean = false;
   sessionesProducto = new Sessiones(this.router);
+  errorProveedor: Boolean = false;
+  calandoX: Boolean = false;
+  disabledNewProveedor: Boolean = false;
+  spinnerAgregarProducto: Boolean = false;
+
+  existeCodigoBarra: Boolean = false;
 
 
   producto: Productos =
@@ -89,30 +124,32 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
 
     this.sessionesProducto.eliminarSession("datosEditarProducto");
 
+
+
+    this.formProducto.get("checkProveedor").valueChanges
+      .subscribe((data: Boolean) => {
+        let checkBool: Boolean = this.formProducto.get('checkProveedor').value;
+
+        if (checkBool) {
+
+        } else {
+
+        }
+      });
   }
 
 
+
+  // obtener los datos de los proveedores para mostrarlos en el autocomplete de proveedores
   getDataProveedores(): void {
-    this.suscription = this.serviceProducto.serviceProveedor.obtenerProveedores()
-      .subscribe
-      (
-        res => {
-          // console.log(res);
-          this.datosProveedores = res;
-          //  console.log(this.datosProveedores);
-        },
-        error => console.log(error)
-      );
-
+    this.datosProveedores$ = this.serviceProducto.serviceProveedor.obtenerProveedores();
   }
 
-
+// evento al seleccionar un proveedor y obtenemos el id y el nombre
   selectEvent(item: any) {
     // do something with selected item
     this.producto.proveedor.nombreProveedor = item.nombreProveedor;
     this.producto.proveedor.id = item.id;
-
-
   }
 
   onChangeSearch(val: string) {
@@ -123,131 +160,199 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
   onFocused(e: any) {
     // do something when input is focused
   }
+
+  // evento para saber cuando un radi buton esta seleccionado y obtener su valor
   changeS(eve: any) {
     if (eve.target.value === "true") {
-      this.disa = true;
-      setTimeout(() => { // this will make the execution after the above boolean has changed
-        let nomProveedor = document.getElementById("lblNomProveedor");
-        nomProveedor.focus();
-        this.producto.proveedor.id = 0;
 
+      this.calandoX = true;
+      this.formProducto.get('newProveedor').setValue('');
+      this.formProducto.controls['newProveedor'].disable();
 
-      }, 100);
-      this.btnAgregarProveedor = true;
     } else {
-      this.disa = false;
-      this.btnAgregarProveedor = false;
-      setTimeout(() => { // this will make the execution after the above boolean has changed
+      this.proveedor.setValue('');
+      this.calandoX = false;
+      this.formProducto.controls['newProveedor'].enable()
 
-      }, 100);
 
     }
 
+  }
+
+
+  // método para gardar el producto
+  guardarProducto(producto: IProducto) {
+
+
+    this._ngZone.runOutsideAngular(() => {
+      this.nuevoProducto$ = this.serviceProducto.serviceProducto.nuevoProducto(producto);
+      this.nuevoProducto$.subscribe
+        (
+          res => {
+            this._ngZone.run(() => {
+
+              this.spinnerAgregarProducto = false;
+              this.mostrarMensajeNuevoProducto = 'El producto se agregó correctamente';
+              this.limpiarProducto();
+            });
+          }
+        );
+
+      setTimeout(() => {
+        this.mostrarMensaje = false;
+      }, 2500);
+
+    });
+  }
+
+  // método para guardar el producto pero sin un proveedor, es decir, que primero se agregaria el producto y después el producto
+  guardarProductoOrProveedor(producto: IProducto, proveedor: IProveedor) {
+
+    if (proveedor.id == 0) {
+      this.mostrarMensaje = true;
+      this.mostrarMensajeNuevoProducto = 'Por favor espere, guardando... ';
+      this.spinnerAgregarProducto = true;
+
+      this._ngZone.runOutsideAngular(() => {
+        this.nuevoProveedor$ = this.serviceProducto.serviceProveedor.nuevoProveedor(proveedor);
+        this.nuevoProveedor$.subscribe
+          (
+            (res: IProveedor) => {
+              this._ngZone.run(() => {
+                setTimeout(() => {
+
+                  producto.proveedor.id = res.id;
+
+                  this.guardarProducto(producto);
+                }, 2500);
+              });
+            }
+          )
+      });
+    } else {
+      this._ngZone.runOutsideAngular(() => {
+        // this.nuevoProducto$ =  this.serviceProducto.serviceProducto.nuevoProducto();
+        this.mostrarMensaje = true;
+        this.mostrarMensajeNuevoProducto = 'Por favor espere, guardando... ';
+        this.spinnerAgregarProducto = true;
+        setTimeout(() => {
+
+          producto.proveedor.id = proveedor.id;
+          this.guardarProducto(producto);
+        }, 2500);
+
+      });
+    }
+  }
+
+
+  enviarDatos() {
+
+    if (this.formProducto.get('checkProveedor').value == 'false') {
+      if (this.formProducto.get('newProveedor').value === '') {
+        this.disabledNewProveedor = true;
+        setTimeout(() => {
+          this.disabledNewProveedor = false;
+        }, 2000);
+      } else {
+        if (this.formProducto.get('nombreProducto').valid && this.formProducto.get('codigoBarraProducto').valid
+          && this.formProducto.get('descripccionProducto').valid && this.formProducto.get('caracteristicasProducto').valid &&
+          this.formProducto.get('existenciasProducto').valid && this.formProducto.get('precioProducto').valid) {
+          let producto = new ProductoServer();
+          producto.producto.nombreProducto = this.formProducto.get('nombreProducto').value;
+          producto.producto.codigoBarrasProducto = this.formProducto.get('codigoBarraProducto').value;
+          producto.producto.descripcionProducto = this.formProducto.get('descripccionProducto').value;
+          producto.producto.caracteristicasProducto = this.formProducto.get('caracteristicasProducto').value;
+          producto.producto.existenciaProducto = this.formProducto.get('existenciasProducto').value;
+          producto.producto.precioProducto = this.formProducto.get('precioProducto').value;
+
+          let pro: IProveedor =
+          {
+            id: 0,
+            nombreProveedor: ''
+          }
+          pro.id = 0;
+          pro.nombreProveedor = this.formProducto.get('newProveedor').value;
+          this.guardarProductoOrProveedor(producto.producto, pro);
+        }
+      }
+    }
+    else {
+
+      if (this.proveedor.value === '') {
+        this.errorProveedor = true;
+        setTimeout(() => {
+          this.errorProveedor = false;
+        }, 2000);
+      } else {
+
+        if (this.formProducto.get('nombreProducto').valid && this.formProducto.get('codigoBarraProducto').valid
+          && this.formProducto.get('descripccionProducto').valid && this.formProducto.get('caracteristicasProducto').valid &&
+          this.formProducto.get('existenciasProducto').valid && this.formProducto.get('precioProducto').valid) {
+          let producto = new ProductoServer();
+          let proveedor: IProveedor;
+          producto.producto.nombreProducto = this.formProducto.get('nombreProducto').value;
+          producto.producto.codigoBarrasProducto = this.formProducto.get('codigoBarraProducto').value;
+          producto.producto.descripcionProducto = this.formProducto.get('descripccionProducto').value;
+          producto.producto.caracteristicasProducto = this.formProducto.get('caracteristicasProducto').value;
+          producto.producto.existenciaProducto = this.formProducto.get('existenciasProducto').value;
+          producto.producto.precioProducto = this.formProducto.get('precioProducto').value;
+          proveedor = this.proveedor.value;
+          this.guardarProductoOrProveedor(producto.producto, proveedor);
+
+        }
+      }
+    }
   }
   // evento click para agregar un producto
-  eventAgregarProducto() {
+  eventAgregarProducto(e: Event) {
     // validamos que el alguna caja este vacía
-    if (this.producto.nombreProducto == "" || this.producto.codigoBarrasProducto == "" || this.producto.descripcionProducto == "" ||
-      this.producto.caracteristicasProducto == "" || this.producto.existenciaProducto == 0 || this.producto.precioProducto == 0 ||
-      this.producto.proveedor.nombreProveedor == "" || this.tornilleria.tornilleria.categoria.id == 0) {
-      // si alguna caja está vacía  se ejecuta este método que solo muestra un mensaje en la vista para el ususario
-      this.validarFormulario();
+    e.preventDefault();
 
-      
-
-      // valoda que las casas de texto no esten vacías
-    } else if (this.producto.nombreProducto != "" || this.producto.codigoBarrasProducto != "" || this.producto.descripcionProducto != "" ||
-      this.producto.caracteristicasProducto != "" || (this.producto.existenciaProducto != 0 && isNaN(this.producto.existenciaProducto)) ||
-      (this.producto.precioProducto != 0 && isNaN(this.producto.precioProducto)) ||
-      this.producto.proveedor.nombreProveedor != "" && this.tornilleria.tornilleria.categoria.id != 0) {
-      // valida que el proveedor y el nombre de proveedor se agregen
-      if (this.producto.proveedor.id > 0 && this.producto.proveedor.nombreProveedor != "") {
-        this.btnAgregarProducto = true;
-        setTimeout(() => {
-          this._ngZone.runOutsideAngular(() => {
-            // realiza el service para agregar el producto
-
-            this.suscription = this.serviceProducto.serviceProducto.guardarProducto(this.producto)
-              .subscribe
-              (
-                res => {
-
-                  // this.tornilleria.tornilleria.producto.id = res.id;
+    this._ngZone.runOutsideAngular(() => {
+      this.existsCodigoBarra$ = this.serviceProducto.serviceProducto.existeCodigoBarra(this.formProducto.get('codigoBarraProducto').value);
+      this.existsCodigoBarra$.subscribe
+        ((res: Boolean) => {
+          this._ngZone.run(() => {
 
 
-                },
-                error => console.log(error)
-              );
-            // reenter the Angular zone and display done
-            this._ngZone.run(() => {
-              //  console.log('Outside Done!'); 
+            if (res) {
+              this.existeCodigoBarra = res;
+              setTimeout(() => {
+                this.existeCodigoBarra = false;
+              }, 2000);
 
-            });
+            } else {
+              this.enviarDatos();
+            }
+
+
+
 
           });
-          this.limpiarProducto();
-          this.btnAgregarProducto = false;
-        }, 3000);
-
-        this.mostrarMensaje = true;
-        setTimeout(() => {
-          this.mostrarMensaje = false;
-        }, 3500);
-
-      }
-      // si el usuario agrega un proveedor lo agrega y despúes agrega el producto
-      else if (this.producto.proveedor.id == 0 && this.producto.proveedor.nombreProveedor != "") {
-        //console.log("nuevo proveedor ");
-        this.btnAgregarProducto = true;
-
-        setTimeout(() => {
-          this._ngZone.runOutsideAngular(() => {
-            // realiza el service para agregar el proveedor
-            this.suscription = this.serviceProducto.serviceProveedor.guardarProveedor(this.producto.proveedor)
-              .subscribe
-              (
-                res => {
-
-                  this.producto.proveedor.id = res.id;
-                  this.suscription = this.serviceProducto.serviceProducto.guardarProducto(this.producto)
-                    .subscribe
-                    (
-                      res => {
-
-                        // console.log(res);
-                      },
-                      error => console.log(error)
-                    );
-                },
-                error => console.log(error)
-              );
-            // reenter the Angular zone and display done
-            this._ngZone.run(() => {
-              // console.log('Outside Done!'); 
-            });
-
-          });
-          this.limpiarProducto();
-          this.btnAgregarProducto = false;
-        }, 3000);
-        this.mostrarMensaje = true;
-        setTimeout(() => {
-          this.mostrarMensaje = true;
-        }, 2000);
-
-      }
-      // console.log(this.producto);
-
-
-
-
-
-
-
-    }
+        });
+    });
 
   }
 
+  buscarCodigo(e: string) {
+
+    if (e !== '') {
+      this._ngZone.runOutsideAngular(() => {
+        this.existsCodigoBarra$ = this.serviceProducto.serviceProducto.existeCodigoBarra(e);
+        this.existsCodigoBarra$.subscribe
+          ((res: Boolean) => {
+            this._ngZone.run(() => {
+              this.existeCodigo = res;
+              this.existeCodigoBarra = res;
+              setTimeout(() => {
+                this.existeCodigoBarra = false;
+              }, 2000);
+            });
+          });
+      });
+    }
+  }
 
   onKey(event: any) { // without type info
     this.valueKeyUp += event.target.value + ' | ';
@@ -295,15 +400,8 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
 
 
   getCategorias() {
-    this.suscription = this.serviceProducto.seriviceCategoria
-      .getCategorias()
-      .subscribe
-      (
-        res => {
-          this.datosCategorias = res;
-        },
-        err => console.log(err)
-      );
+    this.datosCategoria$ = this.serviceProducto.seriviceCategoria
+      .getCategorias();
   }
 
 
@@ -313,15 +411,16 @@ export class AgregarProductoComponent implements OnInit, OnDestroy {
 
   limpiarProducto() {
 
-    this.producto.idProducto = 0;
-    this.producto.nombreProducto = '';
-    this.producto.codigoBarrasProducto = '';
-    this.producto.descripcionProducto = '';
-    this.producto.caracteristicasProducto = '';
-    this.producto.existenciaProducto = 0;
-    this.producto.precioProducto = 0;
-    this.producto.proveedor.id = 0;
-    this.producto.proveedor.nombreProveedor = '';
+    this.formProducto.get('nombreProducto').setValue('');
+    this.formProducto.get('codigoBarraProducto').setValue('');
+    this.formProducto.get('descripccionProducto').setValue('');
+    this.formProducto.get('caracteristicasProducto').setValue('');
+    this.formProducto.get('existenciasProducto').setValue('');
+    this.formProducto.get('precioProducto').setValue('');
+    this.formProducto.get('categorias').setValue('');
+    this.formProducto.get('newProveedor').setValue('');
+    this.proveedor.setValue('');
+
 
   }
 

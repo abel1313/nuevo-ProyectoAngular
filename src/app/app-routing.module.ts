@@ -88,7 +88,7 @@ const routes: Routes =
 
 
 
-
+{ path: '', redirectTo: 'sistema/acceso', pathMatch: 'full' },
 //{ path: '**', redirectTo: 'ejemplos/primero', pathMatch: 'full' }
   { path: '**', redirectTo: 'error/paginanoencontrada', pathMatch: 'full' }
 

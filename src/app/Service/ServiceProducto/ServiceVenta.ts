@@ -5,7 +5,7 @@ export class ServiceVenta
 {
     private URI_JAVA_Productos = 'http://localhost:8080/ferreteria/ventas';
 
-    constructor(private http: HttpClient ){}
+    constructor(private http: HttpClient, private uriServer: string ){}
 
     public getVenta(idProducto: number)
     {

@@ -10,16 +10,16 @@ import { UriJava } from 'src/app/URISERVER/UriJava';
 
 export class ServicePermisos
 {
- private uri = new UriJava();
+ 
 
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient, private uriServer: string){}
 
     // ------------------------------ Productos ------------------------------------------ //
 
 
        guardarPermisos( permisos: IPermisos ): Observable<IPermisos>
        { 
-           return  this.http.post<IPermisos>(`${this.uri.UriJavaFerreteria}/permisos/permisosAdd`, permisos);
+           return  this.http.post<IPermisos>(`${this.uriServer}/permisos/permisosAdd`, permisos);
        } 
 
              // Returns an observable 

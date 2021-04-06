@@ -10,9 +10,9 @@ import { UriJava } from "src/app/URISERVER/UriJava";
 export class ServiceDetalle
 {
 
-    constructor( private http : HttpClient ){}
+    constructor( private http : HttpClient, private uriServer: string ){}
 
-    private uri = new UriJava();
+    
 
     countProductosCarrito$ = new EventEmitter<number>();
     detalleVentaBuscarProducto$ = new EventEmitter<any>(); // BuscarProducto se refiera a la vista
@@ -24,12 +24,12 @@ export class ServiceDetalle
     public saveDetalleServer(detalle: any)
     {
       
-        return this.http.post(`${this.uri.UriJavaFerreteria}/Detalle/saveDetalle`,  detalle  );
+        return this.http.post(`${this.uriServer}/Detalle/saveDetalle`,  detalle  );
     }
 
     public getDetalleVenta()
     {
-        return this.http.get(`${this.uri.UriJavaFerreteria}/detalleVenta/`);
+        return this.http.get(`${this.uriServer}/detalleVenta/`);
     }
 
 
