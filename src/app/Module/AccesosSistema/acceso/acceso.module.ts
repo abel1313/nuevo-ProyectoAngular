@@ -8,6 +8,7 @@ import { InicioSessionComponent } from 'src/app/Vista/InicioSession/inicio-sessi
 import { RegistrarUsuarioComponent } from 'src/app/Vista/InicioSession/registrar-usuario/registrar-usuario.component';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { MateriaModule } from '../../materia/materia.module';
 
 
 
@@ -26,6 +27,7 @@ import { BrowserModule } from '@angular/platform-browser';
     AccesoRoutingModule,
     CommonModule,
     FormsModule,
+    MateriaModule
   
   ]
 })

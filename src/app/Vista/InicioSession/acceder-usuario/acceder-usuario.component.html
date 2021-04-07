@@ -25,9 +25,16 @@
                   Datos incorrectos
                 </div>
 
+                
                 <button class="btn btn-primary btn-block"  (click)="accederSistema();" [disabled]="mensajeSpinner">
-                  <span *ngIf="mensajeSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>  Ingresar
+                  <span *ngIf="mensajeSpinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 
+                  Ingresar
                 </button>
+                <div class="row">
+                  <div class="col-12">
+                    <mat-progress-bar mode="indeterminate" *ngIf="mensajeSpinner" ></mat-progress-bar>
+                  </div>
+                </div>
             </fieldset>
         </form>
     </div>

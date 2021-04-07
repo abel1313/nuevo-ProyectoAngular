@@ -25,11 +25,9 @@ export class AgregarProductoComponent implements OnInit {
 
   formCalando: FormGroup;
   constructor(private serviceProducto: ServiceFerreteriaService, private _ngZone: NgZone,
-    private router: Router, private fb: FormBuilder) {
+    private router: Router, private fb: FormBuilder) {}
+  showFiller = false;
 
-
-
-  }
   formProducto = this.fb.group
     ({
       nombreProducto: ['', Validators.required],
