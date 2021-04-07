@@ -99,7 +99,7 @@ profileForm = new FormGroup({
 
   getDataProveedores(): void
   {
-    this.datosProveedor$ =  this.serviceFerreteria.serviceProveedor.obtenerProveedoresMarcas();
+    this.datosProveedor$ =  this.serviceFerreteria.serviceProveedor.obtenerProveedores();
   }
   selectEvent(item: any) {
     // do something with selected item

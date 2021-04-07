@@ -60,32 +60,12 @@
         </div>
     </div>
     <div class="col-4">
-        <button class="btn btn-primary" [disabled]="buttonGuardarCliente" (click)="btnGuardarCliente();">
+        <button mat-flat-button color="primary" class="fw-bolder" [disabled]="buttonGuardarCliente" (click)="btnGuardarCliente();">
 
             Gardar cliente
         </button>
     </div>
 </div>
-
-
-<!-- <div class="row">
-   
-                            <div *ngIf="!mostrarTemplate; else elseBlock">
-                                <div class="col-6 d-flex justify-content-center align-items-center">
-                                    <button class="btn btn-secondary col-12 "> Guardar empleado</button>
-                                </div>
-                            </div>
-
-                            <div *ngIf="mensajeEditar">
-                                <div class="alert alert-warning" role="alert">
-                                    Se edito correctamente
-                                  </div>
-                            </div>
-
-                        </div> -->
-
-
-
 
 
 <div class="row" *ngIf="chechVenta">

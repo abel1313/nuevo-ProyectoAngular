@@ -13,7 +13,7 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
   templateUrl: './agregar-persona.component.html',
   styleUrls: ['./agregar-persona.component.css']
 })
-export class AgregarPersonaComponent implements OnInit, OnDestroy {
+export class AgregarPersonaComponent implements OnInit {
 
   @ViewChild('checkClando') calndo: ElementRef;
 
@@ -49,10 +49,10 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
   seguimos: Boolean = false;
 
 
-  mensajeAgregar = '';
+  uriNavegado = '';
   mostrarMensaje: string;
 
-  subscription: Subscription;
+  
   pathString = '';
   editarClientex: ICliente;
 
@@ -69,15 +69,18 @@ export class AgregarPersonaComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
+    // elimina la sesion de editar alguna marca en caso de que el usuario notermine de editar la marca y se dirija a esta ista
     Sessiones.eliminarSessionesReportes('editarMarca');
-    this.mensajeAgregar = this.router.url;
+    // obtenemos la uri del navedaro y la guardamos en esta variable
+    this.uriNavegado = this.router.url;
 
 
 
-    if (this.mensajeAgregar == "/productos/buscar") {
+    // se validan las uri para ver que acción realiza
+    if (this.uriNavegado == "/productos/buscar") {
       this.chechVenta = true;
     }
-    if (this.mensajeAgregar == "/clientes/editarcliente") {
+    if (this.uriNavegado == "/clientes/editarcliente") {
       this.editarClientex = sessionStorage.getItem("ediatrCliente") != null ?
         JSON.parse(sessionStorage.getItem("ediatrCliente")) : null;
       this.mostrarMensaje = 'Editar cliente';
@@ -94,7 +97,7 @@ this.mensajeGuardado = ' El cliente se actualizó correctamente';
 
 
     }
-    if (this.mensajeAgregar == "/clientes/nuevo") {
+    if (this.uriNavegado == "/clientes/nuevo") {
       this.mostrarMensaje = 'Nuevo cliente';
       this.mensajeEspera = 'Por favor espere, se está guardando ...';
       this.mensajeGuardado = ' El cliente se guardo correctamente';
@@ -111,18 +114,6 @@ this.mensajeGuardado = ' El cliente se actualizó correctamente';
   seguimosVenta() {
 
     this.mostrarMensajeValidadr();
-
-    // if(this.cliente.cliente.persona.nombrePersona == '' )
-    // {
-    //   this.nocumole = true;
-
-    //   setTimeout(() => {
-
-    //     this.nocumole = false;
-    //   }, 1500);
-    // }
-
-
   }
 
 
@@ -144,7 +135,7 @@ this.mensajeGuardado = ' El cliente se actualizó correctamente';
         this.cliente.cliente.persona.telefonoPersona != ''
 
       ) {
-        if (this.mensajeAgregar == "/clientes/nuevo") {
+        if (this.uriNavegado == "/clientes/nuevo") {
           this.btnMensaje = true;
           this.guardarCliente();
           setTimeout(() => { this.btnMensaje = false; }, 2000);
@@ -152,7 +143,7 @@ this.mensajeGuardado = ' El cliente se actualizó correctamente';
           setTimeout(() => { this.btnMensajeAgregar = true; }, 2100);
           setTimeout(() => { this.btnMensajeAgregar = false; }, 3200);
         }
-        if (this.mensajeAgregar == "/clientes/editarcliente") {
+        if (this.uriNavegado == "/clientes/editarcliente") {
 
           this.udateCliente$ = this.serviceFerreteria
             .serviceCliente.actualizarCliente(this.cliente.cliente);
@@ -320,11 +311,6 @@ this.mensajeGuardado = ' El cliente se actualizó correctamente';
 
 
 
-
-  ngOnDestroy(): void 
-  {
-    //  this.subscription.unsubscribe();
-  }
 
 
 }

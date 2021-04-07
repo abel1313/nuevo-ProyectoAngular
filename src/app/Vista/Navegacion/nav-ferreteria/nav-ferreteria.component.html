@@ -11,23 +11,6 @@
       </li>
 
 
-      <!-- Usuarios -->
-      <li class="nav-item dropdown"
-        *ngIf="(serviceFerreteria.serviceUsuario.permisosProductos$ | async) || permisosUsuarios">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Permisos
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" [routerLink]="['permisos/nuevo']"
-            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">agregar</a>
-          <a class="dropdown-item" [routerLink]="['permisos/buscar']"
-          [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
-          
-        </div>
-      </li>
-      <!-- Usuarios -->
-
       <!-- Clientes -->
       <!-- *ngIf="sessionUsuarioAcceso.listaPermiso.includes(1) || sessionUsuarioAcceso.listaPermiso == null" -->
       <li class="nav-item dropdown"
@@ -93,9 +76,6 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" [routerLink]="['reportes/generarreportes']"
             [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">generar</a>
-          <a class="dropdown-item" [routerLink]="['reportes/buscar']"
-            [routerLinkActive]="['bg-secondary', 'text-white','text-centerd']">mostrar</a>
-          
         </div>
       </li>
       <!-- Reportes -->

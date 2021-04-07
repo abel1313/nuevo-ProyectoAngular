@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { ModulePersonaModule } from '../../Personas/module-persona/module-persona.module';
 import { AgregarDireccionComponent } from 'src/app/Vista/Direccion/agregar-direccion/agregar-direccion.component';
 import { BuscarPagosVentaComponent } from 'src/app/Vista/PagosVenta/BuscarPagos/buscar-pagos-venta/buscar-pagos-venta.component';
+import { MateriaModule } from '../../materia/materia.module';
 
 
 @NgModule({
@@ -28,7 +29,7 @@ import { BuscarPagosVentaComponent } from 'src/app/Vista/PagosVenta/BuscarPagos/
     ModuleClienteRoutingModule,
     FormsModule,
     ModulePersonaModule,
-    
+    MateriaModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

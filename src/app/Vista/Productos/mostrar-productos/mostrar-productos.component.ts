@@ -222,7 +222,7 @@ sessionStorage.setItem("carritoventa", JSON.stringify(this.carritoVenta));
     sessionStorage.setItem("datosEditarProducto", JSON.stringify(event));
 
 
-    this.router.navigateByUrl('/editarProducto');
+    this.router.navigateByUrl('/productos/editarProducto');
 
   }
 

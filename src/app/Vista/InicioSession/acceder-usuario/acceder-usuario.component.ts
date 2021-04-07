@@ -41,6 +41,8 @@ export class AccederUsuarioComponent implements OnInit {
 
   subscription: Subscription;
 
+  usuarioSubs$: Observable<any>;
+
   datosUsuarioAccesso = new DTOPermisosUsuario();
 
   datAccesoUsr: any;
@@ -80,9 +82,9 @@ export class AccederUsuarioComponent implements OnInit {
   {
     this._ngZone.runOutsideAngular(()=>
     {
-      this.subscription = this.serviceFerreteria.serviceUsuario
-      .accesoSistema(this.usuarioAcceder.usuarioAcceso)
-      .subscribe
+      this.usuarioSubs$ = this.serviceFerreteria.serviceUsuario
+      .accesoSistema(this.usuarioAcceder.usuarioAcceso);
+      this.usuarioSubs$.subscribe
       (
         res=>
         {
@@ -180,11 +182,6 @@ export class AccederUsuarioComponent implements OnInit {
   
   }
 
-  ngOnDestroy(): void 
-  {
-    this.subscription.unsubscribe();
-  
-  }
 
 
 }

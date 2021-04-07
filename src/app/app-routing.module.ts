@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ActualizarClienteComponent } from './Vista/Clientes/ActualizarCliente/actualizar-cliente/actualizar-cliente.component';
 import { AgregarClienteComponent } from './Vista/Clientes/AgregarCliente/agregar-cliente/agregar-cliente.component';
 import { BuscarClienteComponent } from './Vista/Clientes/BuscarCliente/buscar-cliente/buscar-cliente.component';
-import { VentasPagosComponent } from './Vista/GenerarReportes/ventas-pagos/ventas-pagos.component';
+
 import { InicioSessionComponent } from './Vista/InicioSession/inicio-session/inicio-session.component';
 import { PagosVentaMostrarComponent } from './Vista/PagosVenta/pagos-venta-mostrar/pagos-venta-mostrar.component';
 import { AgregarPermisosComponent } from './Vista/Permisos/AgregarPermisos/agregar-permisos/agregar-permisos.component';
@@ -13,7 +13,7 @@ import { BuscarProductosComponent } from './Vista/Productos/buscar-productos/bus
 import { EditarProductosComponent } from './Vista/Productos/editar-productos/editar-productos.component';
 import { GenerarReportesVentasComponent } from './Vista/Reportes/generar-reportes-ventas/generar-reportes-ventas.component';
 import { GenerarReportesComponent } from './Vista/Reportes/generar-reportes/generar-reportes.component';
-import { ReportePagoComponent } from './Vista/Reportes/reporte-pago/reporte-pago.component';
+
 import { AgregarVentaComponent } from './Vista/Venta/agregar-venta/agregar-venta.component';
 
 const routes: Routes = 
@@ -32,12 +32,12 @@ const routes: Routes =
 
 
 //  { path: 'acceso', component: InicioSessionComponent },
- { path: 'permisos/nuevo', component: AgregarPermisosComponent },
- { path: 'permisos/buscar', component: MostrarPermisosComponent },
- { path: 'reportes/reportepago', component: ReportePagoComponent },
+//  { path: 'permisos/nuevo', component: AgregarPermisosComponent },
+//  { path: 'permisos/buscar', component: MostrarPermisosComponent },
+ 
 //  { path: 'reportes/generarreportes', component: GenerarReportesComponent },
 //  { path: 'reportes/generarreporteventas', component: GenerarReportesVentasComponent },
- { path: 'reportes/ventaspagoscliente', component: VentasPagosComponent },
+ 
 
  {
    path: 'reportes',

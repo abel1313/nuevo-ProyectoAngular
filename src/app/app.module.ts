@@ -42,7 +42,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { MatInputModule } from '@angular/material/input';
-import { ReportePagoComponent } from './Vista/Reportes/reporte-pago/reporte-pago.component';
+
 import { PaginaNoEncontradaComponent } from './Vista/PaginaNoEncontrada/pagina-no-encontrada/pagina-no-encontrada.component';
 import { FechasVentaComponent } from './Vista/Reportes/fechas-venta/fechas-venta.component';
 import { GenerarReportesComponent } from './Vista/Reportes/generar-reportes/generar-reportes.component';
@@ -52,10 +52,10 @@ import { GenerarReportesComponent } from './Vista/Reportes/generar-reportes/gene
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
-import { GenerarReportesPagosComponent } from './Vista/Reportes/generar-reportes-pagos/generar-reportes-pagos.component';
+
 import { GenerarReportesVentasComponent } from './Vista/Reportes/generar-reportes-ventas/generar-reportes-ventas.component';
 import { PagosClientesComponent } from './Vista/GenerarReportes/pagos-clientes/pagos-clientes.component';
-import { VentasPagosComponent } from './Vista/GenerarReportes/ventas-pagos/ventas-pagos.component';
+
 import { CodigoBarrasComponent } from './Vista/CodigoBarra/codigo-barras/codigo-barras.component';
 import { ModuleProductoModule } from './Module/Productos/module-producto/module-producto.module';
 import { PrimerEjemploComponent } from './Vista/Ejemplos/PrimerEjemplo/primer-ejemplo/primer-ejemplo.component';
@@ -77,15 +77,6 @@ import { PrimerEjemploComponent } from './Vista/Ejemplos/PrimerEjemplo/primer-ej
     AgregarPermisosComponent,
     MostrarPermisosComponent,
     
-  
-    ReportePagoComponent,
-    
-    
-    
-    GenerarReportesPagosComponent,
-    
-    
-    VentasPagosComponent,
     CodigoBarrasComponent,
 
     

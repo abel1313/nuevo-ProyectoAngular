@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { IProducto } from 'src/app/Model/Productos/IProducto';
 import { ProductoAll } from 'src/app/Model/Productos/ProductoAll';
+import { IProveedor } from 'src/app/Model/Proveedores/IProveedor';
 import { IProveedorAll } from 'src/app/Model/Proveedores/IProveedorAll';
 import { Validar } from 'src/app/Model/Validar/Validar';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
@@ -17,7 +18,7 @@ import { Sessiones } from "../../../Model/Sessiones/Sessiones";
   templateUrl: './editar-productos.component.html',
   styleUrls: ['./editar-productos.component.css']
 })
-export class EditarProductosComponent implements OnInit, OnDestroy {
+export class EditarProductosComponent implements OnInit {
 
   constructor( private serviceFerreteria: ServiceFerreteriaService,
               private _ngZone: NgZone, private router: Router) { }
@@ -46,7 +47,7 @@ existenciasActuales: number = 0;
 
   sessionUsuario = new Sessiones( this.router );
 
-  dataProveedores$: Observable<IProveedorAll[]>;
+  dataProveedores$: Observable<IProveedor[]>;
 
   editarProductos$: Observable<IProveedorAll>;
   validar = new Validar();
@@ -61,8 +62,9 @@ existenciasActuales: number = 0;
   {
 
 
+ 
     // método para redireccionar a la vista de mostrarProducto
-    this.sessionUsuario.sessionEditarUsuario( 'productos/buscas' );
+    this.sessionUsuario.sessionEditarUsuario( 'productos/buscar');
     Sessiones.eliminarSessionesReportes('editarMarca');
     this.getProveedores();
 
@@ -150,7 +152,7 @@ this.obtenerProductoEditar();
   // Observable para mostrar los proveedores
   getProveedores()
   {
-   this.dataProveedores$ =  this.serviceFerreteria.serviceProveedor.getAllProveedores();
+   this.dataProveedores$ =  this.serviceFerreteria.serviceProveedor.obtenerProveedores();
   }
 
 // verificar que el código de barra sea diferente cualquier otro
@@ -228,40 +230,46 @@ this.obtenerProductoEditar();
 
   editarProductoServer()
   {
-    this._ngZone.runOutsideAngular(()=>
+    
+    if( this.productoEditarNuevo.producto.proveedor.id == 0 )
     {
-      this.editarProductos$ = this.serviceFerreteria.serviceProducto
-      .editarrProductoServer( this.productoEditarNuevo.producto );
-      this.editarProductos$.subscribe(
-        res=>
-        {
-          this._ngZone.run(()=>
+      this.validar.validarDatos();
+    }else{
+      this.spinnerEditar = true;
+      this.inputEditar = true;
+      this._ngZone.runOutsideAngular(()=>
+      {
+        this.editarProductos$ = this.serviceFerreteria.serviceProducto
+        .editarrProductoServer( this.productoEditarNuevo.producto );
+        this.editarProductos$.subscribe(
+          res=>
           {
-            
-            this.spinnerEditar = true;
-            this.inputEditar = true;
-
-            setTimeout(() => {
-              this.spinnerEditar = false;
-              this.inputEditar = false;
-              this.actualizarMensaje = true;
-            }, 2000);
-
-            setTimeout(() => {
-              this.actualizarMensaje = false;
-       
-
-              this.router.navigateByUrl("mostrarproductos");
-
-            }, 2500);
-
-          });
-        }, err=> console.log(err)
-      );
-    });
+            this._ngZone.run(()=>
+            {
+ 
+               
+  
+              setTimeout(() => {
+                this.spinnerEditar = false;
+                this.inputEditar = false;
+                this.actualizarMensaje = true;
+              }, 2000);
+  
+              setTimeout(() => {
+                this.actualizarMensaje = false;
+         
+  
+                this.router.navigateByUrl("productos/buscar");
+  
+              }, 2500);
+  
+            });
+          }, err=> console.log(err)
+        );
+      });
+    }
+    
   }
-  ngOnDestroy(): void {
-  //this.subscription.unsubscribe();
-  }
+
 
 }

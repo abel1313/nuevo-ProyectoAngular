@@ -71,8 +71,18 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
     this.resultado = parseFloat(event) - this.dtoVentaPago.ventasPagos.totalResta;
   }
   guardarPago() {
-    if (this.datosPagoVenta.pago != 0) {
+    if (this.datosPagoVenta.pago != 0) 
+    {
       this.saveVentasPagadas();
+    }else
+    {
+      this.mensaje = ' el pago debe ser mayor a 0';
+      this.mostrarMensaje = true;
+      setTimeout(() => {
+        this.mensaje = '';
+        this.mostrarMensaje = false;
+      }, 2000);
+
     }
   }
 

@@ -332,7 +332,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
   // evento click de la vista de ventas
   agregarVenta() {
     if (this.pago > 0) {
-      this.disabledPagar = true;
+     
       if (this.usuEjemplo != '' &&
         this.totalVentaMostrar != 0) {
         if (!this.radio) {
@@ -361,7 +361,11 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
               this.mensajesErrorSave = '';
             }, 2000);
           } else {
+            this.disabledPagar = true;
             this.addVentaServer(this.clienteUsuario.idCliente);
+            setTimeout(() => {
+              this.disabledPagar = false;
+            }, 2000);
           }
 
         }

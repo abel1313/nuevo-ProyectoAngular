@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AgregarPersonaComponent } from 'src/app/Vista/Personas/AgregarPersona/agregar-persona/agregar-persona.component';
 import { FormsModule } from '@angular/forms';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
+import { MateriaModule } from '../../materia/materia.module';
 
 
 
@@ -16,6 +17,7 @@ import { AutocompleteLibModule } from 'angular-ng-autocomplete';
     CommonModule,
     FormsModule,
     AutocompleteLibModule,
+    MateriaModule
   ],
   exports: 
   [
