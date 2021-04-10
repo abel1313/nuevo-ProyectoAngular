@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
@@ -10,7 +11,7 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class AgregarClienteComponent implements OnInit{
 
-  constructor( private serviceFerreteria: ServiceFerreteriaService ) { }
+  constructor( private serviceFerreteria: ServiceFerreteriaService, private router: Router ) { }
 
 
 
@@ -19,7 +20,7 @@ export class AgregarClienteComponent implements OnInit{
   ngOnInit(): void 
   {
 
-    Sessiones.eliminarSessionesReportes('editarMarca');
+    
   }
 
   btnCalando()

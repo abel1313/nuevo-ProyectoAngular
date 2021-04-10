@@ -30,6 +30,10 @@ export class ServiceCliente {
   getClientesAll(): Observable<any> {
     return this.http.get(`${this.uriServer}/clientes/buscarclientes`)
   }
+  obtenerClientes(): Observable<ICliente[]> 
+  {
+    return this.http.get<ICliente[]>(`${this.uriServer}/clientes/buscarclientes`)
+  }
   getOneCliente( nombreCliente: string ): Observable<ICliente[]> {
     //console.log(`${this.URI_JAVA_Productos}/all/${nombreProducto}`);
     return this.http.get<ICliente[]>(`${this.uriServer}/clientes/ObtenerUnCliente/${nombreCliente}`);
@@ -62,6 +66,8 @@ export class ServiceCliente {
   // Returns an observable 
 
   actualizarCliente( cliente: ICliente ): Observable<any> {
+
+    console.log(cliente , " cl");
 
     return this.http.put<ICliente[]>(`${this.uriServer}/clientes/updateClient/${cliente.id}`, cliente);
   }

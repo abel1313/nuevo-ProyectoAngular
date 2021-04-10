@@ -34,14 +34,20 @@ import { Direccion } from 'src/app/Model/Direccion/Direccion';
   templateUrl: './agregar-venta.component.html',
   styleUrls: ['./agregar-venta.component.css']
 })
-export class AgregarVentaComponent implements OnInit, OnDestroy {
+export class AgregarVentaComponent implements OnInit {
 
   @ViewChild('checkClando') calndo: ElementRef;
   @ViewChild('totalVenta', { static: false }) totalVentaElemnet: ElementRef;
   @ViewChild('auto') auto: ElementRef;
+  ngModelDatosCliente: ICliente;
+
   constructor(private serviceFerreteria: ServiceFerreteriaService,
     private router: Router, private render2: Renderer2,
-    private _ngZone: NgZone) { }
+    private _ngZone: NgZone) 
+    {
+
+
+     }
 
   //keywordProducto = 'nombrePersona';
   // es para obtener los datos del service que el servidor no regresa
@@ -55,6 +61,13 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
   keyword = 'nombrePersona';
 
   valueString: number = 0;
+
+
+  dataClient$: Observable<ICliente[]>;
+
+
+
+
 
   datosCliente$: Observable<any>;
   guardarPepido$: Observable<IPedido>;
@@ -86,6 +99,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
   radio: Boolean = true;
 
   disabledPagar: Boolean = false;
+  barraLateralVenta: Boolean = false;
 
 
   respuestaCliente: ICliente;
@@ -241,6 +255,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
         detalle.detalleAdd.producto.id = ventaSession[key].id;
 
         detalle.detalleAdd.venta.cliente.id = id;
+        detalle.detalleAdd.venta.usuario.id = ventaSession[key].usuarioId;
         detalleServer.detalleV.detalle.push(detalle.detalleAdd);
 
       }
@@ -269,8 +284,6 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
             this._ngZone.run(() => {
               respuestDetalle = res;
 
-              //  agregar d euna el usuariio a la venta
-
               if (this.pago >= this.totalVentaMostrar) {
                 if (respuestDetalle.id != 0) {
                   ventasPagadas.ventasPagadas.estatusVenta.id = 1;
@@ -284,9 +297,14 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
               }
               else {
 
+                ventasPagadas.ventasPagadas.estatusVenta.id = 2;
+                ventasPagadas.ventasPagadas.venta.id = respuestDetalle.id;
+                this.saveVentaPagada(ventasPagadas.ventasPagadas);
+
                 pagoVenta.pago.venta.id = respuestDetalle.id;
                 pagoVenta.pago.pagoVenta = this.pago;
 
+    
                 this.realizarPagosVenta(pagoVenta.pago);
 
               }
@@ -303,7 +321,9 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
                 this.showMessageRespuesta = false;
               }, 1500);
               setTimeout(() => {
-               this.disabledPagar = false;
+                this.barraLateralVenta = false;
+                this.disabledPagar = false;
+               
                 this.router.navigateByUrl('/ventas/buscar');
 
               }, 2500);
@@ -316,6 +336,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
   }
   realizarPagosVenta(pagoVenta: any) {
     let pag: IPagosVenta = pagoVenta;
+    
     this._ngZone.runOutsideAngular(() => {
       this.realizarPagos$ = this.serviceFerreteria.serivicePagosVenta
         .savePagoVenta(pagoVenta);
@@ -331,13 +352,20 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
 
   // evento click de la vista de ventas
   agregarVenta() {
+
+  
+
     if (this.pago > 0) {
      
       if (this.usuEjemplo != '' &&
         this.totalVentaMostrar != 0) {
         if (!this.radio) {
+          this.barraLateralVenta = true;
+          this.disabledPagar = true;
+          
           this._ngZone.runOutsideAngular(() => {
-            this.guardarCliente$ = this.serviceFerreteria.serviceCliente.guardarCliente(this.clienteVenta.cliente);
+            this.guardarCliente$ = this.serviceFerreteria.serviceCliente
+            .guardarCliente(this.clienteVenta.cliente);
             this.guardarCliente$.subscribe
               (
                 (res: ICliente) => {
@@ -349,9 +377,9 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
               );
           });
         } else if (this.radio) {
+          
           let newDire: IDireccion =
             this.direccion != undefined ? this.direccion : null;
-
           if (newDire == null) {
             this.showMessageRespuesta = true;
             this.mensajesErrorSave = 'Por favor llene los campos de la dirección';
@@ -361,18 +389,16 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
               this.mensajesErrorSave = '';
             }, 2000);
           } else {
+
+            this.barraLateralVenta = true;
             this.disabledPagar = true;
             this.addVentaServer(this.clienteUsuario.idCliente);
             setTimeout(() => {
               this.disabledPagar = false;
             }, 2000);
           }
-
         }
-
-
       }
-
     } else {
       this.validarFormulario();
       this.showMessage = true;
@@ -381,54 +407,6 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
         (<HTMLInputElement>document.getElementById('lblPagoCon')).focus();
       }, 2000);
     }
-
-
-
-
-    //   if( this.radio )
-    //   {
-    //     let id: number = this.clienteUsuario.idCliente;
-    //     this.clienteVenta.cliente.id = id;
-    // //    this.clienteVenta.id = this.clienteUsuario.idCliente;
-    //   }else
-    //   {
-    //     this.agregarPedido(this.clientePersona ,this.direccion);
-    //  //this.agregarCliente( this.clientePersona );
-
-
-    //   }
-    // setTimeout(() => {
-    //   console.log(this.clientePersona, " respaldo persona");
-    //   console.log(this.direccion, " respaldo persona");
-    // }, 2000);
-
-
-
-    // if (this.pago > 0) {
-
-    //   if (!this.radio) {
-    //     console.log("llego");
-    //     var inputValue = (<HTMLInputElement>document.getElementById('totalVenta')).value;
-
-
-    //     this.venta.totalVenta = parseInt(inputValue);
-
-    //     let ventaExample = new VentasServidor(this._ngZone, this.serviceFerreteria);
-    //     ventaExample.addCliente(this.clienteVenta.cliente, ventaExample.enviarVetaServidor)
-    //   }
-
-
-    //   //  this.render2.setAttribute(this.calndo.nativeElement, "checked", "true");
-    // }
-    // else {
-    //   this.validarFormulario();
-    //   this.showMessage = true;
-    //   setTimeout(() => {
-    //     this.showMessage = false;
-    //     (<HTMLInputElement>document.getElementById('lblPagoCon')).focus();
-    //   }, 2000);
-    // }
-
   }
 
   onKey(event: any) // Eventos para tomar el valor del pago
@@ -462,8 +440,6 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
       if (Object.prototype.hasOwnProperty.call(venta, key)) {
         const element = venta[key].cantidad1 * venta[key].subtotal;
         this.totalVentaMostrar += element;
-
-
       }
       this.venta.detalle.push(this.detalleVenta);
       cantidad += this.detalleVenta.cantidadDetalleVenta;
@@ -521,21 +497,10 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
 
 
   getClientes() {
-    this.suscription = this.serviceFerreteria.serviceCliente.getClientesAll()
-      .subscribe
-      (
-        res => {
-          this.datosCliente = res;
+    this.dataClient$ = this.serviceFerreteria.serviceCliente.obtenerClientes();
 
-        }, error => console.log(error)
-      );
   }
-
-
-
   saveVentaPagada(ventasPagadas: any) {
-
-
     this.guardarVentasPagadas$ = this.serviceFerreteria.seriviceVentasPagadas
       .guardarVentasPagadas(ventasPagadas);
     this.guardarVentasPagadas$.subscribe
@@ -546,8 +511,6 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
         err => console.log(err)
       );
   }
-
-
   datosEmitAgregarPersona() {
     this.ventaClienteDatosPersona$ =
       this.serviceFerreteria.serviceVenta.ventaCliente$;
@@ -596,6 +559,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
     });
   }
   guardarDireccion(id: number) {
+
     this._ngZone.runOutsideAngular(() => {
       this.guardarDireccion$ = this.serviceFerreteria.serviceDireccion
         .guardarDireccion(this.direccion);
@@ -605,6 +569,7 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
           (res: IDireccion) => {
             this._ngZone.run(() => {
               this.guardarPedido(id, res);
+
             });
           }, err => console.log(err)
         );
@@ -631,12 +596,6 @@ export class AgregarVentaComponent implements OnInit, OnDestroy {
           err => console.log(err)
         );
     });
-  }
-
-
-
-  ngOnDestroy(): void {
-    this.suscription.unsubscribe();
   }
 
 

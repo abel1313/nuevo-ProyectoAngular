@@ -1,71 +1,95 @@
-<div class="row p-3 text-center ">
-    <div class="col-6">
-        <div class="form-group">
-            <label for="nombrePersona" class="">Nombre</label>
-            <input type="text" class="form-control col-12" name="nombrePersona" id="nombrePersona"
-                placeholder="Ingrese nombre persona" [(ngModel)]="cliente.cliente.persona.nombrePersona" required
-                [disabled]="diabledInputClientePersona">
-            <div class="alert alert-info" *ngIf="validarnombre">
-                Por favor ingrese su nombre
-            </div>
-        </div>
-    </div>
 
-    <div class="col-6">
-        <div class="form-group">
-            <label for="telefonopersona">Teléfono</label>
-            <input type="number" class="form-control" name="telefonoPersona" id="telefonopersona"
-                placeholder="Ingrese su teléfono" [(ngModel)]="cliente.cliente.persona.telefonoPersona" required
-                [disabled]="diabledInputClientePersona">
-            <div class="alert alert-info" *ngIf="validartelefono">
-                Por favor ingrese su teléfono
-            </div>
-        </div>
-    </div>
 
-</div>
-<div class="row p-3 text-center">
-    <div class="col-6">
-        <div class="form-group">
-            <label for="paterno">Apellido paterno</label>
-            <input type="text" class="form-control" name="paternoPersona" id="paterno" placeholder="Ingrese su paterno"
-                [disabled]="diabledInputClientePersona" [(ngModel)]="cliente.cliente.persona.paternoPersona" required>
 
-            <div class="alert alert-info" *ngIf="validarpaterno">
-                Por favor ingrese su apellido paterno
-            </div>
-        </div>
-    </div>
-    <div class="col-6">
-        <div class="form-group">
-            <label for="materno">Apellido paterno</label>
-            <input type="text" class="form-control" name="maternoPersona" id="materno" placeholder="Ingrese su materno"
-                [disabled]="diabledInputClientePersona" [(ngModel)]="cliente.cliente.persona.maternoPersona" required>
 
-            <div class="alert alert-info" *ngIf="validarmaterno">
-                Por favor ingrese su apellido materno
-            </div>
-        </div>
-    </div>
-</div>
+                <form [formGroup]="formProducto" (ngSubmit)="btnGuardarCliente($event)">
 
-<div class="row" *ngIf="mostrarBottonCliente">
-    <div class="col-8">
-        <div class="alert alert-dark" role="alert" *ngIf="buttonGuardarClienteDisabled">
-            {{ mensajeEspera }}
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        </div>
-        <div class="alert alert-dark" role="alert" *ngIf="guardarBoolean">
-           {{ mensajeGuardado }}
-        </div>
-    </div>
-    <div class="col-4">
-        <button mat-flat-button color="primary" class="fw-bolder" [disabled]="buttonGuardarCliente" (click)="btnGuardarCliente();">
+                    <div class="row p-3 text-center ">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="nombrePersona" class="">Nombre</label>
+                                <input type="text" class="form-control col-12" id="nombrePersona"
+                                    placeholder="Ingrese nombre persona" formControlName="nomPersona" required minlength="2" maxlength="25" >
+                                    <div class="">
+                                        <p  *ngIf="formProducto.get('nomPersona').hasError('required') && formProducto.get('nomPersona').touched">Por favor ingrese su teléfono</p>
+                                        <p  *ngIf="formProducto.get('nomPersona').hasError('minlength')">Debe de contener un minimo de 2 dígitos</p>
+                                        <p  *ngIf="formProducto.get('nomPersona').hasError('maxlength')"> Limite 25 dígitos</p>
+                                        
+                                        
+                                    </div>
+                            </div>
+                        </div>
+                    
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="telefonopersona">Teléfono {{ longitud }}</label>
+                                <input type="number" class="form-control" formControlName="telefonoPersona" #valod id="telefonopersona"
+                                    placeholder="Ingrese su teléfono" required min="10" (keyup)=_keyUpLongitud(valod.value)
+                                  >
+                                  <div class="">
+                                    <p  *ngIf="validNumber">Solo ingrese 10 dígitos</p>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    <div class="row p-3 text-center">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="paterno">Apellido paterno</label>
+                                <input type="text" class="form-control" formControlName="paternoPersona" id="paterno" placeholder="Ingrese su paterno"
+                                      required minlength="2" maxlength="25" >
+                    
+                                <div class="">
+                                    <p  *ngIf="formProducto.get('paternoPersona').hasError('required') && formProducto.get('paternoPersona').touched">Por favor ingrese su apellido paterno</p>
+                                    <p  *ngIf="formProducto.get('paternoPersona').hasError('minlength')">Debe de contener un minimo de 3 caractéres</p>
+                                    <p  *ngIf="formProducto.get('paternoPersona').hasError('maxlength')"> Limite 25 caractéres</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="materno">Apellido paterno</label>
+                                <input type="text" class="form-control" formControlName="maternoPersona" id="materno" placeholder="Ingrese su materno"
+                                    required minlength="2" maxlength="25" >
+                    
+                                    <div class="">
+                                        <p  *ngIf="formProducto.get('maternoPersona').hasError('required') && formProducto.get('maternoPersona').touched">Por favor ingrese su apellido materno</p>
+                                        <p  *ngIf="formProducto.get('maternoPersona').hasError('minlength')">Debe de contener un minimo de 3 caractéres</p>
+                                        <p  *ngIf="formProducto.get('maternoPersona').hasError('maxlength')"> Limite 25 caractéres</p>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row" *ngIf="mostrarBottonCliente">
+                        <div class="col-8">
+                            <div class="alert alert-dark" role="alert" *ngIf="buttonGuardarClienteDisabled">
+                                {{ mensajeEspera }}
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            </div>
+                            <div class="alert alert-dark" role="alert" *ngIf="guardarBoolean">
+                               {{ mensajeGuardado }}
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <button mat-flat-button color="primary" class="fw-bolder" [disabled]="!formProducto.valid" type="submit" >
+                    
+                                Gardar cliente
+                            </button>
+                        </div>
+                    </div>
 
-            Gardar cliente
-        </button>
-    </div>
-</div>
+                    <div class="row" *ngIf="verificarInformacion">
+                        <div class="col-12">
+                            <p class="text-center"> {{ mensajeEspera }} </p>
+                        </div>
+                    </div>
+
+                    
+                </form>
+
+
 
 
 <div class="row" *ngIf="chechVenta">
@@ -80,6 +104,12 @@
     </div>
     <div class="col-4">
         <button class="btn btn-success" [disabled]="seguimos" (click)="seguimosVenta()">Seguimos</button>
+        
+        <div class="row" *ngIf="barraLateran">
+            <div class="col-12">
+                <mat-progress-bar mode="indeterminate" class="col-7"></mat-progress-bar>
+            </div>
+        </div>
     </div>
 </div>
 

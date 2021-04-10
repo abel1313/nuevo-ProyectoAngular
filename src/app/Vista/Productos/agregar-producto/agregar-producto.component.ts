@@ -114,13 +114,19 @@ export class AgregarProductoComponent implements OnInit {
   // public pro: Subscription;
 
   ngOnInit(): void {
-    Sessiones.eliminarSessionesReportes('editarMarca');
+
+
+  
+
+    new Sessiones( this.router ).direfenteInterfazEditar();
+
+    
     this.getDataProveedores();
     this.getCategorias();
 
     //(this.check) ? console.log(" Habi") : console.log("Desc") ;
 
-    this.sessionesProducto.eliminarSession("datosEditarProducto");
+    
 
 
 

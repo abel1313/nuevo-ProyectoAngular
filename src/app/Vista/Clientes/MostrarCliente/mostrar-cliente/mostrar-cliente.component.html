@@ -15,12 +15,12 @@
 
     <tbody>
         <tr *ngFor="let item of dtsOb$ | async" class="text-center">
-            <td> {{ item.persona.nombrePersona.toUpperCase() }} </td>
+            <td> {{ item.persona.nombrePersona | uppercase }} </td>
             <td>
-                 {{ item.persona.paternoPersona.toUpperCase() }} 
-                 {{ item.persona.maternoPersona.toUpperCase() }} 
+                 {{ item.persona.paternoPersona | uppercase }} 
+                 {{ item.persona.maternoPersona | uppercase }} 
             </td>
-            <td *ngIf="item.persona.correoelectronicoPersona != null ; else blockElse "> {{ item.persona.correoelectronicoPersona.toLowerCase() }}  </td>
+            <td> {{ item.persona.telefonoPersona }}  </td>
             
             <td> 
                 <button class="btn btn-warning fw-bolder" #dts value="{{ item.id }}" 
@@ -31,4 +31,4 @@
     </tbody>
 </table>
 
-<ng-template #blockElse> sin correo </ng-template>
+

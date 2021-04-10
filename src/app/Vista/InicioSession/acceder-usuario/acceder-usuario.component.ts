@@ -1,14 +1,14 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { CryptoJs } from 'src/app/Model/CryptoJs/CryptoJs';
+
 import { DTOPermisosUsuario } from 'src/app/Model/DTO/DTOPermisosUsuario/DTOPermisosUsuario';
 import { Usuario } from 'src/app/Model/Usuarios/Usuario';
 import { UsuarioAcceso } from 'src/app/Model/Usuarios/UsuarioAcceso';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 
-import { environment } from "../../../../environments/environment";
+
 
 
 
@@ -33,7 +33,7 @@ export class AccederUsuarioComponent implements OnInit {
 
 
   
-  cryptoJs = new CryptoJs();
+  
 
   usuarioAcceder = new UsuarioAcceso();
 
@@ -108,17 +108,12 @@ export class AccederUsuarioComponent implements OnInit {
             }else{
               sessionStorage.setItem("sessionUsuario", JSON.stringify(this.datAccesoUsr) );
               
-              //console.log(sessionStorage.setItem("sessionUsuario", JSON.stringify(this.datAccesoUsr) ));
               this.mensajeSpinner = true;
 
               setTimeout(() => {
                 this.router.navigateByUrl('productos/buscar');
                 this.mensajeErrorAcceso = false;
                 this.mensajeSpinner = false;
-                
-             
-             //console.log(this.datAccesoUsr.listaPermiso.includes(3) , " permisos venta");
-
               
               this.serviceFerreteria.serviceUsuario.permisosUsuarios$.emit(
                 ( 

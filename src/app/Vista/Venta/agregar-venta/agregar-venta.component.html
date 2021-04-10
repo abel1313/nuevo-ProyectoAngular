@@ -58,7 +58,7 @@
                                 <div class="ng-autocomplete col-12 d-flex">
                                     <ng-autocomplete #auto
                                         
-                                        [data]="datosCliente" 
+                                        [data]="dataClient$ | async" 
                                         [searchKeyword]="keyword"
                                         placeholder="Ingrese nombre del cliente" 
                                         (selected)='selectEvent($event)'
@@ -67,7 +67,10 @@
                                         (inputFocused)='onFocused($event)'
                                         [itemTemplate]="itemTemplate" 
                                         [notFoundTemplate]="notFoundTemplate"
-                                        requiered>
+                                        requiered
+                                        name="ngModelDatosCliente"
+                                        [(ngModel)]="ngModelDatosCliente"
+                                        >
                                         <div class="invalid-feedback">
                                             Por favor ingrese el nombre
                                         </div>
@@ -145,8 +148,12 @@
                                 <button [disabled]="disabledPagar" class="btn btn-secondary col-6" (click)="agregarVenta()"> 
                                     <span *ngIf="disabledPagar" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>    Pagar
                                 </button>
-                 
-
+                            </div>
+                           
+                        </div>
+                        <div class="row" *ngIf="barraLateralVenta">
+                            <div class="col-12 d-flex justify-content-end">
+                                <mat-progress-bar mode="indeterminate" class="col-7"></mat-progress-bar>
                             </div>
                         </div>
 

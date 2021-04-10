@@ -1,0 +1,41 @@
+
+
+
+<div class="container-fluid p-3">
+    <div class="row">
+      <div id="htmlData" #dtsPago >
+        <h2>Reporte del pago que realizo el cliente {{ reportePagoCliente.nombreCliente }} </h2>
+        <table class="table table-bordered mt-4">
+          <tr class="table-primary">
+            <th>Cliente</th>
+            <th>Total de la venta</th>
+            <th>Fecha de depósito</th>
+            <th>Adeudo</th>  
+            <th>Pago realizado</th>            
+          </tr>
+          <tr>
+            <th>{{ reportePagoCliente.nombreCliente }}</th>
+            <td>{{ reportePagoCliente.totalVenta | currency }}</td>
+            
+            <td>{{ reportePagoCliente.fechaDeposito }}</td>
+            <td>{{ reportePagoCliente.adeudo }}</td>
+            <td>{{ reportePagoCliente.pagoRealizado }}</td>
+            
+            
+
+
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+<div class="row">
+    <div class="col-12 d-flex justify-content-end">
+        <button mat-raised-button color="warn" class="col-4" 
+        (click)="pdf();" [disabled]="spinerGenerarReporte">
+        <span *ngIf="spinerGenerarReporte" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Generar reporte
+    </button>
+    </div>
+</div>
+

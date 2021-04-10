@@ -1,6 +1,6 @@
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
@@ -24,8 +24,10 @@ export class BuscarPagosVentaComponent implements OnInit, OnDestroy {
     this.sessionProducto.eliminarSession("datosEditarProducto");
   }
 
-  keyupBuscarPago(event: KeyboardEvent) {
-
+  keyupBuscarPago(event: string) 
+  {
+    
+    this.serviceFerreteria.serivicePagosVenta.eventKeyUpNombreCliente$.emit(event);
   }
 
   ngZona() {

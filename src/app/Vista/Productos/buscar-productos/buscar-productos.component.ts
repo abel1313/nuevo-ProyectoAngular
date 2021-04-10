@@ -123,13 +123,6 @@ export class BuscarProductosComponent implements OnInit, OnDestroy {
    this.validarCarritoCompraO();
 
    this.countProductoBuscarProducto = sessionStorage.getItem("tamanoCarrito") != null ?  parseInt(sessionStorage.getItem("tamanoCarrito"))  : 0 ;
-
-  //  if(sessionStorage.getItem("contador") != null)
-  // {
-  //   let cont = parseInt(sessionStorage.getItem("contador"));
-  //   this.serviceFerreteria.serviceDetalle.countProductosCarrito$.emit(cont);
-  // }
-    
     let valueBox = document.getElementById('buscar-producto'). innerHTML;
    
     if(valueBox == ""){

@@ -7,6 +7,7 @@ import { Observable, Subscription } from 'rxjs';
 import { IDetalleVenta } from 'src/app/Model/DetalleVenta/DetalleVenta';
 import { IProducto } from 'src/app/Model/Productos/IProducto';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
+import { UsuarioAcceso } from 'src/app/Model/Usuarios/UsuarioAcceso';
 import { IVenta } from 'src/app/Model/Venta/Venta';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
@@ -27,13 +28,18 @@ export class MostrarProductosComponent implements OnInit {
 
   sessionesProducto = new Sessiones( this.router );
 
+  usuarioCarrito = new UsuarioAcceso();
+
+
   prodCarrito =
   {
     id: 0,
     nombreProducto: "",
     precioProducto: 0,
     cantidad1: 0,
-    subtotal: 0
+    subtotal: 0,
+    usuarioId: 0
+     
   }
   carritoVenta =
   {
@@ -137,6 +143,12 @@ if(sessionStorage.getItem("tamanoCarrito") == null)
   sessionStorage.setItem("tamanoCarrito", JSON.stringify(this.cont));
 }
 
+if( sessionStorage.getItem('sessionUsuario') != null )
+{
+this.usuarioCarrito.usuarioAcceso =
+  (JSON.parse(sessionStorage.getItem('sessionUsuario')).usuario );
+}
+
 let nuevoArrayEc: any = [];
 
 for (var producto of  this.addArray) 
@@ -153,7 +165,9 @@ for (var producto of  this.addArray)
         nombreProducto: producto.nombreProducto,
         precioProducto: producto.precioProducto,
         cantidad1: 1,
-        subtotal: 0
+        subtotal: 0,
+        usuarioId: this.usuarioCarrito.usuarioAcceso.id
+       
       }
       this.prodCarrito.subtotal = 
       this.prodCarrito.precioProducto * this.prodCarrito.cantidad1;
@@ -164,17 +178,13 @@ for (var producto of  this.addArray)
       {
       sessionStorage.setItem("productoDetalle",JSON.stringify(this.arregloDetalleMostrarProducto));
       }
-
-      
-      
       this.detalleVenta.cantidadDetalleVenta = 1;
       this.detalleVenta.precioDetalleVenta = producto.precioProducto;
 
       this.detalleVenta.subtotalDetalleVenta = ( this.detalleVenta.precioDetalleVenta * this.detalleVenta.cantidadDetalleVenta );
       this.detalleVenta.producto = producto; 
       
-    
-
+  
       if( sessionStorage.getItem("tamanoCarrito") != null )
       {
         this.cont =  parseInt(sessionStorage.getItem("tamanoCarrito")) + 1;
@@ -184,8 +194,6 @@ for (var producto of  this.addArray)
       sessionStorage.setItem("tamanoCarrito", JSON.stringify(this.cont));
 
       this.serviceFerreteria.serviceDetalle.detalleVentaBuscarProducto$.emit(this.detalleVenta);
-
-    
   
     }
   

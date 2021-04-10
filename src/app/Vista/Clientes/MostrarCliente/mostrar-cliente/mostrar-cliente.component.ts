@@ -38,9 +38,7 @@ keyUpBuscarCliente: string = "";
     // método para obtener los clientes del servidor y mostrarlos en la vista
     this.obtenerClientes();
 
-    this.sessionesProducto.eliminarSession("datosEditarProducto");
-
-    Sessiones.eliminarSessionesReportes('editarMarca');
+    
     
   }
 

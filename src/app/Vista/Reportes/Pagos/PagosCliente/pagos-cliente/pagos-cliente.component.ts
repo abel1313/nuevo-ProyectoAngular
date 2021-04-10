@@ -1,27 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-
-
-import { jsPDF } from "jspdf";
-import html2canvas from 'html2canvas';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IReporteVenta } from 'src/app/Model/Reportes/IReporteVenta';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
+import { IDTOPagoReporte } from 'src/app/Model/DTO/DROPagosRepostes/IDTOPagoReporte';
+import { DTOVentaPagos } from 'src/app/Model/DTO/DTOVentaPagos/DTOVentaPagos';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 
-
 @Component({
-  selector: 'app-generar-reportes-ventas',
-  templateUrl: './generar-reportes-ventas.component.html',
-  styleUrls: ['./generar-reportes-ventas.component.css']
+  selector: 'app-pagos-cliente',
+  templateUrl: './pagos-cliente.component.html',
+  styleUrls: ['./pagos-cliente.component.css']
 })
-export class GenerarReportesVentasComponent implements OnInit {
+export class PagosClienteComponent implements OnInit {
 
+  @ViewChild('dtsPago') datosPagoCliente: ElementRef;
+
+  
   constructor
   (
-    private router: Router
+    private router: Router, _ngZone: NgZone
   ) { }
 
 
-  reporteVenta: IReporteVenta [] = [];
+  reportePagoCliente: IDTOPagoReporte;
 
   spinerGenerarReporte: Boolean = false;
  
@@ -35,10 +36,12 @@ export class GenerarReportesVentasComponent implements OnInit {
 
 sesionesReportes()
 {
-  this.reporteVenta = 
-sessionStorage.getItem('reporteVenta') != null ?
- JSON.parse(sessionStorage.getItem('reporteVenta')): 
+  this.reportePagoCliente = 
+sessionStorage.getItem('iReportePago') != null ?
+ JSON.parse(sessionStorage.getItem('iReportePago')): 
  this.router.navigateByUrl('/ventas/buscar') ;
+
+
 
 }
 
@@ -48,7 +51,7 @@ sessionStorage.getItem('reporteVenta') != null ?
     this.downloadPdf();
   }
   downloadPdf() {
-    const DATA = document.getElementById('htmlData');
+    const DATA = this.datosPagoCliente.nativeElement;
     const doc = new jsPDF('p', 'pt', 'a4');
     const options = {
       background: 'white',
@@ -67,12 +70,15 @@ sessionStorage.getItem('reporteVenta') != null ?
       doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
       return doc;
     }).then((docResult) => {
-      docResult.save(`${new Date().toISOString()}_Ventas.pdf`);
+      docResult.save(`${new Date().toISOString()}_Pago.pdf`);
     });
     setTimeout(() => 
     {
+      sessionStorage.removeItem('iReportePago');
+      this.router.navigateByUrl('ventas/buscar');
       this.spinerGenerarReporte = false;
     }, 2500);
   }
 
 }
+

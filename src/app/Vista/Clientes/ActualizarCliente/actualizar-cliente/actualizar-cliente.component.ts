@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 
 @Component({
@@ -8,12 +9,16 @@ import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 })
 export class ActualizarClienteComponent implements OnInit {
 
-  constructor() { }
+  constructor( private router: Router ) { }
 
   ngOnInit(): void 
   {
 
-    Sessiones.eliminarSessionesReportes('editarMarca');
+    //Sessiones.eliminarSessionesReportes('editarMarca');
+
+
+    new Sessiones( this.router ).interfazEditar( 'ediatrCliente', 'productos/buscar');
+
   }
 
 }

@@ -4,6 +4,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { EventEmitter } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
+import { IDTOPagoReporte } from 'src/app/Model/DTO/DROPagosRepostes/IDTOPagoReporte';
+import { IDTOVentasPagos } from 'src/app/Model/DTO/DROPagosRepostes/IDTOVentasPagos';
 import { IPagosVenta } from 'src/app/Model/PagosVenta/IPagosVenta';
 
 import { Productos } from 'src/app/Model/Productos/Producto';
@@ -15,15 +17,29 @@ export class ServicePagoVenta
     
 
     eventKeyUp$ = new EventEmitter<string>();
+    eventKeyUpNombreCliente$ = new EventEmitter<string>();
+
+
+
+
+
 
     constructor(private http: HttpClient, private uriServer: string ){}
 
 
     // ------------------------------ Pago Venta ------------------------------------------ //
 
-      getPagosVentaAll(): Observable<any[]>
+      getPagosVentaAll(): Observable<IDTOVentasPagos[]>
       {
-        return this.http.get<any[]>(`${this.uriServer}/pagosventa/mostrarpagosventa `)
+        return this.http.get<IDTOVentasPagos[]>(`${this.uriServer}/pagosventa/mostrarpagosventa `)
+      }
+      buscarPagos(): Observable<IDTOVentasPagos[]>
+      {
+        return this.http.get<IDTOVentasPagos[]>(`${this.uriServer}/pagosventa/buscarPagos`)
+      }
+      getOnePago( nombreCliente: string ): Observable<IDTOVentasPagos[]>
+      {
+        return this.http.get<IDTOVentasPagos[]>(`${this.uriServer}/pagosventa/mostrarUnPago/${nombreCliente}`)
       }
       getOneProduct(nombreProducto:string)
       {
@@ -35,6 +51,13 @@ export class ServicePagoVenta
       { 
            return  this.http.post(`${this.uriServer}/pagosventa/guardarPago`, pagoVenta);
        } 
+
+       //
+       savePagoVentaNew( pagoVenta: IPagosVenta ):Observable<IDTOPagoReporte> 
+       { 
+            return  this.http.post<IDTOPagoReporte>(`${this.uriServer}/pagosventa/guardarPago`, pagoVenta);
+        } 
+       //
 
        guardarProducto( producto: Productos ):Observable<any> { 
   

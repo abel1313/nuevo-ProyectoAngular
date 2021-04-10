@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
@@ -9,12 +10,12 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 })
 export class BuscarClienteComponent implements OnInit {
 
-  constructor( private serviceFerreteria: ServiceFerreteriaService ) { }
+  constructor( private serviceFerreteria: ServiceFerreteriaService, private router: Router ) { }
 
   ngOnInit(): void 
   {
 
-    Sessiones.eliminarSessionesReportes('editarMarca');
+    
   }
   keyUpBuscarCliente( event: any)
   {

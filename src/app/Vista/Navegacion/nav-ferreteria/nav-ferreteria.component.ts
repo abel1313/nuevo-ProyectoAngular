@@ -113,22 +113,26 @@ cerrarSession()
   
   if( sessionStorage.getItem("sessionUsuario") != null )
   {
-    if( sessionStorage.getItem("carritoventa") != null )
-    { 
-      sessionStorage.removeItem("carritoventa");
-      sessionStorage.removeItem("tamanoCarrito");
-      sessionStorage.removeItem("productoDetalle");
-    }
-    if(  sessionStorage.getItem("ediatrCliente") != null )
-    {
-      sessionStorage.removeItem("ediatrCliente");
-    }
-    sessionStorage.removeItem("sessionUsuario");
-    sessionStorage.removeItem("datosClientes");
-    
-    Sessiones.eliminarSessionesReportes('editarMarca');
-
-    this.router.navigateByUrl('/acceso');
+    let sess: string [] = 
+    [      
+      'carritoventa',
+      'tamanoCarrito',
+      'sessionUsuario',
+      'productoDetalle',
+      'editarMarca',
+      'datosEditarProducto',
+      'datosClientes',
+      'ediatrCliente',
+      'reportePagoCliente',
+      'sesionPagos',
+      'generarReportePagos',
+      'iReportePago',
+      'sessionEditProd',
+      'datosEditarProd',
+      'reporteVenta'
+    ];
+    Sessiones.eliminarSesiones( sess ); 
+    this.router.navigateByUrl('sistema/acceso');
   }
 }
 

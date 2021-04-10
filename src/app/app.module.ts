@@ -59,6 +59,7 @@ import { PagosClientesComponent } from './Vista/GenerarReportes/pagos-clientes/p
 import { CodigoBarrasComponent } from './Vista/CodigoBarra/codigo-barras/codigo-barras.component';
 import { ModuleProductoModule } from './Module/Productos/module-producto/module-producto.module';
 import { PrimerEjemploComponent } from './Vista/Ejemplos/PrimerEjemplo/primer-ejemplo/primer-ejemplo.component';
+import { PagosClienteComponent } from './Vista/Reportes/Pagos/PagosCliente/pagos-cliente/pagos-cliente.component';
 
 
 
@@ -78,6 +79,8 @@ import { PrimerEjemploComponent } from './Vista/Ejemplos/PrimerEjemplo/primer-ej
     MostrarPermisosComponent,
     
     CodigoBarrasComponent,
+    
+    PagosClienteComponent,
 
     
     

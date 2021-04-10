@@ -1,12 +1,16 @@
 
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+
+import { Observable, Subscription } from 'rxjs';
 import { IDTOPagoReporte } from 'src/app/Model/DTO/DROPagosRepostes/IDTOPagoReporte';
+import { IDTOVentaPago } from 'src/app/Model/DTO/DROPagosRepostes/IDTOVentaPago';
+import { IDTOVentasPagos } from 'src/app/Model/DTO/DROPagosRepostes/IDTOVentasPagos';
 import { DTOVentaPagos } from 'src/app/Model/DTO/DTOVentaPagos/DTOVentaPagos';
 import { IPagosVenta } from 'src/app/Model/PagosVenta/IPagosVenta';
 import { PagoVenta } from 'src/app/Model/PagosVenta/PagoVenta';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
+import { IVentasPagadas } from 'src/app/Model/VentasPagadas/IVentasPagadas';
 import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.service';
 
 import { VentasPagadas } from "../../../Model/VentasPagadas/VentasPagadas";
@@ -15,10 +19,20 @@ import { VentasPagadas } from "../../../Model/VentasPagadas/VentasPagadas";
   templateUrl: './pagos-venta-mostrar.component.html',
   styleUrls: ['./pagos-venta-mostrar.component.css']
 })
-export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
+export class PagosVentaMostrarComponent implements OnInit {
 
-  DTOPagoVenta: any = [];
+  DTOPagoVenta$: Observable<IDTOVentasPagos[]>;
   suscription: Subscription;
+
+  getPagosAll$: Observable<IDTOVentasPagos[]>;
+
+  
+
+  guardarVentasPagadasNew$: Observable<IVentasPagadas>;
+  IDTOPagoReporteNew$: Observable<IDTOPagoReporte>;
+
+  eventKeyUpNombreEmmit$ = new EventEmitter<string>();
+
 
   constructor(private serviceFerreteria: ServiceFerreteriaService, private router: Router) { }
 
@@ -32,6 +46,8 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
   mostrarMensaje: Boolean = false;
 
   mensajeVentaPagada: Boolean = false;
+
+  barraLateralPago: Boolean = false;
 
 
   resultado: number = 0;
@@ -47,6 +63,8 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
       ventaId: 0
     };
 
+
+
   sessionProducto = new Sessiones(this.router);
 
   ngOnInit(): void {
@@ -54,7 +72,11 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
 
     this.sessionProducto.eliminarSession("datosEditarProducto");
     Sessiones.eliminarSessionesReportes('editarMarca');
+
+this.buscarUnPago();
   }
+
+
 
   onClick(btn: any) {
     this.dtoVentaPago.ventasPagos = btn;
@@ -70,6 +92,8 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
   onKeyUpPagoVenta(event: any) {
     this.resultado = parseFloat(event) - this.dtoVentaPago.ventasPagos.totalResta;
   }
+
+
   guardarPago() {
     if (this.datosPagoVenta.pago != 0) 
     {
@@ -86,65 +110,87 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
     }
   }
 
-  buscarPagosVenta() {
-    this.suscription = this.serviceFerreteria.serivicePagosVenta.getPagosVentaAll()
-      .subscribe
-      (
-        res => {
-
-          this.DTOPagoVenta = res;
 
 
-        },
-        err => console.log(err)
+  //Al realizar una venta agregarla en el de ventas pagadas para poder hacer la relacion completa
+
+  buscarUnPago()
+  {
+    this.eventKeyUpNombreEmmit$ = this.serviceFerreteria.serivicePagosVenta
+    .eventKeyUpNombreCliente$;
+    this.eventKeyUpNombreEmmit$.subscribe
+    (
+      ev=>
+      {
+        console.log(ev, " sale");
+      
+        this.DTOPagoVenta$ = this.serviceFerreteria.serivicePagosVenta.getOnePago( ev );
+  
+
+      }
       );
 
+    //this.DTOPagoVenta = res;
+  }
+  buscarPagosVenta() {
+    this.DTOPagoVenta$ = this.serviceFerreteria.serivicePagosVenta.buscarPagos();
   }
 
 
   saveVentasPagadas() {
     if (this.datosPagoVenta.pago >= this.dtoVentaPago.ventasPagos.totalResta) {
+
+      this.mensajeVentaPagada = true;
       this.datosVentaPagada.estatusventa = 1;
       this.ventasPagadas.ventasPagadas.estatusVenta.id = 1;
+
       this.ventasPagadas.ventasPagadas.venta.id = this.datosVentaPagada.idVenta;
       this.pagoVenta.pago.pagoVenta = this.dtoVentaPago.ventasPagos.totalResta;
-      this.savePagosVenta();
 
-      this.suscription = this.serviceFerreteria.seriviceVentasPagadas
-        .guardarVentasPagadas(this.ventasPagadas.ventasPagadas)
-        .subscribe
+
+      console.log(this.ventasPagadas.ventasPagadas);
+   
+
+      // this.savePagosVenta();
+
+
+      this.guardarVentasPagadasNew$ = this.serviceFerreteria.seriviceVentasPagadas
+        .guardarVentasPagadasUpdate(this.ventasPagadas.ventasPagadas);
+        this.guardarVentasPagadasNew$.subscribe
         (
-          res => {
-
-          },
-          err => console.log(err)
+          res=>console.log(res)
         );
 
 
     } else if (this.datosPagoVenta.pago < this.dtoVentaPago.ventasPagos.totalResta) {
+      this.mensajeVentaPagada = false;
       this.pagoVenta.pago.pagoVenta = this.datosPagoVenta.pago;
 
-      this.savePagosVenta();
+      // this.savePagosVenta();
 
     }
 
   }
   savePagosVenta() {
 
+    this.barraLateralPago = true;
+
     if (this.pagoVenta.pago.venta.id != 0) {
       this.pagoVenta.pago.venta.id = this.ventasPagadas.ventasPagadas.venta.id;
-      this.mensajeVentaPagada = true;
+    
     } else {
       this.pagoVenta.pago.venta.id = this.datosVentaPagada.idVenta;
     }
 
-    this.suscription = this.serviceFerreteria.serivicePagosVenta
-      .savePagoVenta(this.pagoVenta.pago)
-      .subscribe
+
+    
+    this.IDTOPagoReporteNew$ = this.serviceFerreteria.serivicePagosVenta
+      .savePagoVentaNew(this.pagoVenta.pago);
+      this.IDTOPagoReporteNew$.subscribe
       (
         (res: IDTOPagoReporte) => {
           this.buscarPagosVenta();
-          console.log(res);
+          
           sessionStorage.setItem('iReportePago', JSON.stringify(res));
           this.dtoVentaPago.ventasPagos.totalVenta = 0;
           this.dtoVentaPago.ventasPagos.totalPagosVenta = 0;
@@ -157,25 +203,49 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
           this.dtoVentaPago.ventasPagos.cliente.persona.maternoPersona = '';
 
           if (this.mensajeVentaPagada) {
-            this.mostrarMensaje = true;
-            this.mensaje = "Gracias por realizar su pago";
+
+
+         
+           
             setTimeout(() => {
-              this.mostrarMensaje = false;
-              this.mensaje = "";
-            }, 1200);
-            setTimeout(() => {
-              this.router.navigateByUrl('/reportes/reportepago');
+              this.barraLateralPago = false;
+              this.mostrarMensaje = true;
+              this.mensajeVentaPagada = false;
+              this.mensaje = "Gracias por realizar su pago";
+
+              setTimeout(() => {
+
+                setTimeout(() => {
+                  this.mostrarMensaje = false;
+                  this.mensaje = "";
+                  this.router.navigateByUrl('reportes/pagocliente');
+                }, 1200);
+              }, 2000);
+
+              
             }, 2000);
+       
           } else {
-            this.mostrarMensaje = true;
-            this.mensajeVentaPagada = false;
-            this.mensaje = "Gracias por abonar su pago";
+
+
             setTimeout(() => {
-              this.mostrarMensaje = false;
-              this.mensaje = "";
-            }, 1200);
+              this.barraLateralPago = false;
+              this.mostrarMensaje = true;
+              this.mensajeVentaPagada = false;
+              this.mensaje = "Gracias por abonar su pago";
+              setTimeout(() => {
+                this.mostrarMensaje = false;
+                this.mensaje = "";
+                
+                this.router.navigateByUrl('reportes/pagocliente');
+              }, 1200);
+
+            }, 2000);
+
+ 
             setTimeout(() => {
-              this.router.navigateByUrl('/reportes/reportepago');
+
+              //this.router.navigateByUrl('/reportes/reportepago');
             }, 2000);
           }
 
@@ -185,9 +255,5 @@ export class PagosVentaMostrarComponent implements OnInit, OnDestroy {
       );
   }
 
-
-  ngOnDestroy(): void {
-    this.suscription.unsubscribe();
-  }
 
 }

@@ -1,4 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Direccion } from 'src/app/Model/Direccion/Direccion';
 import { Sessiones } from 'src/app/Model/Sessiones/Sessiones';
 import { Validar } from 'src/app/Model/Validar/Validar';
@@ -12,7 +13,7 @@ import { ServiceFerreteriaService } from 'src/app/Service/service-ferreteria.ser
 export class AgregarDireccionComponent implements OnInit {
 
   constructor( private serviceFerreteria: ServiceFerreteriaService,
-                _ngZone: NgZone) { }
+                _ngZone: NgZone, private router: Router ) { }
 
  spinnerDireccion: Boolean = false;               
   mensajeListo: Boolean = false;
@@ -35,7 +36,7 @@ export class AgregarDireccionComponent implements OnInit {
   ngOnInit(): void 
   {
 
-    Sessiones.eliminarSessionesReportes('editarMarca');
+    
   }
 
   // evento click para enviar la direccion a la venta y guardarla

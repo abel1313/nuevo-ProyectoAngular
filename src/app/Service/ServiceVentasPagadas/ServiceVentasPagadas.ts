@@ -30,6 +30,21 @@ export class ServiceVentasPagadas
         return this.http.post( `${this.uriServer}/ventaspagadas/guardarventapagada`, ventasPagadas );
     }
 
+    // ------------------------------------------------------------------------------------------------------------- //
+    guardarVentasPagadasNew( ventasPagadas: IVentasPagadas ): Observable<IVentasPagadas>
+    {
+     
+        return this.http.post<IVentasPagadas>( `${this.uriServer}/ventaspagadas/guardarventapagada`, ventasPagadas );
+    }
+    // ------------------------------------------------------------------------------------------------------------- //
+
+    guardarVentasPagadasUpdate( ventasPagadas: IVentasPagadas ): Observable<IVentasPagadas>
+    {
+     
+        console.log(ventasPagadas, " ven pag");
+        return this.http.put<IVentasPagadas>( `${this.uriServer}/ventaspagadas/actualizarpago/${ventasPagadas.venta.id}`, ventasPagadas );
+    }
+
     guardarVentaPagadaNew( ventasPagadas: IVentasPagadas ): Observable<any>
     {
         return this.http.post( `${this.uriServer}/ventaspagadas/guardarventapagada`, ventasPagadas );
